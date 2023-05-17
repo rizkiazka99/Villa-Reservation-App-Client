@@ -53,7 +53,7 @@ h7({color = textBlack, fontWeight = FontWeight.bold, fontFamily}) {
 
 //body
 bodyLg({color = textBlack, fontWeight = FontWeight.bold, fontFamily}) {
-  return TextStyle(color: color, fontSize: 16, letterSpacing: 2, fontWeight: fontWeight, fontFamily: fontFamily);
+  return TextStyle(color: color, fontSize: 16, fontWeight: fontWeight, fontFamily: fontFamily);
 }
 
 bodyMd({color = textGrey, fontWeight = FontWeight.normal, fontStyle = FontStyle.normal, fontFamily}) {

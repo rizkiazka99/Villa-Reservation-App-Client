@@ -5,6 +5,7 @@ import 'package:reservilla/core/colors.dart';
 import 'package:reservilla/core/font_sizes.dart';
 import 'package:reservilla/modules/controller/auth/login_screen_controller.dart';
 import 'package:reservilla/widgets/authentication_form.dart';
+import 'package:reservilla/widgets/decorative_or.dart';
 import 'package:reservilla/widgets/default_button.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -30,14 +31,14 @@ class _LoginScreenState extends State<LoginScreen> {
               Container(
                 alignment: Alignment.bottomCenter,
                 width: MediaQuery.of(context).size.width,
-                padding: const EdgeInsets.only(bottom: 16),
+                padding: const EdgeInsets.only(bottom: 36),
                 color: contextOrange,
                 child: Image.asset(
                   'assets/images/logo.png',
                 ),
               ),
               Container(
-                height: MediaQuery.of(context).size.height / 1.35,
+                height: MediaQuery.of(context).size.height / 1.4,
                 width: MediaQuery.of(context).size.width,
                 padding: const EdgeInsets.all(16),
                 decoration: const BoxDecoration(
@@ -127,12 +128,34 @@ class _LoginScreenState extends State<LoginScreen> {
                           }
                         ))
                       ),
-                      DefaultButton(
-                        onTap: () {
-                          controller.initiateLogin();
-                        }, 
-                        color: contextOrange, 
-                        buttonText: 'Masuk'
+                      Container(
+                        padding: const EdgeInsets.only(bottom: 15),
+                        child: DefaultButton(
+                          onTap: () {
+                            controller.initiateLogin();
+                          }, 
+                          color: contextOrange, 
+                          buttonText: 'Masuk'
+                        ),
+                      ),
+                      decorativeOr(context),
+                      Container(
+                        padding: const EdgeInsets.only(top: 8),
+                        child: Text(
+                          'Belum punya akun?',
+                          style: bodyLg(color: contextGrey),
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.only(top: 8),
+                        child: DefaultButton(
+                          onTap: () {
+                      
+                          }, 
+                          color: contextGrey, 
+                          buttonText: 'Buat Akun',
+                          buttonTextColor: Colors.white,
+                        ),
                       )
                     ],
                   ),

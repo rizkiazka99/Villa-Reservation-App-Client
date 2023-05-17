@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:reservilla/core/colors.dart';
 import 'package:reservilla/core/font_sizes.dart';
 
 class DefaultButton extends StatelessWidget {
   final void Function()? onTap;
   final Color? color;
   final String buttonText;
+  final Color buttonTextColor;
 
   const DefaultButton({
     super.key, 
     required this.onTap, 
     required this.color, 
-    required this.buttonText
+    required this.buttonText,
+    this.buttonTextColor = textBlack
   });
 
   @override
@@ -27,7 +30,7 @@ class DefaultButton extends StatelessWidget {
         ),
         child: Text(
           buttonText,
-          style: buttonLg(),
+          style: buttonLg(color: buttonTextColor),
         ),
       ),
     );
