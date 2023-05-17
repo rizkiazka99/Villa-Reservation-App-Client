@@ -6,7 +6,6 @@ class Repository {
 
   Future<LoginResponse> login(data) async {
     final response = await usersApi.login(data);
-    print(response);
     return LoginResponse.fromJson(response);
   }
 }

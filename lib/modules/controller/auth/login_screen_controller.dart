@@ -3,12 +3,16 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:reservilla/core/colors.dart';
 import 'package:reservilla/data/api/repository.dart';
+import 'package:reservilla/data/local/storage_repository.dart';
 import 'package:reservilla/data/models/auth/login_response.dart';
+import 'package:reservilla/data/models/auth/user_response.dart';
 import 'package:reservilla/widgets/default_snackbar.dart';
 import 'package:reservilla/widgets/loader_dialog.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreenController extends GetxController {
   Repository repository = Repository();
+  StorageRepository storageRepository = StorageRepository();
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -57,6 +61,13 @@ class LoginScreenController extends GetxController {
     loginLoading = false;
     return loginData;
   }
+
+  Future saveUserData(LoginResponse? loginData) async {
+    User user = User.fromJson(loginData!.data!.toJson());
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('access_token', loginData.accessToken.toString());
+    await storageRepository.saveUserData(user);
+  }
   
   initiateLogin() async {
     final isEmailValid = emailFormKey.currentState!.validate();
@@ -69,9 +80,9 @@ class LoginScreenController extends GetxController {
       );
       await login();
 
-      if (loginData!.accessToken != null) {
+      if (loginData!.status) {
         Get.back();
-        defaultSnackbar('Ok!', 'Login berhasil');
+        await saveUserData(loginData);
       } else {
         if (loginData!.message == 'Invalid e-mail address or password') {
           Get.back();
