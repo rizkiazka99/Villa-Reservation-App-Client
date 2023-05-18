@@ -144,6 +144,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     } else {
                                       if (value.length > 13) {
                                         return 'Nomor telepon tidak boleh lebih dari 13 digit';
+                                      } else if (value.length < 10) {
+                                        return 'Nomor telepon tidak boleh kurang dari 10 digit';
+                                      } else if (value[0] != '0' && value[1] != '8') {
+                                        return 'Nomor telepon tidak valid. Tolong ikuti format "08xxxxxxxx"';
                                       }
                                     }
                                   }
@@ -202,10 +206,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       return 'Kolom password tidak boleh kosong';
                                     } else {
                                       if (!validate) {
-                                        return 'Password harus terdiri dari 1 huruf besar, 1 huruf kecil dan 1 angka';
-                                      }
-                                      if (value.length < 8) {
-                                        return 'Password harus terdiri dari setidaknya 8 karakter';
+                                        return 'Password harus terdiri dari 8 katakter, 1 huruf besar, 1 huruf kecil dan 1 angka';
                                       }
                                     }
                                   }
@@ -246,7 +247,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               )),
                               DefaultButton(
                                 onTap: () {
-    
+                                  controller.initiateSignup();
                                 }, 
                                 color: contextOrange, 
                                 buttonText: 'Buat Akun'

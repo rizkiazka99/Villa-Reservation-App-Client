@@ -58,10 +58,27 @@ class Methods {
       return handleError(err);
     }
   }
+
+  Future dioSignup(url, data) async {
+    try {
+      final response = await dio.post(
+        baseUrl + url,
+        data: jsonEncode(data)
+      );
+
+      return response.data;
+    } catch(err) {
+      return handleError(err);
+    }
+  }
 }
 
 class Users extends Methods {
   Future login(data) async {
     return await dioLogin('users/login', data);
+  }
+
+  Future signup(data) async {
+    return await dioSignup('users/register', data);
   }
 }

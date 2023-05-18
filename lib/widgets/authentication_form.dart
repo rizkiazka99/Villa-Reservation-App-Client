@@ -44,6 +44,7 @@ class _AuthenticationFormState extends State<AuthenticationForm> {
         keyboardType: widget.input,
         decoration: InputDecoration(
           hintText: widget.hintText,
+          errorMaxLines: 2,
           hintStyle: h5(
             color: textGrey,
             fontWeight: FontWeight.normal

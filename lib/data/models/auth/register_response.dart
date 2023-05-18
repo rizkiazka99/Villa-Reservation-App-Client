@@ -2,7 +2,7 @@ class RegisterResponse {
     bool status;
     String message;
     dynamic accessToken;
-    Data data;
+    Data? data;
 
     RegisterResponse({
         required this.status,
@@ -15,14 +15,14 @@ class RegisterResponse {
         status: json["status"],
         message: json["message"],
         accessToken: json["access_token"],
-        data: Data.fromJson(json["data"]),
+        data: json['data'] == null ? null : Data.fromJson(json["data"]),
     );
 
     Map<String, dynamic> toJson() => {
         "status": status,
         "message": message,
         "access_token": accessToken,
-        "data": data.toJson(),
+        "data": data!.toJson(),
     };
 }
 
