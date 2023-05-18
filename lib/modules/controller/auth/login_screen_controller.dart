@@ -6,6 +6,7 @@ import 'package:reservilla/data/api/repository.dart';
 import 'package:reservilla/data/local/storage_repository.dart';
 import 'package:reservilla/data/models/auth/login_response.dart';
 import 'package:reservilla/data/models/auth/user_response.dart';
+import 'package:reservilla/router/route_variables.dart';
 import 'package:reservilla/widgets/default_snackbar.dart';
 import 'package:reservilla/widgets/loader_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -83,6 +84,13 @@ class LoginScreenController extends GetxController {
       if (loginData!.status) {
         Get.back();
         await saveUserData(loginData);
+
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        String? accessToken = prefs.getString('access_token');
+
+        if (accessToken != null) {
+          Get.offAllNamed(dashboardScreenRoute);
+        }
       } else {
         if (loginData!.message == 'Invalid e-mail address or password') {
           Get.back();

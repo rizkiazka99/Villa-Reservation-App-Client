@@ -23,6 +23,7 @@ class ConfirmationDialog extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15)
       ),
+      backgroundColor: Colors.white,
       title: Text(
         title,
         style: h5(),

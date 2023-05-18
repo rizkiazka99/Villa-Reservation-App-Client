@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:reservilla/core/colors.dart';
 import 'package:reservilla/router/route_app.dart';
 import 'package:reservilla/router/route_variables.dart';
 
@@ -26,11 +27,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         //colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
-        colorSchemeSeed: Colors.green,
+        colorSchemeSeed: contextOrange,
         fontFamily: 'Poppins'
       ),
       getPages: AppPages.pages,
-      initialRoute: loginScreenRoute,
+      initialRoute: splashScreenRoute,
     );
   }
 }
