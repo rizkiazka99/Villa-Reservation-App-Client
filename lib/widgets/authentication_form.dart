@@ -7,6 +7,7 @@ class AuthenticationForm extends StatefulWidget {
   final AutovalidateMode? autovalidateMode;
   final TextEditingController controller;
   final bool obscureText;
+  final TextInputType input;
   final String hintText;
   final Widget? suffixIcon;
   final Widget? prefixIcon;
@@ -18,7 +19,8 @@ class AuthenticationForm extends StatefulWidget {
     required this.formKey, 
     required this.autovalidateMode,
     required this.controller, 
-    this.obscureText = false, 
+    this.obscureText = false,
+    this.input = TextInputType.text,
     required this.hintText, 
     this.suffixIcon, 
     this.prefixIcon, 
@@ -39,6 +41,7 @@ class _AuthenticationFormState extends State<AuthenticationForm> {
       child: TextFormField(
         controller: widget.controller,
         obscureText: widget.obscureText,
+        keyboardType: widget.input,
         decoration: InputDecoration(
           hintText: widget.hintText,
           hintStyle: h5(

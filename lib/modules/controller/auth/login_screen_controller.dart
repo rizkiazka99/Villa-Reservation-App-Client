@@ -65,7 +65,7 @@ class LoginScreenController extends GetxController {
   Future saveUserData(LoginResponse? loginData) async {
     User user = User.fromJson(loginData!.data!.toJson());
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('access_token', loginData.accessToken.toString());
+    await prefs.setString('access_token', loginData.accessToken!);
     await storageRepository.saveUserData(user);
   }
   

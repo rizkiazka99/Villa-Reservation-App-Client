@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:reservilla/core/colors.dart';
 import 'package:reservilla/core/font_sizes.dart';
 import 'package:reservilla/modules/controller/auth/login_screen_controller.dart';
+import 'package:reservilla/router/route_variables.dart';
 import 'package:reservilla/widgets/authentication_form.dart';
 import 'package:reservilla/widgets/decorative_or.dart';
 import 'package:reservilla/widgets/default_button.dart';
@@ -150,7 +151,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         padding: const EdgeInsets.only(top: 8),
                         child: DefaultButton(
                           onTap: () {
-                      
+                            Get.toNamed(registerScreenRoute);
                           }, 
                           color: contextGrey, 
                           buttonText: 'Buat Akun',
