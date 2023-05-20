@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Methods {
   Dio dio = Dio();
@@ -46,6 +47,7 @@ class Methods {
     return dioError.response!.data;
   }
 
+  // Auth
   Future dioLogin(url, data) async {
     try {
       final response = await dio.post(
@@ -71,6 +73,29 @@ class Methods {
       return handleError(err);
     }
   }
+
+  // General
+  Future dioGet(url, {query}) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.reload();
+    String? accessToken = prefs.getString('access_token');
+
+    try {
+      final response = await dio.get(
+        baseUrl + url,
+        queryParameters: query == null ? null : Map.from(query),
+        options: Options(
+          headers: {
+            'access_token': accessToken
+          }
+        )
+      );
+
+      return response.data;
+    } catch(err) {
+      return handleError(err);
+    }
+  }
 }
 
 class Users extends Methods {
@@ -80,5 +105,11 @@ class Users extends Methods {
 
   Future signup(data) async {
     return await dioSignup('users/register', data);
+  }
+}
+
+class Bookings extends Methods {
+  Future getBookingsByUser(UserId) async {
+    return await dioGet('bookings/users/$UserId');
   }
 }
