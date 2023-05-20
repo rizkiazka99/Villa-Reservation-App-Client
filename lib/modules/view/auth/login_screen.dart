@@ -22,13 +22,12 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: SafeArea(
-        child: SizedBox(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          child: Stack(
-            children: [
+        backgroundColor: Colors.white,
+        body: SafeArea(
+          child: SizedBox(
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            child: Stack(children: [
               Container(
                 alignment: Alignment.bottomCenter,
                 width: MediaQuery.of(context).size.width,
@@ -45,9 +44,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(35),
-                    bottomRight: Radius.circular(35)
-                  ),
+                      bottomLeft: Radius.circular(35),
+                      bottomRight: Radius.circular(35)),
                 ),
                 child: SingleChildScrollView(
                   physics: const NeverScrollableScrollPhysics(),
@@ -58,30 +56,24 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            Text(
-                              'Masuk',
-                              style: h2(color: contextOrange),
-                              textAlign: TextAlign.right
-                            ),
-                            Text(
-                              'Ke Akun',
-                              style: h2(color: contextGrey),
-                              textAlign: TextAlign.right
-                            ),
-                            Text(
-                              'Anda',
-                              style: h2(color: contextOrange),
-                              textAlign: TextAlign.right
-                            )
+                            Text('Masuk',
+                                style: h2(color: contextOrange),
+                                textAlign: TextAlign.right),
+                            Text('Ke Akun',
+                                style: h2(color: contextGrey),
+                                textAlign: TextAlign.right),
+                            Text('Anda',
+                                style: h2(color: contextOrange),
+                                textAlign: TextAlign.right)
                           ],
                         ),
                       ),
                       Container(
                         padding: const EdgeInsets.only(top: 50, bottom: 15),
                         child: AuthenticationForm(
-                          formKey: controller.emailFormKey, 
-                          autovalidateMode: controller.autoValidateEmail, 
-                          controller: controller.emailController, 
+                          formKey: controller.emailFormKey,
+                          autovalidateMode: controller.autoValidateEmail,
+                          controller: controller.emailController,
                           hintText: 'E-mail',
                           prefixIcon: const Icon(
                             Icons.email,
@@ -89,55 +81,54 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           validator: (value) {
                             bool validate = EmailValidator.validate(value!);
-                            
+
                             if (value.isEmpty) {
                               return 'Kolom e-mail tidak boleh kosong';
                             } else {
                               if (!validate) {
                                 return 'E-mail tidak valid';
-                              } 
+                              }
                             }
                           },
                         ),
                       ),
                       Container(
-                        padding: const EdgeInsets.only(bottom: 15),
-                        child: Obx(() => AuthenticationForm(
-                          formKey: controller.passwordFormKey, 
-                          autovalidateMode: controller.autoValidatePassword, 
-                          controller: controller.passwordController, 
-                          hintText: 'Password',
-                          prefixIcon: const Icon(
-                            Icons.lock,
-                            color: contextOrange,
-                          ),
-                          obscureText: controller.isPasswordVisible,
-                          suffixIcon: IconButton(
-                            onPressed: () {
-                              controller.showAndHidePassword();
-                            },
-                            icon: Icon(
-                              controller.isPasswordVisible == true ? Icons.visibility :
-                                  Icons.visibility_off,
-                              color: contextOrange,
-                            ),
-                          ),
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Kolom password tidak boleh kosong';
-                            }
-                          }
-                        ))
-                      ),
+                          padding: const EdgeInsets.only(bottom: 15),
+                          child: Obx(() => AuthenticationForm(
+                              formKey: controller.passwordFormKey,
+                              autovalidateMode: controller.autoValidatePassword,
+                              controller: controller.passwordController,
+                              hintText: 'Password',
+                              prefixIcon: const Icon(
+                                Icons.lock,
+                                color: contextOrange,
+                              ),
+                              obscureText: controller.isPasswordVisible,
+                              suffixIcon: IconButton(
+                                onPressed: () {
+                                  controller.showAndHidePassword();
+                                },
+                                icon: Icon(
+                                  controller.isPasswordVisible == true
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
+                                  color: contextOrange,
+                                ),
+                              ),
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return 'Kolom password tidak boleh kosong';
+                                }
+                              }))),
                       Container(
                         padding: const EdgeInsets.only(bottom: 15),
                         child: DefaultButton(
-                          onTap: () {
-                            controller.initiateLogin();
-                          }, 
-                          color: contextOrange, 
-                          buttonText: 'Masuk'
-                        ),
+                            onTap: () {
+                              Get.toNamed(dashboardScreenRoute);
+                              // controller.initiateLogin();
+                            },
+                            color: contextOrange,
+                            buttonText: 'Masuk'),
                       ),
                       decorativeOr(context),
                       Container(
@@ -152,8 +143,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         child: DefaultButton(
                           onTap: () {
                             Get.toNamed(registerScreenRoute);
-                          }, 
-                          color: contextGrey, 
+                          },
+                          color: contextGrey,
                           buttonText: 'Buat Akun',
                           buttonTextColor: Colors.white,
                         ),
@@ -162,10 +153,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
               ),
-            ]
+            ]),
           ),
-        ),
-      )
-    );
+        ));
   }
 }
