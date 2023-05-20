@@ -34,7 +34,7 @@ class BookingsScreenController extends GetxController {
     bookingsLoading = true;
     BookingsResponse? res = await repository.getBookingsByUser(UserId);
     bookingsData = res;
-    bookingsLoading = true;
+    bookingsLoading = false;
 
     return bookingsData;
   }

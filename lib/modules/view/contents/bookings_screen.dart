@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:reservilla/core/colors.dart';
 import 'package:reservilla/core/font_sizes.dart';
@@ -17,9 +18,11 @@ class _BookingsScreenState extends State<BookingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: const Text('Bookings'),
+        scrolledUnderElevation: 0,
       ),
       body: SafeArea(
         child: SizedBox(
@@ -31,9 +34,9 @@ class _BookingsScreenState extends State<BookingsScreen> {
               children: [
                 Container(
                   width: MediaQuery.of(context).size.width,
-                  padding: const EdgeInsets.only(left: 8, right: 8),
+                  padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: backgroundColorPrimary,
+                    color: contextOrange,
                     borderRadius: BorderRadius.circular(15)
                   ),
                   child: Obx(() => Row(
@@ -79,7 +82,7 @@ class _BookingsScreenState extends State<BookingsScreen> {
                           },
                           child: Text(
                             'Sudah Lewat',
-                            style: buttonMd(),
+                            style: buttonSm(),
                           ),
                         ),
                       ),
@@ -107,12 +110,64 @@ class _BookingsScreenState extends State<BookingsScreen> {
                       )
                     ],
                   )),
-                )
+                ),
+                Obx(() => controller.tabBarIndex == 0 ? Booked() :
+                              controller.tabBarIndex == 1 ? Text('Sudah Lewat') :
+                              Text('Batal'))
               ],
             ),
           ),
         ),
       ),
+    );
+  }
+}
+
+class Booked extends StatefulWidget {
+  const Booked({super.key});
+
+  @override
+  State<Booked> createState() => _BookedState();
+}
+
+class _BookedState extends State<Booked> {
+  BookingsScreenController controller = Get.find<BookingsScreenController>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.all(8),
+        physics: const BouncingScrollPhysics(),
+        child: Obx(() {
+          if (controller.bookingsLoading) {
+            return SizedBox(
+              height: MediaQuery.of(context).size.height / 1.7,
+              child: const SpinKitRing(
+                color: contextOrange,
+              )
+            );
+          } else {
+              if (controller.bookingsData != null) {
+                return Column(
+                children: [
+                  Column(
+                    children: List.generate(controller.bookingsData!.data.length, (index) => Text(
+                      controller.bookingsData!.data[index].paymentVia
+                    )),
+                  ),
+                ],
+              );
+              } else {
+                return Container(
+                  alignment: Alignment.center,
+                  height: MediaQuery.of(context).size.height / 1.7,
+                  child: Text('Kosong')
+                );
+              }
+          }
+        }),
+      )
     );
   }
 }
