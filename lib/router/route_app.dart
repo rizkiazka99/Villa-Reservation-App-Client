@@ -35,7 +35,12 @@ class AppPages {
     GetPage(
       name: dashboardScreenRoute,
       page: () => const DashboardScreen(),
-      binding: DashboardScreenBinding()
+      bindings: [
+        DashboardScreenBinding(),
+        HomeScreenBinding(),
+        BookingsScreenBinding(),
+        ProfileScreenBinding()
+      ]
     ),
     GetPage(
       name: homeScreenRoute,
