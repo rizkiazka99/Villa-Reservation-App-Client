@@ -8,6 +8,7 @@ class BookingsScreenController extends GetxController {
   Repository repository = Repository();
 
   RxBool _bookingsLoading = false.obs;
+  RxBool _isFetched = false.obs;
   Rxn<BookingsResponse> _bookingsData = Rxn<BookingsResponse>();
   RxList<Datum> _booked = <Datum>[].obs;
   RxList<Datum> _pastBooking = <Datum>[].obs;
@@ -15,6 +16,7 @@ class BookingsScreenController extends GetxController {
   RxInt _tabBarIndex = 0.obs;
 
   bool get bookingsLoading => _bookingsLoading.value;
+  bool get isFetched => _isFetched.value;
   BookingsResponse? get bookingsData => _bookingsData.value;
   List<Datum> get booked => _booked;
   List<Datum> get pastBooking => _pastBooking;
@@ -23,6 +25,8 @@ class BookingsScreenController extends GetxController {
 
   set bookingsLoading(bool bookingsLoading) =>
       this._bookingsLoading.value = bookingsLoading;
+  set isFetched(bool isFetched) =>
+      this._isFetched.value = isFetched;
   set bookingsData(BookingsResponse? bookingsData) =>
       this._bookingsData.value = bookingsData;
   set booked(List<Datum> booked) =>
@@ -76,6 +80,7 @@ class BookingsScreenController extends GetxController {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? UserId = prefs.getInt('id').toString();
 
+    isFetched = false;
     bookingsLoading = true;
     BookingsResponse? res = await repository.getBookingsByUser(UserId);
     bookingsData = res;
@@ -83,6 +88,7 @@ class BookingsScreenController extends GetxController {
     getPastBookings();
     getCancelledBookings();
     bookingsLoading = false;
+    isFetched = true;
 
     return bookingsData;
   }

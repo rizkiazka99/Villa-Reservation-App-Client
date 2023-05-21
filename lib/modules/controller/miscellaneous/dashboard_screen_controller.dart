@@ -55,6 +55,5 @@ class DashboardScreenController extends GetxController with GetTickerProviderSta
   
   void onItemTapped(int index) {
     selectedIndex = index;
-    print(selectedIndex);
   }
 }
