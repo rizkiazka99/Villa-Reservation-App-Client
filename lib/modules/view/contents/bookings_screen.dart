@@ -4,7 +4,7 @@ import 'package:reservilla/core/colors.dart';
 import 'package:reservilla/core/font_sizes.dart';
 import 'package:reservilla/modules/controller/contents/bookings_screen_controller.dart';
 import 'package:reservilla/widgets/booking_card.dart';
-import 'package:reservilla/widgets/default_button.dart';
+//import 'package:reservilla/widgets/default_button.dart';
 import 'package:reservilla/widgets/default_dropdown.dart';
 import 'package:reservilla/widgets/empty_state.dart';
 import 'package:reservilla/widgets/loading_state.dart';
