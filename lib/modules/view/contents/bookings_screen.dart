@@ -4,6 +4,8 @@ import 'package:reservilla/core/colors.dart';
 import 'package:reservilla/core/font_sizes.dart';
 import 'package:reservilla/modules/controller/contents/bookings_screen_controller.dart';
 import 'package:reservilla/widgets/booking_card.dart';
+import 'package:reservilla/widgets/default_button.dart';
+import 'package:reservilla/widgets/default_dropdown.dart';
 import 'package:reservilla/widgets/empty_state.dart';
 import 'package:reservilla/widgets/loading_state.dart';
 
@@ -43,6 +45,7 @@ class _BookingsScreenState extends State<BookingsScreen> {
               ),
               onPressed: () {
                 controller.tabBarIndex = 0;
+                controller.scrollController.jumpTo(0);
               },
               child: Text(
                 'Dipesan',
@@ -65,6 +68,7 @@ class _BookingsScreenState extends State<BookingsScreen> {
               ),
               onPressed: () {
                 controller.tabBarIndex = 1;
+                controller.scrollController.jumpTo(0);
               },
               child: Text(
                 'Sudah Lewat',
@@ -87,6 +91,7 @@ class _BookingsScreenState extends State<BookingsScreen> {
                 ),
                 onPressed: () {
                   controller.tabBarIndex = 2;
+                  controller.scrollController.jumpTo(0);
                 },
                 child: Text(
                   'Batal',
@@ -117,9 +122,35 @@ class _BookingsScreenState extends State<BookingsScreen> {
             child: Column(
               children: [
                 customTabBar(),
-                Obx(() => controller.tabBarIndex == 0 ? const Booked() :
-                  controller.tabBarIndex == 1 ? const PastBookings() :
-                  const CancelledBookings()
+                Obx(() => controller.tabBarIndex == 0 ? DefaultDropdown(
+                  value: controller.selectedStatus,
+                  margin: const EdgeInsets.only(top: 15),
+                  onChanged: (value) {
+                    controller.selectedStatus = value!;
+                    if (controller.selectedStatus == 'Semua') {
+                      controller.filteredBooked = controller.booked;
+                    } else if (controller.selectedStatus == 'Menunggu Pembayaran') {
+                        controller.filteredBooked = controller.booked.where((booking) {
+                          return booking.status == 'pending'; 
+                        }).toList();
+                    } else if (controller.selectedStatus == 'Telah Dibayar') {
+                        controller.filteredBooked = controller.booked.where((booking) {
+                          return booking.status == 'settlement';
+                        }).toList();
+                    }
+                  }, 
+                  items: controller.bookingStatus.map((String status) {
+                    return DropdownMenuItem<String>(
+                      value: status,
+                      child: Text(status),
+                    );
+                  }).toList()
+                ) : const SizedBox.shrink()),
+                Expanded(
+                  child: Obx(() => controller.tabBarIndex == 0 ? const Booked() :
+                    controller.tabBarIndex == 1 ? const PastBookings() :
+                    const CancelledBookings()
+                  ),
                 )
               ],
             ),
@@ -142,8 +173,12 @@ class _BookedState extends State<Booked> {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
+    return RefreshIndicator(
+      onRefresh: () {
+        return controller.getBookingsByUser();
+      },
       child: SingleChildScrollView(
+        controller: controller.scrollController,
         padding: const EdgeInsets.fromLTRB(8, 16, 8, 8),
         physics: const BouncingScrollPhysics(),
         child: Obx(() {
@@ -152,20 +187,34 @@ class _BookedState extends State<Booked> {
           } else {
             if (!controller.isFetched && controller.booked.isEmpty) {
               return const SizedBox.shrink();
-            } else if (controller.isFetched && controller.booked.isEmpty) {
+            } else if (controller.isFetched && controller.booked.isEmpty || controller.filteredBooked.isEmpty) {
               return EmptyState(
-                height: MediaQuery.of(context).size.height / 1.7, 
+                height: MediaQuery.of(context).size.height / 2, 
                 imageAsset: 'assets/images/empty.png', 
-                message: 'Anda belum memiliki booking'
+                message: 'Anda belum memiliki booking aktif'
               );
             } else {
               return BookingCard(
-                bookingList: controller.booked
+                bookingList: controller.filteredBooked
               );
+              /*return Column(
+                children: [
+                  BookingCard(
+                    bookingList: controller.filteredBooked,
+                  ),
+                  DefaultButton(
+                    onTap: () {
+                      controller.getBookingsByUser();
+                    }, 
+                    color: contextOrange, 
+                    buttonText: 'Refresh'
+                  )
+                ],
+              );*/
             }
           }
         }),
-      )
+      ),
     );
   }  
 }
@@ -182,8 +231,12 @@ class _PastBookingsState extends State<PastBookings> {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
+    return RefreshIndicator(
+      onRefresh: () {
+        return controller.getBookingsByUser();
+      },
       child: SingleChildScrollView(
+        controller: controller.scrollController,
         padding: const EdgeInsets.fromLTRB(8, 16, 8, 8),
         physics: const BouncingScrollPhysics(),
         child: Obx(() {
@@ -205,7 +258,7 @@ class _PastBookingsState extends State<PastBookings> {
             }
           }
         }),
-      )
+      ),
     );
   }
 }
@@ -222,8 +275,12 @@ class _CancelledBookingsState extends State<CancelledBookings> {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
+    return RefreshIndicator(
+      onRefresh: () {
+        return controller.getBookingsByUser();
+      },
       child: SingleChildScrollView(
+        controller: controller.scrollController,
         padding: const EdgeInsets.fromLTRB(8, 16, 8, 8),
         physics: const BouncingScrollPhysics(),
         child: Obx(() {
@@ -245,7 +302,7 @@ class _CancelledBookingsState extends State<CancelledBookings> {
             }
           }
         }),
-      )
+      ),
     );
   }
 }
