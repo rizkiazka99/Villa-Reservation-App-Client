@@ -95,6 +95,9 @@ class LoginScreenController extends GetxController {
         if (loginData!.message == 'Invalid e-mail address or password') {
           Get.back();
           defaultSnackbar('Ups!', 'E-mail atau password salah');
+        } else if (loginData!.message == 'Account with this e-mail address wasn\'t found') {
+          Get.back();
+          defaultSnackbar('Ups!', 'E-mail tidak terdaftar');
         } else {
           Get.back();
           defaultSnackbar('Ups!', 'Terjadi kesalahan, mohon coba lagi');

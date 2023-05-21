@@ -92,13 +92,13 @@ class Payment {
     String currency;
     String orderId;
     String paymentType;
-    String signatureKey;
+    String? signatureKey;
     String statusCode;
     String transactionId;
     String transactionStatus;
     String fraudStatus;
-    DateTime expiryTime;
-    DateTime settlementTime;
+    DateTime? expiryTime;
+    DateTime? settlementTime;
     String statusMessage;
     String merchantId;
     String? permataVaNumber;
@@ -131,13 +131,13 @@ class Payment {
         currency: json["currency"],
         orderId: json["order_id"],
         paymentType: json["payment_type"],
-        signatureKey: json["signature_key"],
+        signatureKey: json["signature_key"] == null ? null : json["signature_key"],
         statusCode: json["status_code"],
         transactionId: json["transaction_id"],
         transactionStatus: json["transaction_status"],
         fraudStatus: json["fraud_status"],
-        expiryTime: DateTime.parse(json["expiry_time"]),
-        settlementTime: DateTime.parse(json["settlement_time"]),
+        expiryTime: json['expiry_time'] == null ? null : DateTime.parse(json["expiry_time"]),
+        settlementTime: json["settlement_time"] == null ? null : DateTime.parse(json["settlement_time"]),
         statusMessage: json["status_message"],
         merchantId: json["merchant_id"],
         permataVaNumber: json["permata_va_number"],
@@ -156,8 +156,8 @@ class Payment {
         "transaction_id": transactionId,
         "transaction_status": transactionStatus,
         "fraud_status": fraudStatus,
-        "expiry_time": expiryTime.toIso8601String(),
-        "settlement_time": settlementTime.toIso8601String(),
+        "expiry_time": expiryTime!.toIso8601String(),
+        "settlement_time": settlementTime!.toIso8601String(),
         "status_message": statusMessage,
         "merchant_id": merchantId,
         "permata_va_number": permataVaNumber,
