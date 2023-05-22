@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:reservilla/data/api/repository.dart';
-import 'package:reservilla/data/models/contents/bookings_response.dart';
+import 'package:reservilla/data/models/contents/bookings/bookings_response.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class BookingsScreenController extends GetxController {

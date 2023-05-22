@@ -5,3 +5,4 @@ const dashboardScreenRoute = '/dashboardScreen';
 const homeScreenRoute = '/homeScreen';
 const bookingsScreenRoute ='/bookingsScreen';
 const profileScreenRoute = '/profileScreen';
+const bookingDetailScreenRoute = '/bookingDetail';

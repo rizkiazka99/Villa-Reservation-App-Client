@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:reservilla/core/colors.dart';
 import 'package:reservilla/core/font_sizes.dart';
-import 'package:reservilla/modules/controller/contents/bookings_screen_controller.dart';
+import 'package:reservilla/modules/controller/contents/bookings/bookings_screen_controller.dart';
 import 'package:reservilla/widgets/booking_card.dart';
 //import 'package:reservilla/widgets/default_button.dart';
 import 'package:reservilla/widgets/default_dropdown.dart';

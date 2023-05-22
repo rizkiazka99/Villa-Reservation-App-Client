@@ -1,7 +1,7 @@
 import 'package:reservilla/data/api/api_endpoints.dart';
 import 'package:reservilla/data/models/auth/login_response.dart';
 import 'package:reservilla/data/models/auth/register_response.dart';
-import 'package:reservilla/data/models/contents/bookings_response.dart';
+import 'package:reservilla/data/models/contents/bookings/bookings_response.dart';
 
 class Repository {
   Users usersApi = Users();

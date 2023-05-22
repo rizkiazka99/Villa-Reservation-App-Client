@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:reservilla/modules/view/contents/bookings_screen.dart';
+import 'package:reservilla/modules/view/contents/bookings/bookings_screen.dart';
 import 'package:reservilla/modules/view/contents/home_screen.dart';
 import 'package:reservilla/modules/view/contents/profile_screen.dart';
 

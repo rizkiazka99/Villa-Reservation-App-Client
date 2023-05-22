@@ -247,6 +247,7 @@ class Villa {
     bool swimmingPool;
     DateTime createdAt;
     DateTime updatedAt;
+    List<VillaGalery> villaGaleries;
 
     Villa({
         required this.id,
@@ -261,6 +262,7 @@ class Villa {
         required this.swimmingPool,
         required this.createdAt,
         required this.updatedAt,
+        required this.villaGaleries
     });
 
     factory Villa.fromJson(Map<String, dynamic> json) => Villa(
@@ -276,6 +278,7 @@ class Villa {
         swimmingPool: json["swimming_pool"],
         createdAt: DateTime.parse(json["createdAt"]),
         updatedAt: DateTime.parse(json["updatedAt"]),
+        villaGaleries: List<VillaGalery>.from(json["VillaGaleries"].map((x) => VillaGalery.fromJson(x))),
     );
 
     Map<String, dynamic> toJson() => {
@@ -289,6 +292,39 @@ class Villa {
         "bedroom": bedroom,
         "bathroom": bathroom,
         "swimming_pool": swimmingPool,
+        "createdAt": createdAt.toIso8601String(),
+        "updatedAt": updatedAt.toIso8601String(),
+        "VillaGaleries": List<dynamic>.from(villaGaleries.map((x) => x.toJson())),
+    };
+}
+
+class VillaGalery {
+    int id;
+    int villaId;
+    String imageName;
+    DateTime createdAt;
+    DateTime updatedAt;
+
+    VillaGalery({
+        required this.id,
+        required this.villaId,
+        required this.imageName,
+        required this.createdAt,
+        required this.updatedAt,
+    });
+
+    factory VillaGalery.fromJson(Map<String, dynamic> json) => VillaGalery(
+        id: json["id"],
+        villaId: json["VillaId"],
+        imageName: json["image_name"],
+        createdAt: DateTime.parse(json["createdAt"]),
+        updatedAt: DateTime.parse(json["updatedAt"]),
+    );
+
+    Map<String, dynamic> toJson() => {
+        "id": id,
+        "VillaId": villaId,
+        "image_name": imageName,
         "createdAt": createdAt.toIso8601String(),
         "updatedAt": updatedAt.toIso8601String(),
     };
