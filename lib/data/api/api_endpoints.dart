@@ -112,4 +112,8 @@ class Bookings extends Methods {
   Future getBookingsByUser(UserId) async {
     return await dioGet('bookings/users/$UserId');
   }
+
+  Future getBookingDetail(id) async {
+    return await dioGet('bookings/$id');
+  }
 }

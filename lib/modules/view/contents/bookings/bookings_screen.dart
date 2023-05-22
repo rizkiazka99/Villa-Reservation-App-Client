@@ -4,7 +4,6 @@ import 'package:reservilla/core/colors.dart';
 import 'package:reservilla/core/font_sizes.dart';
 import 'package:reservilla/modules/controller/contents/bookings/bookings_screen_controller.dart';
 import 'package:reservilla/widgets/booking_card.dart';
-//import 'package:reservilla/widgets/default_button.dart';
 import 'package:reservilla/widgets/default_dropdown.dart';
 import 'package:reservilla/widgets/empty_state.dart';
 import 'package:reservilla/widgets/loading_state.dart';
@@ -183,7 +182,9 @@ class _BookedState extends State<Booked> {
         physics: const BouncingScrollPhysics(),
         child: Obx(() {
           if (controller.bookingsLoading) {
-            return const LoadingState();
+            return LoadingState(
+              height: MediaQuery.of(context).size.height / 1.7,
+            );
           } else {
             if (!controller.isFetched && controller.booked.isEmpty) {
               return const SizedBox.shrink();
@@ -197,20 +198,6 @@ class _BookedState extends State<Booked> {
               return BookingCard(
                 bookingList: controller.filteredBooked
               );
-              /*return Column(
-                children: [
-                  BookingCard(
-                    bookingList: controller.filteredBooked,
-                  ),
-                  DefaultButton(
-                    onTap: () {
-                      controller.getBookingsByUser();
-                    }, 
-                    color: contextOrange, 
-                    buttonText: 'Refresh'
-                  )
-                ],
-              );*/
             }
           }
         }),
@@ -241,7 +228,9 @@ class _PastBookingsState extends State<PastBookings> {
         physics: const BouncingScrollPhysics(),
         child: Obx(() {
           if (controller.bookingsLoading) {
-            return const LoadingState();
+            return LoadingState(
+              height: MediaQuery.of(context).size.height / 1.7,
+            );
           } else {
             if (!controller.isFetched && controller.pastBooking.isEmpty) {
               return const SizedBox.shrink();
@@ -285,7 +274,9 @@ class _CancelledBookingsState extends State<CancelledBookings> {
         physics: const BouncingScrollPhysics(),
         child: Obx(() {
           if (controller.bookingsLoading) {
-            return const LoadingState();
+            return LoadingState(
+              height: MediaQuery.of(context).size.height / 1.7,
+            );
           } else {
             if (!controller.isFetched && controller.cancelledBooking.isEmpty) {
               return const SizedBox.shrink();

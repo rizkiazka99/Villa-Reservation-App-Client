@@ -32,7 +32,7 @@ const iconColorDark = Color(0xFF121F3E);
 const dividerColorPrimary = Color(0xFFE5EBF0);
 const dividerColorLight = Color(0xFFF2F5F8);
 //background color
-const backgroundColorPrimary = Color(0xFFF3F7F9);
+const backgroundColorPrimary = Color(0xFFEFEBEB);
 const backgroundColorLight = Color(0xFFFBF9F9);
 const backgroundGrey = Color(0xfffafafa);
 //other

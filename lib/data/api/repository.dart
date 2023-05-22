@@ -1,6 +1,7 @@
 import 'package:reservilla/data/api/api_endpoints.dart';
 import 'package:reservilla/data/models/auth/login_response.dart';
 import 'package:reservilla/data/models/auth/register_response.dart';
+import 'package:reservilla/data/models/contents/bookings/booking_detail_response.dart';
 import 'package:reservilla/data/models/contents/bookings/bookings_response.dart';
 
 class Repository {
@@ -19,7 +20,12 @@ class Repository {
 
   Future<BookingsResponse> getBookingsByUser(UserId) async {
     final response = await bookingsApi.getBookingsByUser(UserId);
-    print(response);
     return BookingsResponse.fromJson(response);
+  }
+
+  Future<BookingDetailResponse> getBookingDetail(id) async {
+    final response = await bookingsApi.getBookingDetail(id);
+    print(response);
+    return BookingDetailResponse.fromJson(response);
   }
 }

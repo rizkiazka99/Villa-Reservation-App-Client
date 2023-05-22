@@ -4,12 +4,17 @@ import 'package:reservilla/core/colors.dart';
 import 'package:reservilla/core/font_sizes.dart';
 
 class LoadingState extends StatelessWidget {
-  const LoadingState({super.key});
+  final double height;
+
+  const LoadingState({
+    super.key, 
+    required this.height 
+  });
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: MediaQuery.of(context).size.height / 1.7,
+      height: height,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
