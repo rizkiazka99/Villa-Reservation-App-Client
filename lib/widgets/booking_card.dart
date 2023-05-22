@@ -27,17 +27,55 @@ class _BookingCardState extends State<BookingCard> {
             widget.bookingList.length,
             (index) => Column(
               children: [
-                Obx(() => widget.bookingList[index].villa.villaGaleries.isNotEmpty ? /*CachedNetworkImage(
+                Obx(() => widget.bookingList[index].villa.villaGaleries.isNotEmpty ? CachedNetworkImage(
                   fit: BoxFit.cover,
                   width: MediaQuery.of(context).size.width,
-                  imageUrl: widget.bookingList[index].villa.villaGaleries[0].imageName,
+                  imageUrl: 'http://10.0.2.2:3000/${widget.bookingList[index].villa.villaGaleries[0].imageName}',
                   fadeInDuration: const Duration(milliseconds: 300),
-                  errorWidget: (context, url, error) => const Icon(Icons.error),
-                  placeholder: (context, url) => const SpinKitThreeBounce(
-                    color: contextOrange,
-                    size: 18
+                  errorWidget: (context, url, error) => Container(
+                    width: MediaQuery.of(context).size.width,
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(15),
+                        topRight: Radius.circular(15)
+                      ),
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: contextGrey.withOpacity(0.1),
+                          blurRadius: 7,
+                          spreadRadius: 5,
+                          offset: const Offset(0, 3)
+                        )
+                      ]
+                    ),
+                    child: const Icon(Icons.error)
                   ),
-                )*/ Image.network('http://10.0.2.2:3000/' + widget.bookingList[index].villa.villaGaleries[0].imageName) : Image.asset(
+                  placeholder: (context, url) => Container(
+                    width: MediaQuery.of(context).size.width,
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(15),
+                        topRight: Radius.circular(15)
+                      ),
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: contextGrey.withOpacity(0.1),
+                          blurRadius: 7,
+                          spreadRadius: 5,
+                          offset: const Offset(0, 3)
+                        )
+                      ]
+                    ),
+                    child: const SpinKitThreeBounce(
+                      color: contextOrange,
+                      size: 18
+                    ),
+                  ),
+                ) : Image.asset(
                   'assets/images/placeholder.webp'
                 )),
                 Container(
