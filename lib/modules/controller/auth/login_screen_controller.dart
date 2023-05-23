@@ -5,7 +5,7 @@ import 'package:reservilla/core/colors.dart';
 import 'package:reservilla/data/api/repository.dart';
 import 'package:reservilla/data/local/storage_repository.dart';
 import 'package:reservilla/data/models/auth/login_response.dart';
-import 'package:reservilla/data/models/auth/user_response.dart';
+import 'package:reservilla/data/models/auth/user_data_response.dart';
 import 'package:reservilla/router/route_variables.dart';
 import 'package:reservilla/widgets/default_snackbar.dart';
 import 'package:reservilla/widgets/loader_dialog.dart';
@@ -64,7 +64,7 @@ class LoginScreenController extends GetxController {
   }
 
   Future saveUserData(LoginResponse? loginData) async {
-    User user = User.fromJson(loginData!.data!.toJson());
+    UserData user = UserData.fromJson(loginData!.data!.toJson());
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('access_token', loginData.accessToken!);
     await storageRepository.saveUserData(user);

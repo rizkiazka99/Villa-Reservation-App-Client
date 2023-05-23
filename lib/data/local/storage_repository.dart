@@ -1,8 +1,8 @@
-import 'package:reservilla/data/models/auth/user_response.dart';
+import 'package:reservilla/data/models/auth/user_data_response.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class StorageRepository {
-  Future saveUserData(User user) async {
+  Future saveUserData(UserData user) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     await prefs.setInt('id', user.id);
@@ -11,7 +11,7 @@ class StorageRepository {
     await prefs.setString('name', user.name);
   }
 
-  Future<User> getUserData() async {
+  Future<UserData> getUserData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance(); 
 
     int? id = prefs.getInt('id');
@@ -20,7 +20,7 @@ class StorageRepository {
     String? name = prefs.getString('name');
     String? accessToken = prefs.getString('access_token');
 
-    User user = User(
+    UserData user = UserData(
       id: id!, 
       email: email!, 
       phone: phone!, 

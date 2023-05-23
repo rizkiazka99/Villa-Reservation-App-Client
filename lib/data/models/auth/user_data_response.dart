@@ -1,11 +1,11 @@
-class User {
+class UserData {
     int id;
     String email;
     String phone;
     String name;
     String? accessToken;
 
-    User({
+    UserData({
         required this.id,
         required this.email,
         required this.phone,
@@ -13,7 +13,7 @@ class User {
         this.accessToken
     });
 
-    factory User.fromJson(Map<String, dynamic> json) => User(
+    factory UserData.fromJson(Map<String, dynamic> json) => UserData(
         id: json["id"],
         email: json["email"],
         phone: json["phone"],

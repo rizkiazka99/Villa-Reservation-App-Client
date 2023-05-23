@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:reservilla/core/colors.dart';
 import 'package:reservilla/core/font_sizes.dart';
 import 'package:reservilla/modules/controller/contents/bookings/bookings_screen_controller.dart';
+import 'package:reservilla/modules/controller/miscellaneous/dashboard_screen_controller.dart';
 import 'package:reservilla/widgets/booking_card.dart';
 import 'package:reservilla/widgets/default_dropdown.dart';
 import 'package:reservilla/widgets/empty_state.dart';
@@ -17,6 +18,7 @@ class BookingsScreen extends StatefulWidget {
 
 class _BookingsScreenState extends State<BookingsScreen> {
   BookingsScreenController controller = Get.find<BookingsScreenController>();
+  DashboardScreenController dashboardScreenController = Get.find<DashboardScreenController>();
 
   Widget customTabBar() {
     return Container(
@@ -43,6 +45,7 @@ class _BookingsScreenState extends State<BookingsScreen> {
                   : null
               ),
               onPressed: () {
+                controller.needReview = false;
                 controller.tabBarIndex = 0;
                 controller.scrollController.jumpTo(0);
               },
@@ -66,6 +69,7 @@ class _BookingsScreenState extends State<BookingsScreen> {
                 : null
               ),
               onPressed: () {
+                controller.needReview = true;
                 controller.tabBarIndex = 1;
                 controller.scrollController.jumpTo(0);
               },
@@ -89,6 +93,7 @@ class _BookingsScreenState extends State<BookingsScreen> {
                   : null
                 ),
                 onPressed: () {
+                  controller.needReview = false;
                   controller.tabBarIndex = 2;
                   controller.scrollController.jumpTo(0);
                 },
@@ -170,6 +175,7 @@ class Booked extends StatefulWidget {
 
 class _BookedState extends State<Booked> {
   BookingsScreenController controller = Get.find<BookingsScreenController>();
+  DashboardScreenController dashboardScreenController = Get.find<DashboardScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -197,7 +203,8 @@ class _BookedState extends State<Booked> {
               );
             } else {
               return BookingCard(
-                bookingList: controller.filteredBooked
+                bookingList: controller.filteredBooked,
+                user: dashboardScreenController.user
               );
             }
           }
@@ -216,6 +223,7 @@ class PastBookings extends StatefulWidget {
 
 class _PastBookingsState extends State<PastBookings> {
   BookingsScreenController controller = Get.find<BookingsScreenController>();
+  DashboardScreenController dashboardScreenController = Get.find<DashboardScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -243,7 +251,8 @@ class _PastBookingsState extends State<PastBookings> {
               );
             } else {
               return BookingCard(
-                bookingList: controller.pastBooking
+                bookingList: controller.pastBooking,
+                user: dashboardScreenController.user
               );
             }
           }
@@ -262,6 +271,7 @@ class CancelledBookings extends StatefulWidget {
 
 class _CancelledBookingsState extends State<CancelledBookings> {
   BookingsScreenController controller = Get.find<BookingsScreenController>();
+  DashboardScreenController dashboardScreenController = Get.find<DashboardScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -289,7 +299,8 @@ class _CancelledBookingsState extends State<CancelledBookings> {
               );
             } else {
               return BookingCard(
-                bookingList: controller.cancelledBooking
+                bookingList: controller.cancelledBooking,
+                user: dashboardScreenController.user
               );
             }
           }

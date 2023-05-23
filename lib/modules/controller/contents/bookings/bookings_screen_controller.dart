@@ -7,7 +7,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class BookingsScreenController extends GetxController {
   Repository repository = Repository();
-
   ScrollController scrollController = ScrollController();
 
   RxBool _bookingsLoading = false.obs;
@@ -19,6 +18,7 @@ class BookingsScreenController extends GetxController {
   RxList<Datum> _cancelledBooking = <Datum>[].obs;
   RxInt _tabBarIndex = 0.obs;
   RxString _selectedStatus = 'Semua'.obs;
+  RxBool _needReview = false.obs;
 
   bool get bookingsLoading => _bookingsLoading.value;
   bool get isFetched => _isFetched.value;
@@ -29,6 +29,7 @@ class BookingsScreenController extends GetxController {
   List<Datum> get cancelledBooking => _cancelledBooking;
   int get tabBarIndex => _tabBarIndex.value;
   String get selectedStatus => _selectedStatus.value;
+  bool get needReview => _needReview.value;
 
   set bookingsLoading(bool bookingsLoading) =>
       this._bookingsLoading.value = bookingsLoading;
@@ -48,6 +49,8 @@ class BookingsScreenController extends GetxController {
       this._tabBarIndex.value = tabBarIndex;
   set selectedStatus(String selectedStatus) =>
       this._selectedStatus.value = selectedStatus;
+  set needReview(bool needReview) =>
+      this._needReview.value = needReview;
 
   List<String> bookingStatus = ['Semua', 'Menunggu Pembayaran', 'Telah Dibayar'];
   

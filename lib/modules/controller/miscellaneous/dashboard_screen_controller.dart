@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:reservilla/data/api/repository.dart';
+import 'package:reservilla/data/models/miscellaneous/user_response.dart';
 import 'package:reservilla/modules/view/contents/bookings/bookings_screen.dart';
 import 'package:reservilla/modules/view/contents/home_screen.dart';
 import 'package:reservilla/modules/view/contents/profile_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DashboardScreenController extends GetxController with GetTickerProviderStateMixin {
   final PageStorageBucket bucket = PageStorageBucket();
+  Repository repository = Repository();
 
   late AnimationController homeController;
   late AnimationController bookingsController;
@@ -24,9 +28,19 @@ class DashboardScreenController extends GetxController with GetTickerProviderSta
   ];
 
   RxInt _selectedIndex = 0.obs;
+  RxBool _userLoading = false.obs;
+  Rxn<UserResponse> _user = Rxn<UserResponse>();
+
   int get selectedIndex => _selectedIndex.value;
+  bool get userLoading => _userLoading.value;
+  UserResponse? get user => _user.value;
+
   set selectedIndex(int selectedIndex) =>
       this._selectedIndex.value = selectedIndex;
+  set userLoading(bool userLoading) =>
+      this._userLoading.value = userLoading;
+  set user(UserResponse? user) => 
+      this._user.value = user;
 
   @override
   void onInit() {
@@ -43,6 +57,7 @@ class DashboardScreenController extends GetxController with GetTickerProviderSta
       vsync: this,
       duration: const Duration(seconds: 1)
     );
+    getUserById();
   }
 
   @override
@@ -55,5 +70,17 @@ class DashboardScreenController extends GetxController with GetTickerProviderSta
   
   void onItemTapped(int index) {
     selectedIndex = index;
+  }
+
+  Future<UserResponse?> getUserById() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String id = prefs.getInt('id').toString();
+
+    userLoading = true;
+    UserResponse? res = await repository.getUserById(id);
+    user = res;
+    userLoading = false;
+
+    return user;
   }
 }

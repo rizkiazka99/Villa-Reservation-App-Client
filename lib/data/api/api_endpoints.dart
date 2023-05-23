@@ -90,7 +90,7 @@ class Methods {
           }
         )
       );
-
+      
       return response.data;
     } catch(err) {
       return handleError(err);
@@ -105,6 +105,10 @@ class Users extends Methods {
 
   Future signup(data) async {
     return await dioSignup('users/register', data);
+  }
+
+  Future getUserById(id) async {
+    return await dioGet('users/$id');
   }
 }
 
