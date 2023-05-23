@@ -8,6 +8,7 @@ import 'package:reservilla/core/colors.dart';
 import 'package:reservilla/core/font_sizes.dart';
 import 'package:reservilla/helpers/currency_formatter.dart';
 import 'package:reservilla/modules/controller/contents/bookings/booking_detail_controller.dart';
+import 'package:reservilla/widgets/back_button.dart';
 import 'package:reservilla/widgets/default_snackbar.dart';
 import 'package:reservilla/widgets/loading_state.dart';
 import 'package:reservilla/widgets/custom_icon_button.dart';
@@ -22,22 +23,35 @@ class BookingDetailScreen extends StatefulWidget {
 class _BookingDetailScreenState extends State<BookingDetailScreen> {
   BookingDetailController controller = Get.find<BookingDetailController>();
 
+  Widget paymentCountdown(int endTime) {
+    return Column(
+      children: [
+        Text(
+          'Bayar Sebelum',
+          style: bodyMd(color: contextGrey),
+        ),
+        const SizedBox(height: 5),
+        Container(
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: contextOrange.withOpacity(0.5),
+            borderRadius: BorderRadius.circular(15)
+          ),
+          child: CountdownTimer(
+            endTime: endTime,
+            textStyle: h4(color: contextRed),
+          ),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        leading: CustomIconButton(
-          onTap: () {
-            Get.back();
-          },
-          padding: 8,
-          radius: 12,
-          borderColor: backgroundColorPrimary,
-          icon: Icons.arrow_back_ios_rounded,
-          iconColor: contextOrange,
-          iconSize: 16,
-        ),
+        leading: backButton(),
         title: Obx(() => controller.bookingDetailLoading ? const Text('Booking') : 
           Text(
             'Booking ${controller.bookingDetailData!.data.id}'
@@ -297,7 +311,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
                                       controller.bookingDetailData!.data.paymentVia == 'permata' ?
                                           'assets/images/bank_permata.png' : 'assets/images/bca.png',
                                       width: 100,
-                                      height: 100
+                                      height: 80
                                     )),
                                   ),
                                   Obx(() {
@@ -306,17 +320,13 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
                                         int endTime = controller.bookingDetailData!.data.payment.expiryTime!
                                             .millisecondsSinceEpoch + 1000 * 30;
 
-                                        return CountdownTimer(
-                                          endTime: endTime,
-                                        );
+                                        return paymentCountdown(endTime);
                                       } else {
                                         DateTime expiryTime = controller.bookingDetailData!.data.payment
                                             .transactionTime.add(const Duration(days: 1));
                                         int endTime = expiryTime.millisecondsSinceEpoch + 1000 * 30;
 
-                                        return CountdownTimer(
-                                          endTime: endTime,
-                                        );
+                                        return paymentCountdown(endTime);
                                       }
                                     } else {
                                       return const SizedBox.shrink();
