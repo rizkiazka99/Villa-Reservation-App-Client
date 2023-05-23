@@ -239,7 +239,13 @@ class _BookingCardState extends State<BookingCard> {
                 if (formattedBookingEndDate.isBefore(DateTime.now())) {
                   return InkWell(
                     onTap: () {
-
+                      Get.toNamed(
+                        addReviewScreenRoute,
+                        arguments: {
+                          'VillaId': widget.bookingList[index].villaId,
+                          'villa_name': widget.bookingList[index].villa.name
+                        }
+                      );
                     },
                     child: Container(
                       width: MediaQuery.of(context).size.width,

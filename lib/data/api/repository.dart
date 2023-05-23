@@ -3,11 +3,13 @@ import 'package:reservilla/data/models/auth/login_response.dart';
 import 'package:reservilla/data/models/auth/register_response.dart';
 import 'package:reservilla/data/models/contents/bookings/booking_detail_response.dart';
 import 'package:reservilla/data/models/contents/bookings/bookings_response.dart';
+import 'package:reservilla/data/models/contents/reviews/add_review_response.dart';
 import 'package:reservilla/data/models/miscellaneous/user_response.dart';
 
 class Repository {
   Users usersApi = Users();
   Bookings bookingsApi = Bookings();
+  Reviews reviewsApi = Reviews();
 
   Future<LoginResponse> login(data) async {
     final response = await usersApi.login(data);
@@ -31,7 +33,11 @@ class Repository {
 
   Future<UserResponse> getUserById(id) async {
     final response = await usersApi.getUserById(id);
-    print(response);
     return UserResponse.fromJson(response);
+  }
+
+  Future<AddReviewResponse> addReview(data) async {
+    final response = await reviewsApi.addReview(data);
+    return AddReviewResponse.fromJson(response);
   }
 }

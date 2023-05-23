@@ -6,7 +6,7 @@ import 'package:reservilla/core/font_sizes.dart';
 import 'package:reservilla/helpers/regex.dart';
 import 'package:reservilla/modules/controller/auth/register_screen_controller.dart';
 import 'package:reservilla/router/route_variables.dart';
-import 'package:reservilla/widgets/authentication_form.dart';
+import 'package:reservilla/widgets/custom_form.dart';
 import 'package:reservilla/widgets/confirmation_dialog.dart';
 import 'package:reservilla/widgets/default_button.dart';
 
@@ -104,7 +104,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ),
                               Container(
                                 padding: const EdgeInsets.only(top: 35, bottom: 15),
-                                child: AuthenticationForm(
+                                child: CustomForm(
                                   formKey: controller.emailFormKey, 
                                   autovalidateMode: controller.autoValidateEmail, 
                                   controller: controller.emailController, 
@@ -128,7 +128,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ),
                               Container(
                                 padding: const EdgeInsets.only(bottom: 15),
-                                child: AuthenticationForm(
+                                child: CustomForm(
                                   formKey: controller.phoneFormKey, 
                                   autovalidateMode: controller.autoValidatePhone, 
                                   controller: controller.phoneController, 
@@ -155,7 +155,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ),
                               Container(
                                 padding: const EdgeInsets.only(bottom: 15),
-                                child: AuthenticationForm(
+                                child: CustomForm(
                                   formKey: controller.nameFormKey, 
                                   autovalidateMode: controller.autoValidateName, 
                                   controller: controller.nameController, 
@@ -179,7 +179,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ),
                               Container(
                                 padding: const EdgeInsets.only(bottom: 15),
-                                child: Obx(() => AuthenticationForm(
+                                child: Obx(() => CustomForm(
                                   formKey: controller.passwordFormKey, 
                                   autovalidateMode: controller.autoValidatePassword,
                                   controller: controller.passwordController, 
@@ -214,7 +214,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               )),
                               Container(
                                 padding: const EdgeInsets.only(bottom: 15),
-                                child: Obx(() => AuthenticationForm(
+                                child: Obx(() => CustomForm(
                                   formKey: controller.confirmPasswordFormKey, 
                                   autovalidateMode: controller.autoValidateConfirmPassword,
                                   controller: controller.confirmPasswordController, 

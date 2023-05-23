@@ -5,6 +5,7 @@ import 'package:reservilla/modules/binding/contents/bookings/booking_detail_bind
 import 'package:reservilla/modules/binding/contents/bookings/bookings_screen_binding.dart';
 import 'package:reservilla/modules/binding/contents/home_screen_binding.dart';
 import 'package:reservilla/modules/binding/contents/profile_screen_binding.dart';
+import 'package:reservilla/modules/binding/contents/reviews/add_review_binding.dart';
 import 'package:reservilla/modules/binding/miscellaneous/dashboard_screen_binding.dart';
 import 'package:reservilla/modules/binding/miscellaneous/splash_screen_binding.dart';
 import 'package:reservilla/modules/view/auth/login_screen.dart';
@@ -13,6 +14,7 @@ import 'package:reservilla/modules/view/contents/bookings/booking_detail_screen.
 import 'package:reservilla/modules/view/contents/bookings/bookings_screen.dart';
 import 'package:reservilla/modules/view/contents/home_screen.dart';
 import 'package:reservilla/modules/view/contents/profile_screen.dart';
+import 'package:reservilla/modules/view/contents/reviews/add_review_screen.dart';
 import 'package:reservilla/modules/view/miscellaneous/dashboard_screen.dart';
 import 'package:reservilla/modules/view/miscellaneous/splash_screen.dart';
 import 'package:reservilla/router/route_variables.dart';
@@ -63,6 +65,11 @@ class AppPages {
       name: bookingDetailScreenRoute, 
       page: () => const BookingDetailScreen(),
       binding: BookingDetailBinding()
+    ),
+    GetPage(
+      name: addReviewScreenRoute,
+      page: () => const AddReviewScreen(),
+      binding: AddReviewBinding()
     )
   ];
 }

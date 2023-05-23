@@ -90,7 +90,29 @@ class Methods {
           }
         )
       );
-      
+
+      return response.data;
+    } catch(err) {
+      return handleError(err);
+    }
+  }
+  
+  Future dioPost(url, data) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.reload();
+    String? accessToken = prefs.getString('access_token');
+
+    try {
+      final response = await dio.post(
+        baseUrl + url,
+        data: jsonEncode(data),
+        options: Options(
+          headers: {
+            'access_token': accessToken
+          }
+        )
+      );
+
       return response.data;
     } catch(err) {
       return handleError(err);
@@ -119,5 +141,11 @@ class Bookings extends Methods {
 
   Future getBookingDetail(id) async {
     return await dioGet('bookings/$id');
+  }
+}
+
+class Reviews extends Methods {
+  Future addReview(data) async {
+    return await dioPost('villaReviews/add', data);
   }
 }

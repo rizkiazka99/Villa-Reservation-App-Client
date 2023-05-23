@@ -2,25 +2,29 @@ import 'package:flutter/material.dart';
 import 'package:reservilla/core/colors.dart';
 import 'package:reservilla/core/font_sizes.dart';
 
-class AuthenticationForm extends StatefulWidget {
+class CustomForm extends StatefulWidget {
   final Key? formKey;
   final AutovalidateMode? autovalidateMode;
   final TextEditingController controller;
   final bool obscureText;
   final TextInputType input;
+  final int minLines;
+  final int maxLines;
   final String hintText;
   final Widget? suffixIcon;
   final Widget? prefixIcon;
   final String? Function(String?)? validator;
   final Function(String)? onChanged;
 
-  const AuthenticationForm({
+  const CustomForm({
     super.key,
     required this.formKey, 
     required this.autovalidateMode,
     required this.controller, 
     this.obscureText = false,
     this.input = TextInputType.text,
+    this.minLines = 1,
+    this.maxLines = 1,
     required this.hintText, 
     this.suffixIcon, 
     this.prefixIcon, 
@@ -29,10 +33,10 @@ class AuthenticationForm extends StatefulWidget {
   });
 
   @override
-  State<AuthenticationForm> createState() => _AuthenticationFormState();
+  State<CustomForm> createState() => _CustomFormState();
 }
 
-class _AuthenticationFormState extends State<AuthenticationForm> {
+class _CustomFormState extends State<CustomForm> {
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -42,6 +46,8 @@ class _AuthenticationFormState extends State<AuthenticationForm> {
         controller: widget.controller,
         obscureText: widget.obscureText,
         keyboardType: widget.input,
+        minLines: widget.minLines,
+        maxLines: widget.maxLines,
         decoration: InputDecoration(
           hintText: widget.hintText,
           errorMaxLines: 2,

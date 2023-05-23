@@ -5,7 +5,7 @@ import 'package:reservilla/core/colors.dart';
 import 'package:reservilla/core/font_sizes.dart';
 import 'package:reservilla/modules/controller/auth/login_screen_controller.dart';
 import 'package:reservilla/router/route_variables.dart';
-import 'package:reservilla/widgets/authentication_form.dart';
+import 'package:reservilla/widgets/custom_form.dart';
 import 'package:reservilla/widgets/decorative_or.dart';
 import 'package:reservilla/widgets/default_button.dart';
 
@@ -78,7 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       Container(
                         padding: const EdgeInsets.only(top: 50, bottom: 15),
-                        child: AuthenticationForm(
+                        child: CustomForm(
                           formKey: controller.emailFormKey, 
                           autovalidateMode: controller.autoValidateEmail, 
                           controller: controller.emailController, 
@@ -102,7 +102,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       Container(
                         padding: const EdgeInsets.only(bottom: 15),
-                        child: Obx(() => AuthenticationForm(
+                        child: Obx(() => CustomForm(
                           formKey: controller.passwordFormKey, 
                           autovalidateMode: controller.autoValidatePassword, 
                           controller: controller.passwordController, 
