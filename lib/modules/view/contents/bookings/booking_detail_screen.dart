@@ -1,10 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:reservilla/core/colors.dart';
 import 'package:reservilla/core/font_sizes.dart';
+import 'package:reservilla/helpers/currency_formatter.dart';
 import 'package:reservilla/modules/controller/contents/bookings/booking_detail_controller.dart';
 import 'package:reservilla/widgets/default_snackbar.dart';
 import 'package:reservilla/widgets/loading_state.dart';
@@ -150,6 +152,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
                             'Waktu Inap',
                             style: h4(color: contextOrange),
                           ),
+                          const SizedBox(height: 8),
                           Row(
                             children: [
                               Text(
@@ -214,16 +217,8 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width / 2.5,
-                                child: Obx(() => Image.asset(
-                                  controller.bookingDetailData!.data.paymentVia == 'permata' ?
-                                      'assets/images/bank_permata.png' : 'assets/images/bca.png',
-                                  width: 100,
-                                  height: 100
-                                )),
-                              ),
-                              SizedBox(
+                              Container(
+                                margin: const EdgeInsets.only(top: 8),
                                 width: MediaQuery.of(context).size.width / 2.2,
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -237,6 +232,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
                                           'TELAH DIBAYAR' : controller.bookingDetailData!.data.status == 'pending' ?
                                            'MENUNGGU PEMBAYARAN' : 'BATAL',
                                       style: h5(color: contextOrange),
+                                      textAlign: TextAlign.justify,
                                     )),
                                     const SizedBox(height: 8),
                                     Text(
@@ -244,7 +240,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
                                       style: bodyMd(color: contextGrey),
                                     ),
                                     Text(
-                                      'Rp. ${controller.bookingDetailData!.data.payment.grossAmount}',
+                                      CurrencyFormatter.convertToIdr(controller.bookingDetailData!.data.totalPrice, 2),
                                       style: h5(color: contextOrange),
                                     ),
                                     const SizedBox(height: 8),
@@ -262,7 +258,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
                                             } else {
                                               Clipboard.setData(ClipboardData(text: controller.bookingDetailData!.data.payment.vaNumbers![0].vaNumber));
                                             }
-
+                              
                                             defaultSnackbar('Sukses!', 'Nomor Virtual Account telah tersalin ke clipboard');
                                           },
                                           child: const Icon(
@@ -280,7 +276,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
                                         } else {
                                           Clipboard.setData(ClipboardData(text: controller.bookingDetailData!.data.payment.vaNumbers![0].vaNumber));
                                         }
-
+                              
                                         defaultSnackbar('Sukses!', 'Nomor Virtual Account telah tersalin ke clipboard');
                                       },
                                       child: Obx(() => Text(
@@ -292,7 +288,42 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
                                     )
                                   ],
                                 ),
-                              )
+                              ),
+                              Column(
+                                children: [
+                                  SizedBox(
+                                    width: MediaQuery.of(context).size.width / 2.5,
+                                    child: Obx(() => Image.asset(
+                                      controller.bookingDetailData!.data.paymentVia == 'permata' ?
+                                          'assets/images/bank_permata.png' : 'assets/images/bca.png',
+                                      width: 100,
+                                      height: 100
+                                    )),
+                                  ),
+                                  Obx(() {
+                                    if (controller.bookingDetailData!.data.status == 'pending') {
+                                      if (controller.bookingDetailData!.data.payment.expiryTime != null) {
+                                        int endTime = controller.bookingDetailData!.data.payment.expiryTime!
+                                            .millisecondsSinceEpoch + 1000 * 30;
+
+                                        return CountdownTimer(
+                                          endTime: endTime,
+                                        );
+                                      } else {
+                                        DateTime expiryTime = controller.bookingDetailData!.data.payment
+                                            .transactionTime.add(const Duration(days: 1));
+                                        int endTime = expiryTime.millisecondsSinceEpoch + 1000 * 30;
+
+                                        return CountdownTimer(
+                                          endTime: endTime,
+                                        );
+                                      }
+                                    } else {
+                                      return const SizedBox.shrink();
+                                    }
+                                  })
+                                ],
+                              ),
                             ],
                           )
                         ],

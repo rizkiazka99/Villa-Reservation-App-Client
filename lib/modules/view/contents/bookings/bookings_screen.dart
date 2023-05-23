@@ -137,6 +137,7 @@ class _BookingsScreenState extends State<BookingsScreen> {
                           return booking.status == 'settlement';
                         }).toList();
                     }
+                    controller.scrollController.jumpTo(0);
                   }, 
                   items: controller.bookingStatus.map((String status) {
                     return DropdownMenuItem<String>(
