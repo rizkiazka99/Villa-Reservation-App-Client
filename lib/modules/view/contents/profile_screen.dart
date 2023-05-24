@@ -25,7 +25,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   ProfileScreenController controller = Get.find<ProfileScreenController>();
   DashboardScreenController dashboardScreenController = Get.find<DashboardScreenController>();
   
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
