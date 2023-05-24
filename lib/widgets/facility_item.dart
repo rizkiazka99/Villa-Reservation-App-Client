@@ -4,7 +4,7 @@ import 'package:reservilla/core/theme.dart';
 class FacilityItem extends StatelessWidget {
   final String name;
   final String imageUrl;
-  final int total;
+  final String total;
 
   const FacilityItem({
     super.key,
@@ -16,7 +16,8 @@ class FacilityItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Image.asset(
           imageUrl,
@@ -27,13 +28,13 @@ class FacilityItem extends StatelessWidget {
         ),
         Text.rich(
           TextSpan(
-            text: '$total',
-            style: whitegreyTextStyle.copyWith(
+            text: "$total",
+            style: greyTextStyle.copyWith(
               fontSize: 14,
             ),
             children: [
               TextSpan(
-                text: ' $name',
+                text: name != 'Pool' ? ' $name' : '',
                 style: greyTextStyle.copyWith(
                   fontSize: 14,
                 ),

@@ -31,26 +31,6 @@ class CityCard extends StatelessWidget {
                         height: 102,
                         fit: BoxFit.cover,
                       ),
-                      Align(
-                        alignment: Alignment.topRight,
-                        child: Container(
-                          width: 50,
-                          height: 30,
-                          decoration: BoxDecoration(
-                            color: whitegreyColor,
-                            borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(36),
-                            ),
-                          ),
-                          child: Center(
-                            child: Image.asset(
-                              'assets/icons/icon_star.png',
-                              width: 22,
-                              height: 22,
-                            ),
-                          ),
-                        ),
-                      )
                     ],
                   ),
                   SizedBox(

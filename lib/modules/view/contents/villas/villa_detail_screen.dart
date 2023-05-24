@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:reservilla/core/theme.dart';
 import 'package:reservilla/data/models/contents/villas/villa_detail_response.dart';
+import 'package:reservilla/helpers/currency_formatter.dart';
 import 'package:reservilla/modules/controller/contents/villas/villa_detail_controller.dart';
 import 'package:reservilla/widgets/facility_item.dart';
 import 'package:reservilla/widgets/loading_state.dart';
@@ -114,8 +115,10 @@ class _VillaDetailScreenState extends State<VillaDetailScreen> {
                                     ),
                                     Text.rich(
                                       TextSpan(
-                                        text:
-                                            '\Rp${controller.villaDetailData!.data.price}',
+                                        text: CurrencyFormatter.convertToIdr(
+                                            controller
+                                                .villaDetailData!.data.price,
+                                            2),
                                         style: oceanTextStyle.copyWith(
                                           fontSize: 16,
                                         ),
@@ -175,20 +178,20 @@ class _VillaDetailScreenState extends State<VillaDetailScreen> {
                                   imageUrl: 'assets/icons/icon_kitchen.png',
                                   total: controller
                                           .villaDetailData!.data.swimmingPool
-                                      ? 1
-                                      : 0,
+                                      ? "Available"
+                                      : "Unavailable",
                                 ),
                                 FacilityItem(
                                   name: 'Bedroom',
                                   imageUrl: 'assets/icons/icon_bedroom.png',
                                   total:
-                                      controller.villaDetailData!.data.bedroom,
+                                      '${controller.villaDetailData!.data.bedroom}',
                                 ),
                                 FacilityItem(
                                   name: 'Bathroom',
                                   imageUrl: 'assets/icons/icon_cupboard.png',
                                   total:
-                                      controller.villaDetailData!.data.bathroom,
+                                      '${controller.villaDetailData!.data.bathroom}',
                                 ),
                               ],
                             ),
@@ -285,10 +288,9 @@ class _VillaDetailScreenState extends State<VillaDetailScreen> {
                                 ),
                                 InkWell(
                                   onTap: () {
-                                    // launchUrl(
-                                    //     'https://goo.gl/maps/SyZx2yjWB1yR6AeH8');
-
-                                    // launchUrl(widget.space.mapUrl!);
+                                    String mapUrl =
+                                        controller.villaDetailData!.data.mapUrl;
+                                    controller.launchMaps(mapUrl);
                                   },
                                   child: Image.asset(
                                     'assets/icons/btn_map.png',
@@ -312,10 +314,9 @@ class _VillaDetailScreenState extends State<VillaDetailScreen> {
                               onPressed: () {
                                 handleBook(controller.villaDetailData!.data);
                               },
-                              // color: purpleColor,
-                              // shape: RoundedRectangleBorder(
-                              //   borderRadius: BorderRadius.circular(17),
-                              // ),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: oceanColor,
+                              ),
                               child: Text(
                                 'Book Now',
                                 style: whiteTextStyle.copyWith(

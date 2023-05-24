@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:reservilla/data/models/contents/villas/villas_response.dart';
 import 'package:reservilla/core/theme.dart';
+import 'package:reservilla/helpers/currency_formatter.dart';
 import 'package:reservilla/router/route_variables.dart';
 
 class VillaCard extends StatelessWidget {
@@ -46,7 +47,7 @@ class VillaCard extends StatelessWidget {
                             width: 70,
                             height: 30,
                             decoration: BoxDecoration(
-                              color: whitegreyColor,
+                              color: whiteColor,
                               borderRadius: const BorderRadius.only(
                                 bottomLeft: Radius.circular(36),
                               ),
@@ -62,7 +63,7 @@ class VillaCard extends StatelessWidget {
                                 ),
                                 Text(
                                   '${villa[index].averageRating ?? "0.0"}',
-                                  style: whiteTextStyle.copyWith(
+                                  style: blackTextStyle.copyWith(
                                     fontSize: 13,
                                   ),
                                 ),
@@ -91,13 +92,14 @@ class VillaCard extends StatelessWidget {
                     ),
                     Text.rich(
                       TextSpan(
-                        text: '\Rp${villa[index].price}',
+                        text: CurrencyFormatter.convertToIdr(
+                            villa[index].price, 2),
                         style: oceanTextStyle.copyWith(
                           fontSize: 16,
                         ),
                         children: [
                           TextSpan(
-                            text: ' / day',
+                            text: ' / month',
                             style: greyTextStyle.copyWith(
                               fontSize: 16,
                             ),
@@ -106,7 +108,7 @@ class VillaCard extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(
-                      height: 16,
+                      height: 4,
                     ),
                     Text(
                       villa[index].location.name,

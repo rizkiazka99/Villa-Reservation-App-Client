@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:get/get.dart';
 import 'package:reservilla/data/api/repository.dart';
 import 'package:reservilla/data/models/contents/villas/villa_detail_response.dart';
+import 'package:reservilla/widgets/default_snackbar.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class VillaDetailController extends GetxController {
@@ -42,5 +43,29 @@ class VillaDetailController extends GetxController {
     villaDetailLoading = false;
 
     return villaDetailData;
+  }
+
+  launchDialer(String contactNumber) async {
+    Uri dialerUri = Uri.parse('tel:+62$contactNumber');
+
+    try {
+      await launchUrl(dialerUri);
+    } catch (err) {
+      return defaultSnackbar('Ups', 'Terjadi kesalahan, silahkan coba lagi');
+    }
+  }
+
+  launchMaps(String mapsUrl) async {
+    Uri mapsUri = Uri.parse(mapsUrl);
+
+    try {
+      if (await canLaunchUrl(mapsUri)) {
+        await launchMaps(mapsUrl);
+      } else {
+        await launchUrl(mapsUri);
+      }
+    } catch (err) {
+      return defaultSnackbar('Ups', 'Terjadi kesalahan, silahkan coba lagi');
+    }
   }
 }
