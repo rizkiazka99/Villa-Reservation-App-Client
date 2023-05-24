@@ -9,6 +9,8 @@ import 'package:reservilla/data/models/contents/profile/edit_profile_response.da
 import 'package:reservilla/data/models/contents/reviews/add_review_response.dart';
 import 'package:reservilla/data/models/miscellaneous/user_response.dart';
 
+import '../models/contents/reviews/user_reviews_response.dart';
+
 class Repository {
   Users usersApi = Users();
   Upload uploadApi = Upload();
@@ -27,7 +29,6 @@ class Repository {
 
   Future uploadFile(FormData formData, Function onSendProgress) async {
     final response = await uploadApi.uploadFile(formData, onSendProgress);
-    print(response);
     return response;
   }
 
@@ -56,9 +57,13 @@ class Repository {
     return AddReviewResponse.fromJson(response);
   }
 
+  Future<UserReviewsResponse> getUserReviews() async {
+    final response = await reviewsApi.getUserReviews();
+    return UserReviewsResponse.fromJson(response);
+  }
+
   Future<EditProfileResponse> editProfile(id, data) async {
     final response = await usersApi.editProfile(id, data);
-    print(response);
     return EditProfileResponse.fromJson(response);
   }
 }

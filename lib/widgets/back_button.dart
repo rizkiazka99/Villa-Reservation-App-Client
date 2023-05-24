@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:reservilla/core/colors.dart';
 import 'package:reservilla/widgets/custom_icon_button.dart';
 
-Widget backButton() {
+Widget backButton({iconColor = contextOrange}) {
   return CustomIconButton(
     onTap: () {
       Get.back();
@@ -12,7 +12,7 @@ Widget backButton() {
     radius: 12,
     borderColor: backgroundColorPrimary,
     icon: Icons.arrow_back_ios_rounded,
-    iconColor: contextOrange,
+    iconColor: iconColor,
     iconSize: 16,
   );
 }

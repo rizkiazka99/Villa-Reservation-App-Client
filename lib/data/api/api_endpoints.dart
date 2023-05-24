@@ -209,4 +209,8 @@ class Reviews extends Methods {
   Future addReview(data) async {
     return await dioPost('villaReviews/add', data);
   }
+
+  Future getUserReviews() async {
+    return await dioGet('villaReviews/users');
+  }
 }

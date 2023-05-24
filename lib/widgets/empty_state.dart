@@ -27,7 +27,7 @@ class EmptyState extends StatelessWidget {
               height: 250,
               width: 250,
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 12),
             Text(
               message,
               style: bodyLg(fontWeight: FontWeight.normal),

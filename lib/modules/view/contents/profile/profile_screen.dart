@@ -68,7 +68,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       ProfileSectionButton(
                         onTap: () {
-
+                          Get.toNamed(userReviewsScreenRoute);
                         },
                         icon: Icons.reviews_rounded,
                         buttonText: 'Ulasan',
