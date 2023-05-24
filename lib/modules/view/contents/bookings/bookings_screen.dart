@@ -111,7 +111,6 @@ class _BookingsScreenState extends State<BookingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBody: true,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: const Text('Bookings'),
@@ -152,11 +151,16 @@ class _BookingsScreenState extends State<BookingsScreen> {
                   }).toList()
                 ) : const SizedBox.shrink()),
                 Expanded(
-                  child: Obx(() => controller.tabBarIndex == 0 ? const Booked() :
-                    controller.tabBarIndex == 1 ? const PastBookings() :
-                    const CancelledBookings()
+                  child: SingleChildScrollView(
+                    controller: controller.scrollController,
+                    padding: const EdgeInsets.fromLTRB(8, 16, 8, 8),
+                    physics: const BouncingScrollPhysics(),
+                    child: Obx(() => controller.tabBarIndex == 0 ? const Booked() :
+                      controller.tabBarIndex == 1 ? const PastBookings() :
+                      const CancelledBookings()
+                    ),
                   ),
-                )
+                ),
               ],
             ),
           ),
@@ -197,33 +201,28 @@ class _BookedState extends State<Booked> {
         
         return controller.getBookingsByUser();
       },
-      child: SingleChildScrollView(
-        controller: controller.scrollController,
-        padding: const EdgeInsets.fromLTRB(8, 16, 8, 8),
-        physics: const BouncingScrollPhysics(),
-        child: Obx(() {
-          if (controller.bookingsLoading) {
-            return LoadingState(
-              height: MediaQuery.of(context).size.height / 1.7,
+      child: Obx(() {
+        if (controller.bookingsLoading) {
+          return LoadingState(
+            height: MediaQuery.of(context).size.height / 1.7,
+          );
+        } else {
+          if (!controller.isFetched && controller.booked.isEmpty) {
+            return const SizedBox.shrink();
+          } else if (controller.isFetched && controller.booked.isEmpty || controller.filteredBooked.isEmpty) {
+            return EmptyState(
+              height: MediaQuery.of(context).size.height / 2, 
+              imageAsset: 'assets/images/empty.png', 
+              message: 'Anda belum memiliki booking aktif'
             );
           } else {
-            if (!controller.isFetched && controller.booked.isEmpty) {
-              return const SizedBox.shrink();
-            } else if (controller.isFetched && controller.booked.isEmpty || controller.filteredBooked.isEmpty) {
-              return EmptyState(
-                height: MediaQuery.of(context).size.height / 2, 
-                imageAsset: 'assets/images/empty.png', 
-                message: 'Anda belum memiliki booking aktif'
-              );
-            } else {
-              return BookingCard(
-                bookingList: controller.filteredBooked,
-                user: dashboardScreenController.user
-              );
-            }
+            return BookingCard(
+              bookingList: controller.filteredBooked,
+              user: dashboardScreenController.user
+            );
           }
-        }),
-      ),
+        }
+      }),
     );
   }  
 }
@@ -245,33 +244,28 @@ class _PastBookingsState extends State<PastBookings> {
       onRefresh: () {
         return controller.getBookingsByUser();
       },
-      child: SingleChildScrollView(
-        controller: controller.scrollController,
-        padding: const EdgeInsets.fromLTRB(8, 16, 8, 8),
-        physics: const BouncingScrollPhysics(),
-        child: Obx(() {
-          if (controller.bookingsLoading) {
-            return LoadingState(
-              height: MediaQuery.of(context).size.height / 1.7,
+      child: Obx(() {
+        if (controller.bookingsLoading) {
+          return LoadingState(
+            height: MediaQuery.of(context).size.height / 1.7,
+          );
+        } else {
+          if (!controller.isFetched && controller.pastBooking.isEmpty) {
+            return const SizedBox.shrink();
+          } else if (controller.isFetched && controller.pastBooking.isEmpty) {
+            return EmptyState(
+              height: MediaQuery.of(context).size.height / 1.7, 
+              imageAsset: 'assets/images/empty.png', 
+              message: 'Anda belum memiliki booking yang telah berlalu'
             );
           } else {
-            if (!controller.isFetched && controller.pastBooking.isEmpty) {
-              return const SizedBox.shrink();
-            } else if (controller.isFetched && controller.pastBooking.isEmpty) {
-              return EmptyState(
-                height: MediaQuery.of(context).size.height / 1.7, 
-                imageAsset: 'assets/images/empty.png', 
-                message: 'Anda belum memiliki booking yang telah berlalu'
-              );
-            } else {
-              return BookingCard(
-                bookingList: controller.pastBooking,
-                user: dashboardScreenController.user
-              );
-            }
+            return BookingCard(
+              bookingList: controller.pastBooking,
+              user: dashboardScreenController.user
+            );
           }
-        }),
-      ),
+        }
+      }),
     );
   }
 }
@@ -293,33 +287,28 @@ class _CancelledBookingsState extends State<CancelledBookings> {
       onRefresh: () {
         return controller.getBookingsByUser();
       },
-      child: SingleChildScrollView(
-        controller: controller.scrollController,
-        padding: const EdgeInsets.fromLTRB(8, 16, 8, 8),
-        physics: const BouncingScrollPhysics(),
-        child: Obx(() {
-          if (controller.bookingsLoading) {
-            return LoadingState(
-              height: MediaQuery.of(context).size.height / 1.7,
+      child: Obx(() {
+        if (controller.bookingsLoading) {
+          return LoadingState(
+            height: MediaQuery.of(context).size.height / 1.7,
+          );
+        } else {
+          if (!controller.isFetched && controller.cancelledBooking.isEmpty) {
+            return const SizedBox.shrink();
+          } else if (controller.isFetched && controller.cancelledBooking.isEmpty) { 
+            return EmptyState(
+              height: MediaQuery.of(context).size.height / 1.7, 
+              imageAsset: 'assets/images/empty.png', 
+              message: 'Anda belum memiliki booking yang dibatalkan'
             );
           } else {
-            if (!controller.isFetched && controller.cancelledBooking.isEmpty) {
-              return const SizedBox.shrink();
-            } else if (controller.isFetched && controller.cancelledBooking.isEmpty) { 
-              return EmptyState(
-                height: MediaQuery.of(context).size.height / 1.7, 
-                imageAsset: 'assets/images/empty.png', 
-                message: 'Anda belum memiliki booking yang dibatalkan'
-              );
-            } else {
-              return BookingCard(
-                bookingList: controller.cancelledBooking,
-                user: dashboardScreenController.user
-              );
-            }
+            return BookingCard(
+              bookingList: controller.cancelledBooking,
+              user: dashboardScreenController.user
+            );
           }
-        }),
-      ),
+        }
+      }),
     );
   }
 }

@@ -6,6 +6,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:reservilla/core/colors.dart';
 import 'package:reservilla/core/font_sizes.dart';
+import 'package:reservilla/helpers/common_variables.dart';
 import 'package:reservilla/helpers/currency_formatter.dart';
 import 'package:reservilla/modules/controller/contents/bookings/booking_detail_controller.dart';
 import 'package:reservilla/widgets/back_button.dart';
@@ -112,7 +113,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
                         fit: BoxFit.cover,
                         height: MediaQuery.of(context).size.height / 5,
                         width: MediaQuery.of(context).size.width,
-                        imageUrl: 'http://10.0.2.2:3000/${controller.bookingDetailData!.data.villa.villaGaleries[0].imageName}',
+                        imageUrl: baseUrlImg + controller.bookingDetailData!.data.villa.villaGaleries[0].imageName,
                         fadeInDuration: const Duration(milliseconds: 300),
                         errorWidget: (context, url, error) => const Icon(Icons.error),
                         placeholder: (context, url) => const SpinKitThreeBounce(

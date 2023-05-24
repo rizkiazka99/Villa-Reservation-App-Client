@@ -7,6 +7,7 @@ import 'package:reservilla/core/colors.dart';
 import 'package:reservilla/core/font_sizes.dart';
 import 'package:reservilla/data/models/contents/bookings/bookings_response.dart';
 import 'package:reservilla/data/models/miscellaneous/user_response.dart';
+import 'package:reservilla/helpers/common_variables.dart';
 import 'package:reservilla/modules/controller/contents/bookings/bookings_screen_controller.dart';
 import 'package:reservilla/router/route_variables.dart';
 
@@ -62,7 +63,7 @@ class _BookingCardState extends State<BookingCard> {
                       fit: BoxFit.cover,
                       height: MediaQuery.of(context).size.height / 5,
                       width: MediaQuery.of(context).size.width,
-                      imageUrl: 'http://10.0.2.2:3000/${widget.bookingList[index].villa.villaGaleries[0].imageName}',
+                      imageUrl: baseUrlImg + widget.bookingList[index].villa.villaGaleries[0].imageName,
                       fadeInDuration: const Duration(milliseconds: 300),
                       errorWidget: (context, url, error) => Container(
                         width: MediaQuery.of(context).size.width,

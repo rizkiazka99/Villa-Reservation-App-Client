@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
+import 'package:reservilla/helpers/common_variables.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Methods {
   Dio dio = Dio();
-  String baseUrl = 'http://10.0.2.2:3000/api/'; // Local, Emulator
 
   handleError(error) {
     String errorDesc = '';
@@ -104,6 +104,28 @@ class Methods {
 
     try {
       final response = await dio.post(
+        baseUrl + url,
+        data: jsonEncode(data),
+        options: Options(
+          headers: {
+            'access_token': accessToken
+          }
+        )
+      );
+
+      return response.data;
+    } catch(err) {
+      return handleError(err);
+    }
+  }
+
+  Future dioPut(url, data) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.reload();
+    String? accessToken = prefs.getString('access_token');
+
+    try {
+      final response = await dio.put(
         baseUrl + url,
         data: jsonEncode(data),
         options: Options(

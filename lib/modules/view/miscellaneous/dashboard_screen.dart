@@ -98,7 +98,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               )
             ],
             currentIndex: controller.selectedIndex,
-            elevation: 16
+            elevation: 0
           )),
         ),
       ),
