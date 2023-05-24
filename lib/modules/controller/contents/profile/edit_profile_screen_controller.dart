@@ -125,7 +125,6 @@ class EditProfileScreenController extends GetxController {
       'type': 'profile-picture'
     });
     dynamic res = repository.uploadFile(formData, onSendProgress);
-    print(res);
     if (res['error']) {
       picture = res['data']['url'];
       uploadProgressReceived = 0;
