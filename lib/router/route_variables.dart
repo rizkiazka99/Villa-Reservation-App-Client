@@ -7,3 +7,4 @@ const bookingsScreenRoute ='/bookingsScreen';
 const profileScreenRoute = '/profileScreen';
 const bookingDetailScreenRoute = '/bookingDetail';
 const addReviewScreenRoute = '/addReview';
+const editProfileScreenRoute = '/editProfile';

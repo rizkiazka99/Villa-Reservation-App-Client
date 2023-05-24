@@ -140,6 +140,37 @@ class Methods {
       return handleError(err);
     }
   }
+
+  // File Upload
+  dioUpload(String url, FormData formData, dynamic onSendProgress) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.reload();
+    String? accessToken = prefs.getString('access_token');
+
+    try {
+      final response = await dio.post(
+        baseUrlImg + url,
+        data: formData,
+        onSendProgress: onSendProgress,
+        options: Options(
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            'access_token': accessToken
+          }
+        )
+      );
+
+      return response.data;
+    } catch(err) {
+      return handleError(err);
+    }
+  }
+}
+
+class Upload extends Methods {
+  Future uploadFile(FormData formData, Function onSendProgress) async {
+    return await dioUpload('uploads', formData, onSendProgress);
+  }
 }
 
 class Users extends Methods {
@@ -153,6 +184,10 @@ class Users extends Methods {
 
   Future getUserById(id) async {
     return await dioGet('users/$id');
+  }
+
+  Future editProfile(id, data) async {
+    return await dioPut('users/update/$id', data);
   }
 }
 

@@ -4,7 +4,7 @@ import 'package:reservilla/data/api/repository.dart';
 import 'package:reservilla/data/models/miscellaneous/user_response.dart';
 import 'package:reservilla/modules/view/contents/bookings/bookings_screen.dart';
 import 'package:reservilla/modules/view/contents/home_screen.dart';
-import 'package:reservilla/modules/view/contents/profile_screen.dart';
+import 'package:reservilla/modules/view/contents/profile/profile_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DashboardScreenController extends GetxController with GetTickerProviderStateMixin {

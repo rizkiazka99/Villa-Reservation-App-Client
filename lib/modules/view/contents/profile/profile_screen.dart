@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:reservilla/core/colors.dart';
 import 'package:reservilla/core/font_sizes.dart';
 import 'package:reservilla/helpers/common_variables.dart';
-import 'package:reservilla/modules/controller/contents/profile_screen_controller.dart';
+import 'package:reservilla/modules/controller/contents/profile/profile_screen_controller.dart';
 import 'package:reservilla/modules/controller/miscellaneous/dashboard_screen_controller.dart';
 import 'package:reservilla/router/route_variables.dart';
 import 'package:reservilla/widgets/confirmation_dialog.dart';
@@ -82,10 +82,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       ProfileSectionButton(
                         onTap: () {
-
+                          Get.toNamed(editProfileScreenRoute);
                         }, 
                         icon: Icons.edit_note, 
-                        buttonText: 'Ubah Profil'
+                        buttonText: 'Perbarui Profil'
                       ),
                       Container(
                         padding: const EdgeInsets.all(16),

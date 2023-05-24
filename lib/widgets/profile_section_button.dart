@@ -43,7 +43,10 @@ class ProfileSectionButton extends StatelessWidget {
                         children: [
                           Text(
                             buttonText,
-                            style: h4(color: contextOrange),
+                            style: h4_5(
+                              color: contextOrange,
+                              fontWeight: FontWeight.normal
+                            ),
                           ),
                           const Icon(
                             Icons.arrow_forward_ios_rounded,
