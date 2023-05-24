@@ -1,59 +1,60 @@
 class BookingDetailResponse {
-    bool status;
-    String message;
-    Data data;
+  bool status;
+  String message;
+  Data data;
 
-    BookingDetailResponse({
-        required this.status,
-        required this.message,
-        required this.data,
-    });
+  BookingDetailResponse({
+    required this.status,
+    required this.message,
+    required this.data,
+  });
 
-    factory BookingDetailResponse.fromJson(Map<String, dynamic> json) => BookingDetailResponse(
+  factory BookingDetailResponse.fromJson(Map<String, dynamic> json) =>
+      BookingDetailResponse(
         status: json["status"],
         message: json["message"],
         data: Data.fromJson(json["data"]),
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "status": status,
         "message": message,
         "data": data.toJson(),
-    };
+      };
 }
 
 class Data {
-    String id;
-    int userId;
-    int villaId;
-    int totalPrice;
-    String bookingStartDate;
-    String bookingEndDate;
-    Payment payment;
-    String status;
-    String paymentVia;
-    DateTime createdAt;
-    DateTime updatedAt;
-    User user;
-    Villa villa;
+  String id;
+  int userId;
+  int villaId;
+  int totalPrice;
+  String bookingStartDate;
+  String bookingEndDate;
+  Payment payment;
+  String status;
+  String paymentVia;
+  DateTime createdAt;
+  DateTime updatedAt;
+  User user;
+  Villa villa;
 
-    Data({
-        required this.id,
-        required this.userId,
-        required this.villaId,
-        required this.totalPrice,
-        required this.bookingStartDate,
-        required this.bookingEndDate,
-        required this.payment,
-        required this.status,
-        required this.paymentVia,
-        required this.createdAt,
-        required this.updatedAt,
-        required this.user,
-        required this.villa,
-    });
+  Data({
+    required this.id,
+    required this.userId,
+    required this.villaId,
+    required this.totalPrice,
+    required this.bookingStartDate,
+    required this.bookingEndDate,
+    required this.payment,
+    required this.status,
+    required this.paymentVia,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.user,
+    required this.villa,
+  });
 
-    factory Data.fromJson(Map<String, dynamic> json) => Data(
+  factory Data.fromJson(Map<String, dynamic> json) => Data(
         id: json["id"],
         userId: json["UserId"],
         villaId: json["VillaId"],
@@ -67,9 +68,9 @@ class Data {
         updatedAt: DateTime.parse(json["updatedAt"]),
         user: User.fromJson(json["User"]),
         villa: Villa.fromJson(json["Villa"]),
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "id": id,
         "UserId": userId,
         "VillaId": villaId,
@@ -83,69 +84,79 @@ class Data {
         "updatedAt": updatedAt.toIso8601String(),
         "User": user.toJson(),
         "Villa": villa.toJson(),
-    };
+      };
 }
 
 class Payment {
-    DateTime transactionTime;
-    String grossAmount;
-    String currency;
-    String orderId;
-    String paymentType;
-    String? signatureKey;
-    String statusCode;
-    String transactionId;
-    String transactionStatus;
-    String fraudStatus;
-    DateTime? expiryTime;
-    DateTime? settlementTime;
-    String statusMessage;
-    String merchantId;
-    String? permataVaNumber;
-    List<VaNumber>? vaNumbers;
-    List<dynamic>? paymentAmounts;
+  DateTime transactionTime;
+  String grossAmount;
+  String currency;
+  String orderId;
+  String paymentType;
+  String? signatureKey;
+  String statusCode;
+  String transactionId;
+  String transactionStatus;
+  String fraudStatus;
+  DateTime? expiryTime;
+  DateTime? settlementTime;
+  String statusMessage;
+  String merchantId;
+  String? permataVaNumber;
+  List<VaNumber>? vaNumbers;
+  List<dynamic>? paymentAmounts;
 
-    Payment({
-        required this.transactionTime,
-        required this.grossAmount,
-        required this.currency,
-        required this.orderId,
-        required this.paymentType,
-        required this.signatureKey,
-        required this.statusCode,
-        required this.transactionId,
-        required this.transactionStatus,
-        required this.fraudStatus,
-        required this.expiryTime,
-        required this.settlementTime,
-        required this.statusMessage,
-        required this.merchantId,
-        this.permataVaNumber,
-        this.vaNumbers,
-        this.paymentAmounts,
-    });
+  Payment({
+    required this.transactionTime,
+    required this.grossAmount,
+    required this.currency,
+    required this.orderId,
+    required this.paymentType,
+    required this.signatureKey,
+    required this.statusCode,
+    required this.transactionId,
+    required this.transactionStatus,
+    required this.fraudStatus,
+    required this.expiryTime,
+    required this.settlementTime,
+    required this.statusMessage,
+    required this.merchantId,
+    this.permataVaNumber,
+    this.vaNumbers,
+    this.paymentAmounts,
+  });
 
-    factory Payment.fromJson(Map<String, dynamic> json) => Payment(
+  factory Payment.fromJson(Map<String, dynamic> json) => Payment(
         transactionTime: DateTime.parse(json["transaction_time"]),
         grossAmount: json["gross_amount"],
         currency: json["currency"],
         orderId: json["order_id"],
         paymentType: json["payment_type"],
-        signatureKey: json["signature_key"] == null ? null : json["signature_key"],
+        signatureKey:
+            json["signature_key"] == null ? null : json["signature_key"],
         statusCode: json["status_code"],
         transactionId: json["transaction_id"],
         transactionStatus: json["transaction_status"],
         fraudStatus: json["fraud_status"],
-        expiryTime: json['expiry_time'] == null ? null : DateTime.parse(json["expiry_time"]),
-        settlementTime: json["settlement_time"] == null ? null : DateTime.parse(json["settlement_time"]),
+        expiryTime: json['expiry_time'] == null
+            ? null
+            : DateTime.parse(json["expiry_time"]),
+        settlementTime: json["settlement_time"] == null
+            ? null
+            : DateTime.parse(json["settlement_time"]),
         statusMessage: json["status_message"],
         merchantId: json["merchant_id"],
         permataVaNumber: json["permata_va_number"],
-        vaNumbers: json["va_numbers"] == null ? [] : List<VaNumber>.from(json["va_numbers"]!.map((x) => VaNumber.fromJson(x))),
-        paymentAmounts: json["payment_amounts"] == null ? [] : List<dynamic>.from(json["payment_amounts"]!.map((x) => x)),
-    );
+        vaNumbers: json["va_numbers"] == null
+            ? []
+            : List<VaNumber>.from(
+                json["va_numbers"]!.map((x) => VaNumber.fromJson(x))),
+        paymentAmounts: json["payment_amounts"] == null
+            ? []
+            : List<dynamic>.from(json["payment_amounts"]!.map((x) => x)),
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "transaction_time": transactionTime.toIso8601String(),
         "gross_amount": grossAmount,
         "currency": currency,
@@ -161,55 +172,59 @@ class Payment {
         "status_message": statusMessage,
         "merchant_id": merchantId,
         "permata_va_number": permataVaNumber,
-        "va_numbers": vaNumbers == null ? [] : List<dynamic>.from(vaNumbers!.map((x) => x.toJson())),
-        "payment_amounts": paymentAmounts == null ? [] : List<dynamic>.from(paymentAmounts!.map((x) => x)),
-    };
+        "va_numbers": vaNumbers == null
+            ? []
+            : List<dynamic>.from(vaNumbers!.map((x) => x.toJson())),
+        "payment_amounts": paymentAmounts == null
+            ? []
+            : List<dynamic>.from(paymentAmounts!.map((x) => x)),
+      };
 }
 
 class VaNumber {
-    String bank;
-    String vaNumber;
+  String bank;
+  String vaNumber;
 
-    VaNumber({
-        required this.bank,
-        required this.vaNumber,
-    });
+  VaNumber({
+    required this.bank,
+    required this.vaNumber,
+  });
 
-    factory VaNumber.fromJson(Map<String, dynamic> json) => VaNumber(
+  factory VaNumber.fromJson(Map<String, dynamic> json) => VaNumber(
         bank: json["bank"],
         vaNumber: json["va_number"],
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "bank": bank,
         "va_number": vaNumber,
-    };
+      };
 }
 
 class User {
-    int id;
-    String email;
-    String phone;
-    String name;
-    String password;
-    dynamic profilePicture;
-    String role;
-    DateTime createdAt;
-    DateTime updatedAt;
+  int id;
+  String email;
+  String phone;
+  String name;
+  String password;
+  dynamic profilePicture;
+  String role;
+  DateTime createdAt;
+  DateTime updatedAt;
 
-    User({
-        required this.id,
-        required this.email,
-        required this.phone,
-        required this.name,
-        required this.password,
-        this.profilePicture,
-        required this.role,
-        required this.createdAt,
-        required this.updatedAt,
-    });
+  User({
+    required this.id,
+    required this.email,
+    required this.phone,
+    required this.name,
+    required this.password,
+    this.profilePicture,
+    required this.role,
+    required this.createdAt,
+    required this.updatedAt,
+  });
 
-    factory User.fromJson(Map<String, dynamic> json) => User(
+  factory User.fromJson(Map<String, dynamic> json) => User(
         id: json["id"],
         email: json["email"],
         phone: json["phone"],
@@ -219,9 +234,9 @@ class User {
         role: json["role"],
         createdAt: DateTime.parse(json["createdAt"]),
         updatedAt: DateTime.parse(json["updatedAt"]),
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "id": id,
         "email": email,
         "phone": phone,
@@ -231,43 +246,42 @@ class User {
         "role": role,
         "createdAt": createdAt.toIso8601String(),
         "updatedAt": updatedAt.toIso8601String(),
-    };
+      };
 }
 
 class Villa {
-    int id;
-    int locationId;
-    String name;
-    String description;
-    int price;
-    String mapUrl;
-    String phone;
-    int bedroom;
-    int bathroom;
-    bool swimmingPool;
-    DateTime createdAt;
-    DateTime updatedAt;
-    List<VillaGalery> villaGaleries;
-    Location location;
+  int id;
+  int locationId;
+  String name;
+  String description;
+  int price;
+  String mapUrl;
+  String phone;
+  int bedroom;
+  int bathroom;
+  bool swimmingPool;
+  DateTime createdAt;
+  DateTime updatedAt;
+  List<VillaGalery> villaGaleries;
+  Location location;
 
-    Villa({
-        required this.id,
-        required this.locationId,
-        required this.name,
-        required this.description,
-        required this.price,
-        required this.mapUrl,
-        required this.phone,
-        required this.bedroom,
-        required this.bathroom,
-        required this.swimmingPool,
-        required this.createdAt,
-        required this.updatedAt,
-        required this.villaGaleries,
-        required this.location
-    });
+  Villa(
+      {required this.id,
+      required this.locationId,
+      required this.name,
+      required this.description,
+      required this.price,
+      required this.mapUrl,
+      required this.phone,
+      required this.bedroom,
+      required this.bathroom,
+      required this.swimmingPool,
+      required this.createdAt,
+      required this.updatedAt,
+      required this.villaGaleries,
+      required this.location});
 
-    factory Villa.fromJson(Map<String, dynamic> json) => Villa(
+  factory Villa.fromJson(Map<String, dynamic> json) => Villa(
         id: json["id"],
         locationId: json["LocationId"],
         name: json["name"],
@@ -280,11 +294,12 @@ class Villa {
         swimmingPool: json["swimming_pool"],
         createdAt: DateTime.parse(json["createdAt"]),
         updatedAt: DateTime.parse(json["updatedAt"]),
-        villaGaleries: List<VillaGalery>.from(json["VillaGaleries"].map((x) => VillaGalery.fromJson(x))),
+        villaGaleries: List<VillaGalery>.from(
+            json["VillaGaleries"].map((x) => VillaGalery.fromJson(x))),
         location: Location.fromJson(json["Location"]),
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "id": id,
         "LocationId": locationId,
         "name": name,
@@ -297,67 +312,68 @@ class Villa {
         "swimming_pool": swimmingPool,
         "createdAt": createdAt.toIso8601String(),
         "updatedAt": updatedAt.toIso8601String(),
-        "VillaGaleries": List<dynamic>.from(villaGaleries.map((x) => x.toJson())),
+        "VillaGaleries":
+            List<dynamic>.from(villaGaleries.map((x) => x.toJson())),
         "Location": location.toJson(),
-    };
+      };
 }
 
 class VillaGalery {
-    int id;
-    int villaId;
-    String imageName;
-    DateTime createdAt;
-    DateTime updatedAt;
+  int id;
+  int villaId;
+  String imageName;
+  DateTime createdAt;
+  DateTime updatedAt;
 
-    VillaGalery({
-        required this.id,
-        required this.villaId,
-        required this.imageName,
-        required this.createdAt,
-        required this.updatedAt,
-    });
+  VillaGalery({
+    required this.id,
+    required this.villaId,
+    required this.imageName,
+    required this.createdAt,
+    required this.updatedAt,
+  });
 
-    factory VillaGalery.fromJson(Map<String, dynamic> json) => VillaGalery(
+  factory VillaGalery.fromJson(Map<String, dynamic> json) => VillaGalery(
         id: json["id"],
         villaId: json["VillaId"],
         imageName: json["image_name"],
         createdAt: DateTime.parse(json["createdAt"]),
         updatedAt: DateTime.parse(json["updatedAt"]),
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "id": id,
         "VillaId": villaId,
         "image_name": imageName,
         "createdAt": createdAt.toIso8601String(),
         "updatedAt": updatedAt.toIso8601String(),
-    };
+      };
 }
 
 class Location {
-    int id;
-    String name;
-    DateTime createdAt;
-    DateTime updatedAt;
+  int id;
+  String name;
+  DateTime createdAt;
+  DateTime updatedAt;
 
-    Location({
-        required this.id,
-        required this.name,
-        required this.createdAt,
-        required this.updatedAt,
-    });
+  Location({
+    required this.id,
+    required this.name,
+    required this.createdAt,
+    required this.updatedAt,
+  });
 
-    factory Location.fromJson(Map<String, dynamic> json) => Location(
+  factory Location.fromJson(Map<String, dynamic> json) => Location(
         id: json["id"],
         name: json["name"],
         createdAt: DateTime.parse(json["createdAt"]),
         updatedAt: DateTime.parse(json["updatedAt"]),
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,
         "createdAt": createdAt.toIso8601String(),
         "updatedAt": updatedAt.toIso8601String(),
-    };
+      };
 }

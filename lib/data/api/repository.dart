@@ -1,6 +1,9 @@
 import 'package:reservilla/data/api/api_endpoints.dart';
 import 'package:reservilla/data/models/auth/login_response.dart';
 import 'package:reservilla/data/models/auth/register_response.dart';
+import 'package:reservilla/data/models/contents/villas/villas_response.dart';
+import 'package:reservilla/data/models/contents/villas/villa_detail_response.dart';
+import 'package:reservilla/data/models/contents/locations/locations_response.dart';
 import 'package:reservilla/data/models/contents/bookings/booking_detail_response.dart';
 import 'package:reservilla/data/models/contents/bookings/bookings_response.dart';
 import 'package:reservilla/data/models/contents/bookings/payment_check_response.dart';
@@ -9,6 +12,8 @@ import 'package:reservilla/data/models/miscellaneous/user_response.dart';
 
 class Repository {
   Users usersApi = Users();
+  Locations locationsApi = Locations();
+  Villas villasApi = Villas();
   Bookings bookingsApi = Bookings();
   Reviews reviewsApi = Reviews();
 
@@ -20,6 +25,21 @@ class Repository {
   Future<RegisterResponse> signup(data) async {
     final response = await usersApi.signup(data);
     return RegisterResponse.fromJson(response);
+  }
+
+  Future<LocationsResponse> getLocations() async {
+    final response = await locationsApi.getLocations();
+    return LocationsResponse.fromJson(response);
+  }
+
+  Future<VillasResponse> getVillas() async {
+    final response = await villasApi.getVillas();
+    return VillasResponse.fromJson(response);
+  }
+
+  Future<VillaDetailResponse> getVillaDetail(villaId) async {
+    final response = await villasApi.getVillaDetail(villaId);
+    return VillaDetailResponse.fromJson(response);
   }
 
   Future<BookingsResponse> getBookingsByUser(UserId) async {

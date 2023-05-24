@@ -13,7 +13,7 @@ class Methods {
     if (error is DioError) {
       dioError = error as DioError;
 
-      switch(dioError.type) {
+      switch (dioError.type) {
         case DioErrorType.cancel:
           errorDesc = 'Request to the server was cancelled';
           break;
@@ -38,38 +38,33 @@ class Methods {
         case DioErrorType.unknown:
           errorDesc = 'Unknown error occurred';
           break;
-      } 
+      }
     } else {
       errorDesc = 'Unexpected error occurred';
     }
 
-    print('Status Code: ${dioError!.response!.statusCode}, Message: $errorDesc');
+    print(
+        'Status Code: ${dioError!.response!.statusCode}, Message: $errorDesc');
     return dioError.response!.data;
   }
 
   // Auth
   Future dioLogin(url, data) async {
     try {
-      final response = await dio.post(
-        baseUrl + url,
-        data: jsonEncode(data)
-      );
+      final response = await dio.post(baseUrl + url, data: jsonEncode(data));
 
       return response.data;
-    } catch(err) {
+    } catch (err) {
       return handleError(err);
     }
   }
 
   Future dioSignup(url, data) async {
     try {
-      final response = await dio.post(
-        baseUrl + url,
-        data: jsonEncode(data)
-      );
+      final response = await dio.post(baseUrl + url, data: jsonEncode(data));
 
       return response.data;
-    } catch(err) {
+    } catch (err) {
       return handleError(err);
     }
   }
@@ -81,40 +76,28 @@ class Methods {
     String? accessToken = prefs.getString('access_token');
 
     try {
-      final response = await dio.get(
-        baseUrl + url,
-        queryParameters: query == null ? null : Map.from(query),
-        options: Options(
-          headers: {
-            'access_token': accessToken
-          }
-        )
-      );
+      final response = await dio.get(baseUrl + url,
+          queryParameters: query == null ? null : Map.from(query),
+          options: Options(headers: {'access_token': accessToken}));
 
       return response.data;
-    } catch(err) {
+    } catch (err) {
       return handleError(err);
     }
   }
-  
+
   Future dioPost(url, data) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.reload();
     String? accessToken = prefs.getString('access_token');
 
     try {
-      final response = await dio.post(
-        baseUrl + url,
-        data: jsonEncode(data),
-        options: Options(
-          headers: {
-            'access_token': accessToken
-          }
-        )
-      );
+      final response = await dio.post(baseUrl + url,
+          data: jsonEncode(data),
+          options: Options(headers: {'access_token': accessToken}));
 
       return response.data;
-    } catch(err) {
+    } catch (err) {
       return handleError(err);
     }
   }
@@ -131,6 +114,22 @@ class Users extends Methods {
 
   Future getUserById(id) async {
     return await dioGet('users/$id');
+  }
+}
+
+class Locations extends Methods {
+  Future getLocations() async {
+    return await dioGet('locations');
+  }
+}
+
+class Villas extends Methods {
+  Future getVillas() async {
+    return await dioGet('villas');
+  }
+
+  Future getVillaDetail(villaId) async {
+    return await dioGet('villas/$villaId');
   }
 }
 

@@ -6,6 +6,7 @@ import 'package:reservilla/modules/binding/contents/bookings/bookings_screen_bin
 import 'package:reservilla/modules/binding/contents/home_screen_binding.dart';
 import 'package:reservilla/modules/binding/contents/profile_screen_binding.dart';
 import 'package:reservilla/modules/binding/contents/reviews/add_review_binding.dart';
+import 'package:reservilla/modules/binding/contents/villas/villa_detail_binding.dart';
 import 'package:reservilla/modules/binding/miscellaneous/dashboard_screen_binding.dart';
 import 'package:reservilla/modules/binding/miscellaneous/splash_screen_binding.dart';
 import 'package:reservilla/modules/view/auth/login_screen.dart';
@@ -15,6 +16,7 @@ import 'package:reservilla/modules/view/contents/bookings/bookings_screen.dart';
 import 'package:reservilla/modules/view/contents/home_screen.dart';
 import 'package:reservilla/modules/view/contents/profile_screen.dart';
 import 'package:reservilla/modules/view/contents/reviews/add_review_screen.dart';
+import 'package:reservilla/modules/view/contents/villas/villa_detail_screen.dart';
 import 'package:reservilla/modules/view/miscellaneous/dashboard_screen.dart';
 import 'package:reservilla/modules/view/miscellaneous/splash_screen.dart';
 import 'package:reservilla/router/route_variables.dart';
@@ -22,54 +24,49 @@ import 'package:reservilla/router/route_variables.dart';
 class AppPages {
   static final pages = [
     GetPage(
-      name: splashScreenRoute, 
-      page: () => const SplashScreen(),
-      binding: SplashScreenBinding()
-    ),
+        name: splashScreenRoute,
+        page: () => const SplashScreen(),
+        binding: SplashScreenBinding()),
     GetPage(
-      name: loginScreenRoute, 
-      page: () => const LoginScreen(),
-      binding: LoginScreenBinding()
-    ),
+        name: loginScreenRoute,
+        page: () => const LoginScreen(),
+        binding: LoginScreenBinding()),
     GetPage(
-      name: registerScreenRoute, 
-      page: () => const RegisterScreen(),
-      binding: RegisterScreenBinding()
-    ),
+        name: registerScreenRoute,
+        page: () => const RegisterScreen(),
+        binding: RegisterScreenBinding()),
     GetPage(
-      name: dashboardScreenRoute,
-      page: () => const DashboardScreen(),
-      bindings: [
-        DashboardScreenBinding(),
-        HomeScreenBinding(),
-        BookingsScreenBinding(),
-        ProfileScreenBinding()
-      ]
-    ),
+        name: dashboardScreenRoute,
+        page: () => const DashboardScreen(),
+        bindings: [
+          DashboardScreenBinding(),
+          HomeScreenBinding(),
+          BookingsScreenBinding(),
+          ProfileScreenBinding()
+        ]),
     GetPage(
-      name: homeScreenRoute,
-      page: () => const HomeScreen(),
-      binding: HomeScreenBinding()
-    ),
+        name: homeScreenRoute,
+        page: () => const HomeScreen(),
+        binding: HomeScreenBinding()),
     GetPage(
-      name: bookingsScreenRoute,
-      page: () => const BookingsScreen(),
-      binding: BookingsScreenBinding()
-    ),
+        name: bookingsScreenRoute,
+        page: () => const BookingsScreen(),
+        binding: BookingsScreenBinding()),
     GetPage(
-      name: profileScreenRoute,
-      page: () => const ProfileScreen(),
-      binding: ProfileScreenBinding()
-    ),
+        name: profileScreenRoute,
+        page: () => const ProfileScreen(),
+        binding: ProfileScreenBinding()),
     GetPage(
-      name: bookingDetailScreenRoute, 
-      page: () => const BookingDetailScreen(),
-      binding: BookingDetailBinding()
-    ),
+        name: villaDetailScreenRoute,
+        page: () => const VillaDetailScreen(),
+        binding: VillaDetailBinding()),
     GetPage(
-      name: addReviewScreenRoute,
-      page: () => const AddReviewScreen(),
-      binding: AddReviewBinding()
-    )
+        name: bookingDetailScreenRoute,
+        page: () => const BookingDetailScreen(),
+        binding: BookingDetailBinding()),
+    GetPage(
+        name: addReviewScreenRoute,
+        page: () => const AddReviewScreen(),
+        binding: AddReviewBinding())
   ];
 }
