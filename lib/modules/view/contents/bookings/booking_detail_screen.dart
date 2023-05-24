@@ -39,6 +39,38 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
           ),
           child: CountdownTimer(
             endTime: endTime,
+            widgetBuilder: (context, time) {
+              if (time == null) {
+                return Center(
+                  child: Text(
+                    '00 : 00 : 00',
+                    style: h4(color: contextRed)
+                  ),
+                );
+              } else {
+                if (time.days != null) {
+                  return Center(
+                    child: Text(
+                      '${time.days} : ${time.hours} : ${time.min} : ${time.sec}',
+                      style: h4(color: contextRed)
+                    ),
+                  );
+                } else {
+                  return Center(
+                    child: Text(
+                      '${time.hours} : ${time.min} : ${time.sec}',
+                      style: h4(color: contextRed)
+                    ),
+                  );
+                }
+              }
+            },
+            endWidget: Center(
+              child: Text(
+                '00 : 00 : 00',
+                style: h4(color: contextRed),
+              ),
+            ),
             textStyle: h4(color: contextRed),
           ),
         ),

@@ -38,20 +38,35 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
             width: MediaQuery.of(context).size.width,
             child: Column(
               children: [
-                RatingBar.builder(
-                  initialRating: 1,
-                  minRating: 1,
-                  direction: Axis.horizontal,
-                  allowHalfRating: true,
-                  itemCount: 5,
-                  itemPadding: const EdgeInsets.symmetric(horizontal: 4),
-                  itemBuilder: (context, _) => const Icon(
-                    Icons.star,
-                    color: contextOrange,
-                  ), 
-                  onRatingUpdate: (rating) {
-                    controller.rating = rating;
-                  }
+                Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(15),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.1),
+                        blurRadius: 2,
+                        spreadRadius: 1,
+                        offset: const Offset(0, 3)
+                      )
+                    ]
+                  ),
+                  child: RatingBar.builder(
+                    initialRating: 1,
+                    minRating: 1,
+                    direction: Axis.horizontal,
+                    allowHalfRating: true,
+                    itemCount: 5,
+                    itemPadding: const EdgeInsets.symmetric(horizontal: 4),
+                    itemBuilder: (context, _) => const Icon(
+                      Icons.star_rounded,
+                      color: contextOrange,
+                    ), 
+                    onRatingUpdate: (rating) {
+                      controller.rating = rating;
+                    }
+                  ),
                 ),
                 const SizedBox(height: 15),
                 CustomForm(

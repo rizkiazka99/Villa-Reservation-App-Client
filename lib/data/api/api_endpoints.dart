@@ -142,6 +142,10 @@ class Bookings extends Methods {
   Future getBookingDetail(id) async {
     return await dioGet('bookings/$id');
   }
+
+  Future paymentCheck(id) async {
+    return await dioGet('bookings/check/$id');
+  }
 }
 
 class Reviews extends Methods {

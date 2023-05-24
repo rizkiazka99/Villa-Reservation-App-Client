@@ -181,6 +181,20 @@ class _BookedState extends State<Booked> {
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: () {
+        List pendingBookingsIds = [];
+
+        for(var i = 0; i < controller.booked.length; i++) {
+          if (controller.booked[i].status == 'pending') {
+            pendingBookingsIds.add(controller.booked[i].id);
+          }
+        }
+
+        if (pendingBookingsIds.isNotEmpty) {
+          for(var j = 0; j < pendingBookingsIds.length; j++) {
+            controller.paymentCheck(pendingBookingsIds[j]);
+          }
+        }
+        
         return controller.getBookingsByUser();
       },
       child: SingleChildScrollView(

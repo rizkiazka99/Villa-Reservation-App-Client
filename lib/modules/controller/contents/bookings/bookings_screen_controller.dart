@@ -3,30 +3,36 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:reservilla/data/api/repository.dart';
 import 'package:reservilla/data/models/contents/bookings/bookings_response.dart';
+import 'package:reservilla/data/models/contents/bookings/payment_check_response.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class BookingsScreenController extends GetxController {
   Repository repository = Repository();
+
   ScrollController scrollController = ScrollController();
 
   RxBool _bookingsLoading = false.obs;
   RxBool _isFetched = false.obs;
+  RxBool _paymentCheckLoading = false.obs;
   Rxn<BookingsResponse> _bookingsData = Rxn<BookingsResponse>();
   RxList<Datum> _booked = <Datum>[].obs;
   RxList<Datum> _filteredBooked = <Datum>[].obs;
   RxList<Datum> _pastBooking = <Datum>[].obs;
   RxList<Datum> _cancelledBooking = <Datum>[].obs;
+  Rxn<PaymentCheckResponse> _paymentCheckResult = Rxn<PaymentCheckResponse>();
   RxInt _tabBarIndex = 0.obs;
   RxString _selectedStatus = 'Semua'.obs;
   RxBool _needReview = false.obs;
 
   bool get bookingsLoading => _bookingsLoading.value;
   bool get isFetched => _isFetched.value;
+  bool get paymentCheckLoading => _paymentCheckLoading.value;
   BookingsResponse? get bookingsData => _bookingsData.value;
   List<Datum> get filteredBooked => _filteredBooked;
   List<Datum> get booked => _booked;
   List<Datum> get pastBooking => _pastBooking;
   List<Datum> get cancelledBooking => _cancelledBooking;
+  PaymentCheckResponse? get paymentCheckResult => _paymentCheckResult.value;
   int get tabBarIndex => _tabBarIndex.value;
   String get selectedStatus => _selectedStatus.value;
   bool get needReview => _needReview.value;
@@ -35,6 +41,8 @@ class BookingsScreenController extends GetxController {
       this._bookingsLoading.value = bookingsLoading;
   set isFetched(bool isFetched) =>
       this._isFetched.value = isFetched;
+  set paymentCheckLoading(bool paymentCheckLoading) =>
+      this._paymentCheckLoading.value = paymentCheckLoading;
   set bookingsData(BookingsResponse? bookingsData) =>
       this._bookingsData.value = bookingsData;
   set booked(List<Datum> booked) =>
@@ -45,6 +53,8 @@ class BookingsScreenController extends GetxController {
       this._pastBooking.value = pastBooking;
   set cancelledBooking(List<Datum> cancelledBooking) =>
       this._cancelledBooking.value = cancelledBooking;
+  set paymentCheckResult(PaymentCheckResponse? paymentCheckResult) =>
+      this._paymentCheckResult.value = paymentCheckResult;
   set tabBarIndex(int tabBarIndex) =>
       this._tabBarIndex.value = tabBarIndex;
   set selectedStatus(String selectedStatus) =>
@@ -117,5 +127,14 @@ class BookingsScreenController extends GetxController {
     isFetched = true;
 
     return bookingsData;
+  }
+
+  Future<PaymentCheckResponse?> paymentCheck(id) async {
+    paymentCheckLoading = true;
+    PaymentCheckResponse? res = await repository.paymentCheck(id);
+    paymentCheckResult = res;
+    paymentCheckLoading = false;
+
+    return paymentCheckResult;
   }
 }
