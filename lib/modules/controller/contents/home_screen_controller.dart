@@ -35,9 +35,11 @@ class HomeScreenController extends GetxController {
     super.dispose();
   }
 
-  getAllVillas() {
+  getRecommendedVillas() {
     if (villasData!.data.isNotEmpty) {
-      villas = villasData!.data.toList();
+      villas = villasData!.data.where((villa) => 
+        villa.averageRating != null && villa.averageRating > 4
+      ).toList();
     } else {
       villas = [];
     }
@@ -49,7 +51,7 @@ class HomeScreenController extends GetxController {
 
     VillasResponse? result = await repository.getVillas();
     villasData = result;
-    getAllVillas();
+    getRecommendedVillas();
 
     villasLoading = false;
     isFetched = true;

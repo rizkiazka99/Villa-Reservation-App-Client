@@ -1,16 +1,22 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
 import 'package:reservilla/core/colors.dart';
+import 'package:reservilla/core/font_sizes.dart';
 import 'package:reservilla/core/theme.dart';
 import 'package:reservilla/data/models/contents/villas/villa_detail_response.dart';
 import 'package:reservilla/helpers/common_variables.dart';
 import 'package:reservilla/helpers/currency_formatter.dart';
 import 'package:reservilla/modules/controller/contents/villas/villa_detail_controller.dart';
+import 'package:reservilla/router/route_variables.dart';
+import 'package:reservilla/widgets/bottom_navbar_button.dart';
+import 'package:reservilla/widgets/custom_icon_button.dart';
 import 'package:reservilla/widgets/facility_item.dart';
 import 'package:reservilla/widgets/loading_state.dart';
 import 'package:reservilla/widgets/rating_item.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class VillaDetailScreen extends StatefulWidget {
   const VillaDetailScreen({super.key});
@@ -126,10 +132,11 @@ class _VillaDetailScreenState extends State<VillaDetailScreen> {
                                             2),
                                         style: oceanTextStyle.copyWith(
                                           fontSize: 16,
+                                          color: contextOrange
                                         ),
                                         children: [
                                           TextSpan(
-                                            text: ' / month',
+                                            text: ' / hari',
                                             style: greyTextStyle.copyWith(
                                               fontSize: 16,
                                             ),
@@ -139,17 +146,31 @@ class _VillaDetailScreenState extends State<VillaDetailScreen> {
                                     ),
                                   ],
                                 ),
-                                Row(
-                                  children: [1, 2, 3, 4, 5].map((index) {
-                                    return Container(
-                                      margin: const EdgeInsets.only(left: 2),
-                                      child: RatingItem(
-                                        index: index,
-                                        rating: 5,
+                                SizedBox(
+                                  width: MediaQuery.of(context).size.width / 4,
+                                  child: Obx(() => controller.villaDetailData!.data.averageRating != null ? RatingBarIndicator(
+                                    rating: controller.villaDetailData!.data.averageRating!,
+                                    itemCount: 5,
+                                    itemSize: 20,
+                                    itemBuilder: (context, index) {
+                                      return const Icon(
+                                        Icons.star_rounded,
+                                        color: contextOrange
+                                      );
+                                    }
+                                  ) : Column(
+                                    children: [
+                                      const Icon(
+                                        Icons.star_rounded,
+                                        color: contextOrange
                                       ),
-                                    );
-                                  }).toList(),
-                                ),
+                                      Text(
+                                        '0.0',
+                                        style: h4(color: contextGrey),
+                                      ),
+                                    ],
+                                  )),
+                                )
                               ],
                             ),
                           ),
@@ -158,7 +179,7 @@ class _VillaDetailScreenState extends State<VillaDetailScreen> {
                           Padding(
                             padding: EdgeInsets.only(left: edge),
                             child: Text(
-                              'Main Facilities',
+                              'Fasilitas Utama',
                               style: regularTextStyle.copyWith(
                                 fontSize: 16,
                               ),
@@ -199,7 +220,7 @@ class _VillaDetailScreenState extends State<VillaDetailScreen> {
                           Padding(
                             padding: EdgeInsets.only(left: edge),
                             child: Text(
-                              'Description',
+                              'Deskripsi',
                               style: regularTextStyle.copyWith(
                                 fontSize: 16,
                               ),
@@ -211,6 +232,7 @@ class _VillaDetailScreenState extends State<VillaDetailScreen> {
                             child: Text(
                               controller.villaDetailData!.data.description,
                               style: greyTextStyle,
+                              textAlign: TextAlign.justify,
                             ),
                           ),
                           const SizedBox(height: 30),
@@ -218,7 +240,7 @@ class _VillaDetailScreenState extends State<VillaDetailScreen> {
                           Padding(
                             padding: EdgeInsets.only(left: edge),
                             child: Text(
-                              'Photos',
+                              'Foto',
                               style: regularTextStyle.copyWith(
                                 fontSize: 16,
                               ),
@@ -228,7 +250,9 @@ class _VillaDetailScreenState extends State<VillaDetailScreen> {
                           SizedBox(
                             height: 88,
                             child: ListView(
+                              physics: const BouncingScrollPhysics(),
                               scrollDirection: Axis.horizontal,
+                              padding: const EdgeInsets.only(right: 16),
                               children: controller
                                   .villaDetailData!.data.villaGaleries
                                   .map((item) {
@@ -238,8 +262,8 @@ class _VillaDetailScreenState extends State<VillaDetailScreen> {
                                     borderRadius: BorderRadius.circular(16),
                                     child: Image.network(
                                       "http://10.0.2.2:3000/${item.imageName}",
-                                      width: 110,
-                                      height: 88,
+                                      width: 150,
+                                      height: 180,
                                       fit: BoxFit.cover,
                                     ),
                                   ),
@@ -252,7 +276,7 @@ class _VillaDetailScreenState extends State<VillaDetailScreen> {
                           Padding(
                             padding: EdgeInsets.only(left: edge),
                             child: Text(
-                              'Location',
+                              'Kota',
                               style: regularTextStyle.copyWith(
                                 fontSize: 16,
                               ),
@@ -261,52 +285,13 @@ class _VillaDetailScreenState extends State<VillaDetailScreen> {
                           const SizedBox(height: 6),
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: edge),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  controller
-                                      .villaDetailData!.data.location.name,
-                                  style: greyTextStyle,
-                                ),
-                                InkWell(
-                                  onTap: () {
-                                    String mapUrl =
-                                        controller.villaDetailData!.data.mapUrl;
-                                    controller.launchMaps(mapUrl);
-                                  },
-                                  child: Image.asset(
-                                    'assets/icons/btn_map.png',
-                                    width: 40,
-                                  ),
-                                ),
-                              ],
+                            child: Text(
+                              controller
+                                  .villaDetailData!.data.location.name,
+                              style: greyTextStyle,
                             ),
                           ),
-                          const SizedBox(height: 40),
-                          Container(
-                            margin: EdgeInsets.symmetric(
-                              horizontal: edge,
-                            ),
-                            height: 50,
-                            width:
-                                MediaQuery.of(context).size.width - (2 * edge),
-                            child: ElevatedButton(
-                              onPressed: () {
-                                handleBook(controller.villaDetailData!.data);
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: oceanColor,
-                              ),
-                              child: Text(
-                                'Book Now',
-                                style: whiteTextStyle.copyWith(
-                                  fontSize: 18,
-                                ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 40),
+                          const SizedBox(height: 25),
                         ],
                       ),
                     ),
@@ -342,6 +327,50 @@ class _VillaDetailScreenState extends State<VillaDetailScreen> {
             );
           }
         }),
+      ),
+      bottomNavigationBar: Container(
+        width: MediaQuery.of(context).size.width,
+        padding: const EdgeInsets.all(8),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            BottomNavBarButton(
+              onPressed: () async {
+                Get.toNamed(
+                  bookVillaScreenRoute,
+                  arguments: {
+                    'villa_id': controller.villaDetailData!.data.id
+                  }
+                );
+              },
+              width: MediaQuery.of(context).size.width / 1.6,
+              buttonColor: contextOrange,
+              buttonText: 'Book Villa',
+            ),
+            Row(
+              children: [
+                CustomIconButton(
+                  onTap: () {
+                    String mapsUrl = controller.villaDetailData!.data.mapUrl;
+                    controller.launchMaps(mapsUrl);
+                  },
+                  radius: 100, 
+                  icon: Icons.location_on
+                ),
+              ],
+            ),
+            const SizedBox(width: 8),
+            CustomIconButton(
+              onTap: () {
+                String phoneNumber = controller.villaDetailData!.data.phone;
+                controller.launchDialer(phoneNumber);
+              },
+              radius: 100,
+              icon: Icons.phone,
+            ),
+          ],
+        ),
       ),
     );
   }

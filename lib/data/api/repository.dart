@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:reservilla/data/api/api_endpoints.dart';
 import 'package:reservilla/data/models/auth/login_response.dart';
 import 'package:reservilla/data/models/auth/register_response.dart';
+import 'package:reservilla/data/models/contents/bookings/book_response.dart';
 import 'package:reservilla/data/models/contents/bookings/booking_detail_response.dart';
 import 'package:reservilla/data/models/contents/bookings/bookings_response.dart';
 import 'package:reservilla/data/models/contents/bookings/payment_check_response.dart';
@@ -56,6 +57,11 @@ class Repository {
   Future<VillaDetailResponse> getVillaDetail(villaId) async {
     final response = await villasApi.getVillaDetail(villaId);
     return VillaDetailResponse.fromJson(response);
+  }
+
+  Future<BookResponse> book(data) async {
+    final response = await bookingsApi.book(data);
+    return BookResponse.fromJson(response);
   }
 
   Future<BookingsResponse> getBookingsByUser(UserId) async {

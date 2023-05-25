@@ -41,6 +41,7 @@ class Data {
   List<Favorite> villaGaleries;
   List<Booking> bookings;
   List<Favorite> favorites;
+  double? averageRating;
 
   Data({
     required this.id,
@@ -60,6 +61,7 @@ class Data {
     required this.villaGaleries,
     required this.bookings,
     required this.favorites,
+    required this.averageRating
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
@@ -84,6 +86,7 @@ class Data {
             json["Bookings"].map((x) => Booking.fromJson(x))),
         favorites: List<Favorite>.from(
             json["Favorites"].map((x) => Favorite.fromJson(x))),
+        averageRating: json["averageRating"] == null ? null : json["averageRating"]
       );
 
   Map<String, dynamic> toJson() => {
@@ -105,6 +108,7 @@ class Data {
             List<dynamic>.from(villaGaleries.map((x) => x.toJson())),
         "Bookings": List<dynamic>.from(bookings.map((x) => x.toJson())),
         "Favorites": List<dynamic>.from(favorites.map((x) => x.toJson())),
+        "averageRating": averageRating
       };
 }
 

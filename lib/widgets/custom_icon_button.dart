@@ -24,6 +24,7 @@ class CustomIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      splashFactory: NoSplash.splashFactory,
       onTap: onTap,
       child: Padding(
         padding: EdgeInsets.all(padding),

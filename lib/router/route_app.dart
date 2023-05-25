@@ -10,6 +10,7 @@ import 'package:reservilla/modules/binding/contents/profile/profile_screen_bindi
 import 'package:reservilla/modules/binding/contents/reviews/add_review_binding.dart';
 import 'package:reservilla/modules/binding/contents/reviews/user_reviews_screen_binding.dart';
 import 'package:reservilla/modules/binding/contents/villas/all_villas_screen_binding.dart';
+import 'package:reservilla/modules/binding/contents/villas/book_villa_screen_binding.dart';
 import 'package:reservilla/modules/binding/contents/villas/villa_detail_binding.dart';
 import 'package:reservilla/modules/binding/miscellaneous/dashboard_screen_binding.dart';
 import 'package:reservilla/modules/binding/miscellaneous/splash_screen_binding.dart';
@@ -24,6 +25,7 @@ import 'package:reservilla/modules/view/contents/profile/profile_screen.dart';
 import 'package:reservilla/modules/view/contents/reviews/add_review_screen.dart';
 import 'package:reservilla/modules/view/contents/reviews/user_reviews_screen.dart';
 import 'package:reservilla/modules/view/contents/villas/all_villas_screen.dart';
+import 'package:reservilla/modules/view/contents/villas/book_villa_screen.dart';
 import 'package:reservilla/modules/view/contents/villas/villa_detail_screen.dart';
 import 'package:reservilla/modules/view/miscellaneous/dashboard_screen.dart';
 import 'package:reservilla/modules/view/miscellaneous/splash_screen.dart';
@@ -105,6 +107,11 @@ class AppPages {
       name: allVillasScreenRoute,
       page: () => const AllVillasScreen(),
       binding: AllVillasScreenBinding()
+    ),
+    GetPage(
+      name: bookVillaScreenRoute,
+      page: () => const BookVillaScreen(),
+      binding: BookVillaScreenBinding()
     )
   ];
 }

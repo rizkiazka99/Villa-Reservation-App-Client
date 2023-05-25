@@ -5,6 +5,7 @@ import 'package:reservilla/core/colors.dart';
 import 'package:reservilla/core/font_sizes.dart';
 import 'package:reservilla/modules/controller/contents/reviews/add_review_controller.dart';
 import 'package:reservilla/widgets/back_button.dart';
+import 'package:reservilla/widgets/bottom_navbar_button.dart';
 import 'package:reservilla/widgets/custom_form.dart';
 import 'package:reservilla/widgets/default_button.dart';
 
@@ -85,22 +86,12 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: Container(
-        margin: const EdgeInsets.fromLTRB(8, 0, 8, 8),
-        child: ElevatedButton(
-          onPressed: () {
-            controller.initiateAddReview();
-          },
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(contextOrange),
-            padding: MaterialStateProperty.all(const EdgeInsets.all(16))
-          ),
-          child: Text(
-            'Kirim Ulasan',
-            style: buttonMd(color: Colors.white),
-            
-          )
-        ),
+      bottomNavigationBar: BottomNavBarButton(
+        onPressed: () {
+          controller.initiateAddReview();
+        },
+        buttonColor: contextOrange,
+        buttonText: 'Kirim Ulasan'
       ),
     );
   }

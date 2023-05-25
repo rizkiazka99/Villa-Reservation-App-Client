@@ -13,6 +13,7 @@ class CityCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
+      physics: const BouncingScrollPhysics(),
       scrollDirection: Axis.horizontal,
       padding: const EdgeInsets.only(right: 16),
       children: List.generate(
