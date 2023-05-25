@@ -5,6 +5,7 @@ import 'package:reservilla/data/models/auth/register_response.dart';
 import 'package:reservilla/data/models/contents/bookings/booking_detail_response.dart';
 import 'package:reservilla/data/models/contents/bookings/bookings_response.dart';
 import 'package:reservilla/data/models/contents/bookings/payment_check_response.dart';
+import 'package:reservilla/data/models/contents/locations/location_detail_response.dart';
 import 'package:reservilla/data/models/contents/locations/locations_response.dart';
 import 'package:reservilla/data/models/contents/profile/edit_profile_response.dart';
 import 'package:reservilla/data/models/contents/reviews/add_review_response.dart';
@@ -40,6 +41,11 @@ class Repository {
   Future<LocationsResponse> getLocations() async {
     final response = await locationsApi.getLocations();
     return LocationsResponse.fromJson(response);
+  }
+
+  Future<LocationDetailResponse> getLocationDetail(id) async {
+    final response = await locationsApi.getLocationDetail(id);
+    return LocationDetailResponse.fromJson(response);
   }
 
   Future<VillasResponse> getVillas() async {

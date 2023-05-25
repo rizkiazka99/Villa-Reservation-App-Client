@@ -137,7 +137,7 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
                               children: [
                                 Text(
                                   controller.bookingDetailData!.data.villa.name,
-                                  style: h3(color: contextOrange),
+                                  style: h3(color: Colors.black),
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                 ),
@@ -197,7 +197,10 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
                         children: [
                           Text(
                             'Waktu Inap',
-                            style: h4(color: contextOrange),
+                            style: h4(
+                              color: Colors.black,
+                              fontWeight: FontWeight.normal
+                            ),
                           ),
                           const SizedBox(height: 8),
                           Row(
@@ -259,7 +262,10 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
                         children: [
                           Text(
                             'Pembayaran',
-                            style: h4(color: contextOrange),
+                            style: h4(
+                              color: Colors.black,
+                              fontWeight: FontWeight.normal
+                            ),
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,

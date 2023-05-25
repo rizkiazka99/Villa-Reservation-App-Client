@@ -10,3 +10,5 @@ const addReviewScreenRoute = '/addReview';
 const editProfileScreenRoute = '/editProfileScreen';
 const userReviewsScreenRoute = '/userReviewsScreen';
 const villaDetailScreenRoute = '/villaDetail';
+const locationDetailScreenRoute = '/locationDetail';
+const allVillasScreenRoute = '/allVillas';

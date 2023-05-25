@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:reservilla/core/colors.dart';
+import 'package:reservilla/core/font_sizes.dart';
 import 'package:reservilla/core/theme.dart';
 import 'package:reservilla/modules/controller/contents/locations/location_screen_controller.dart';
 import 'package:reservilla/modules/controller/contents/home_screen_controller.dart';
 import 'package:reservilla/modules/controller/miscellaneous/dashboard_screen_controller.dart';
-import 'package:reservilla/widgets/loading_state.dart';
+import 'package:reservilla/router/route_variables.dart';
 import 'package:reservilla/widgets/skeleton_loader.dart';
 import 'package:reservilla/widgets/villa_card.dart';
 import 'package:reservilla/widgets/city_card.dart';
@@ -88,14 +89,39 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       const SizedBox(height: 30),
                       // NOTE: RECOMMENDED SPACE
-                      Padding(
-                        padding: EdgeInsets.only(left: edge),
-                        child: Text(
-                          'Villa - Villa Paling Recommended',
-                          style: regularTextStyle.copyWith(
-                            fontSize: 16,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(left: edge),
+                            child: Text(
+                              'Villa - Villa Recommended',
+                              style: regularTextStyle.copyWith(
+                                fontSize: 16,
+                              ),
+                            ),
                           ),
-                        ),
+                          Obx(() => controller.villasLoading ? const SizedBox.shrink() : Padding(
+                            padding: const EdgeInsets.only(right: 8),
+                            child: TextButton(
+                              onPressed: () {
+                                Get.toNamed(allVillasScreenRoute);
+                              },
+                              child: Column(
+                                children: [
+                                  Text(
+                                    'Lihat',
+                                    style: bodySm(color: contextOrange),
+                                  ),
+                                  Text(
+                                    'Semua',
+                                    style: bodySm(color: contextOrange)
+                                  )
+                                ],
+                              ),
+                            ),
+                          ))
+                        ],
                       ),
                       const SizedBox(height: 16),
                       Obx(() => controller.villasLoading ? Column(

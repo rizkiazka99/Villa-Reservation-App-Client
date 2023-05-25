@@ -205,6 +205,10 @@ class Locations extends Methods {
   Future getLocations() async {
     return await dioGet('locations');
   }
+
+  Future getLocationDetail(id) async {
+    return await dioGet('locations/$id');
+  }
 }
 
 class Bookings extends Methods {
