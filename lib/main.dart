@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:reservilla/core/colors.dart';
 import 'package:reservilla/router/route_app.dart';
 import 'package:reservilla/router/route_variables.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  await initializeDateFormatting('id_ID', null).then((value) =>
+    runApp(const MyApp())
+  );  
 }
 
 class MyApp extends StatelessWidget {

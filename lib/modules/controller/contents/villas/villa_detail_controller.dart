@@ -25,6 +25,7 @@ class VillaDetailController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    id = Get.arguments['id'];
     getVillaDetail();
   }
 
@@ -34,12 +35,9 @@ class VillaDetailController extends GetxController {
   }
 
   Future<VillaDetailResponse?> getVillaDetail() async {
-    id = Get.arguments['id'];
     villaDetailLoading = true;
-
     VillaDetailResponse? res = await repository.getVillaDetail(id);
     villaDetailData = res;
-
     villaDetailLoading = false;
 
     return villaDetailData;

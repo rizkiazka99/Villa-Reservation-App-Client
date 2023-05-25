@@ -72,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       Padding(
                         padding: EdgeInsets.only(left: edge),
                         child: Text(
-                          'Kota - Kota Populer',
+                          'Kota Populer',
                           style: regularTextStyle.copyWith(
                             fontSize: 16,
                           ),
@@ -95,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           Padding(
                             padding: EdgeInsets.only(left: edge),
                             child: Text(
-                              'Villa - Villa Recommended',
+                              'Rekomendasi Villa',
                               style: regularTextStyle.copyWith(
                                 fontSize: 16,
                               ),

@@ -4,10 +4,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:reservilla/core/colors.dart';
 import 'package:reservilla/core/font_sizes.dart';
 import 'package:reservilla/helpers/common_variables.dart';
 import 'package:reservilla/helpers/currency_formatter.dart';
+import 'package:reservilla/helpers/date_formatter.dart';
 import 'package:reservilla/modules/controller/contents/bookings/booking_detail_controller.dart';
 import 'package:reservilla/widgets/back_button.dart';
 import 'package:reservilla/widgets/default_snackbar.dart';
@@ -217,7 +219,10 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
                                 ),
                               ),
                               Text(
-                                controller.bookingDetailData!.data.bookingStartDate,
+                                DateFormatter.monthNameIncluded(
+                                  DateFormat('dd-MM-yyyy').parse(controller.bookingDetailData!.data.bookingStartDate), 
+                                  'id_ID'
+                                ),
                                 style: bodyMd(
                                   color: contextOrange,
                                   fontWeight: FontWeight.bold
@@ -239,7 +244,10 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
                                 ),
                               ),
                               Text(
-                                controller.bookingDetailData!.data.bookingEndDate,
+                                DateFormatter.monthNameIncluded(
+                                  DateFormat('dd-MM-yyyy').parse(controller.bookingDetailData!.data.bookingEndDate), 
+                                  'id_ID'
+                                ),
                                 style: bodyMd(
                                   color: contextOrange,
                                   fontWeight: FontWeight.bold

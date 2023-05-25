@@ -13,6 +13,7 @@ import 'package:reservilla/modules/controller/contents/villas/villa_detail_contr
 import 'package:reservilla/router/route_variables.dart';
 import 'package:reservilla/widgets/bottom_navbar_button.dart';
 import 'package:reservilla/widgets/custom_icon_button.dart';
+import 'package:reservilla/widgets/empty_state.dart';
 import 'package:reservilla/widgets/facility_item.dart';
 import 'package:reservilla/widgets/loading_state.dart';
 import 'package:reservilla/widgets/rating_item.dart';
@@ -73,7 +74,7 @@ class _VillaDetailScreenState extends State<VillaDetailScreen> {
         child: Obx(() {
           if (controller.villaDetailLoading) {
             return LoadingState(
-              height: MediaQuery.of(context).size.height / 2,
+              height: MediaQuery.of(context).size.height,
             );
           } else {
             return Stack(
@@ -247,8 +248,8 @@ class _VillaDetailScreenState extends State<VillaDetailScreen> {
                             ),
                           ),
                           const SizedBox(height: 12),
-                          SizedBox(
-                            height: 88,
+                          controller.villaDetailData!.data.villaGaleries.isNotEmpty ? SizedBox(
+                            height: 100,
                             child: ListView(
                               physics: const BouncingScrollPhysics(),
                               scrollDirection: Axis.horizontal,
@@ -270,6 +271,12 @@ class _VillaDetailScreenState extends State<VillaDetailScreen> {
                                 );
                               }).toList(),
                             ),
+                          ) : const EmptyState(
+                            height: 135, 
+                            imageAsset: 'assets/images/empty.png',
+                            imageHeight: 100,
+                            imageWidth: 100, 
+                            message: 'Foto tidak tersedia'
                           ),
                           const SizedBox(height: 30),
                           // NOTE: LOCATION
@@ -335,40 +342,51 @@ class _VillaDetailScreenState extends State<VillaDetailScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            BottomNavBarButton(
-              onPressed: () async {
-                Get.toNamed(
-                  bookVillaScreenRoute,
-                  arguments: {
-                    'villa_id': controller.villaDetailData!.data.id
-                  }
-                );
+            Obx(() => BottomNavBarButton(
+              onPressed: ()  {
+                if (!controller.villaDetailLoading) {
+                  Get.toNamed(
+                    bookVillaScreenRoute,
+                    arguments: {
+                      'villa_id': controller.villaDetailData!.data.id,
+                      'price': controller.villaDetailData!.data.price
+                    }
+                  );
+                }
               },
               width: MediaQuery.of(context).size.width / 1.6,
-              buttonColor: contextOrange,
+              buttonColor: controller.villaDetailLoading ? contextGrey : contextOrange,
               buttonText: 'Book Villa',
-            ),
+            )),
             Row(
               children: [
-                CustomIconButton(
+                Obx(() => CustomIconButton(
                   onTap: () {
-                    String mapsUrl = controller.villaDetailData!.data.mapUrl;
-                    controller.launchMaps(mapsUrl);
+                    if (!controller.villaDetailLoading) {
+                      String mapsUrl = controller.villaDetailData!.data.mapUrl;
+                      controller.launchMaps(mapsUrl);
+                    }
                   },
                   radius: 100, 
-                  icon: Icons.location_on
-                ),
+                  icon: Icons.location_on,
+                  iconColor: controller.villaDetailLoading ? contextGrey : contextOrange,
+                  borderColor: controller.villaDetailLoading ? contextGrey : contextOrange,
+                )),
+                const SizedBox(width: 8),
+                Obx(() => CustomIconButton(
+                  onTap: () {
+                    if (!controller.villaDetailLoading) {
+                      String phoneNumber = controller.villaDetailData!.data.phone;
+                      controller.launchDialer(phoneNumber);
+                    }
+                  },
+                  radius: 100,
+                  icon: Icons.phone,
+                  iconColor: controller.villaDetailLoading ? contextGrey : contextOrange,
+                  borderColor: controller.villaDetailLoading ? contextGrey : contextOrange,
+                )),
               ],
-            ),
-            const SizedBox(width: 8),
-            CustomIconButton(
-              onTap: () {
-                String phoneNumber = controller.villaDetailData!.data.phone;
-                controller.launchDialer(phoneNumber);
-              },
-              radius: 100,
-              icon: Icons.phone,
-            ),
+            )
           ],
         ),
       ),
