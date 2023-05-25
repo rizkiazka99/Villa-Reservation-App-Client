@@ -8,6 +8,7 @@ import 'package:reservilla/modules/binding/contents/profile/edit_profile_screen_
 import 'package:reservilla/modules/binding/contents/profile/profile_screen_binding.dart';
 import 'package:reservilla/modules/binding/contents/reviews/add_review_binding.dart';
 import 'package:reservilla/modules/binding/contents/reviews/user_reviews_screen_binding.dart';
+import 'package:reservilla/modules/binding/contents/villas/villa_detail_binding.dart';
 import 'package:reservilla/modules/binding/miscellaneous/dashboard_screen_binding.dart';
 import 'package:reservilla/modules/binding/miscellaneous/splash_screen_binding.dart';
 import 'package:reservilla/modules/view/auth/login_screen.dart';
@@ -19,6 +20,7 @@ import 'package:reservilla/modules/view/contents/profile/edit_profile_screen.dar
 import 'package:reservilla/modules/view/contents/profile/profile_screen.dart';
 import 'package:reservilla/modules/view/contents/reviews/add_review_screen.dart';
 import 'package:reservilla/modules/view/contents/reviews/user_reviews_screen.dart';
+import 'package:reservilla/modules/view/contents/villas/villa_detail_screen.dart';
 import 'package:reservilla/modules/view/miscellaneous/dashboard_screen.dart';
 import 'package:reservilla/modules/view/miscellaneous/splash_screen.dart';
 import 'package:reservilla/router/route_variables.dart';
@@ -84,6 +86,11 @@ class AppPages {
       name: editProfileScreenRoute,
       page: () => const EditProfileScreen(),
       binding: EditProfileScreenBinding()
-    )
+    ),
+    GetPage(
+      name: villaDetailScreenRoute,
+      page: () => const VillaDetailScreen(),
+      binding: VillaDetailBinding()
+    ),
   ];
 }

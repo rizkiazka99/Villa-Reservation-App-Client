@@ -191,6 +191,22 @@ class Users extends Methods {
   }
 }
 
+class Villas extends Methods {
+  Future getVillas() async {
+    return await dioGet('villas');
+  }
+
+  Future getVillaDetail(villaId) async {
+    return await dioGet('villas/$villaId');
+  }
+}
+
+class Locations extends Methods {
+  Future getLocations() async {
+    return await dioGet('locations');
+  }
+}
+
 class Bookings extends Methods {
   Future getBookingsByUser(UserId) async {
     return await dioGet('bookings/users/$UserId');

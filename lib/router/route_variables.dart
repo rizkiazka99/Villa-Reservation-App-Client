@@ -9,3 +9,4 @@ const bookingDetailScreenRoute = '/bookingDetail';
 const addReviewScreenRoute = '/addReview';
 const editProfileScreenRoute = '/editProfileScreen';
 const userReviewsScreenRoute = '/userReviewsScreen';
+const villaDetailScreenRoute = '/villaDetail';

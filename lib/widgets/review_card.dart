@@ -137,10 +137,12 @@ class _ReviewCardState extends State<ReviewCard> {
                           thickness: 2,
                           color: contextOrange,
                         ),
-                        Text(
-                          widget.reviews.data[index].comment.isNotEmpty ?
-                              widget.reviews.data[index].comment : 'Tidak diberikan komentar',
+                        widget.reviews.data[index].comment.isNotEmpty ? Text(
+                              widget.reviews.data[index].comment,
                           style: bodyMd(),
+                        ) : Text(
+                          'Tidak diberikan komentar',
+                          style: bodyMd(fontStyle: FontStyle.italic),
                         )
                       ],
                     ),
