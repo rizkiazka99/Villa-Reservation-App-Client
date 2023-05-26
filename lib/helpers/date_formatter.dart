@@ -6,6 +6,11 @@ class DateFormatter {
     return newDate;
   }
 
+  static String monthNameExcludedUndashed(DateTime date, String locale) {
+    String newDate = DateFormat('ddMMyyyy', locale).format(date);
+    return newDate;
+  }
+
   static String monthNameIncluded(DateTime date, String locale) {
     String newDate = DateFormat('dd MMMM yyyy', locale).format(date);
     return newDate;

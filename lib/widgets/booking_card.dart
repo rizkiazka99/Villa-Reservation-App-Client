@@ -8,6 +8,7 @@ import 'package:reservilla/core/font_sizes.dart';
 import 'package:reservilla/data/models/contents/bookings/bookings_response.dart';
 import 'package:reservilla/data/models/miscellaneous/user_response.dart';
 import 'package:reservilla/helpers/common_variables.dart';
+import 'package:reservilla/helpers/date_formatter.dart';
 import 'package:reservilla/modules/controller/contents/bookings/bookings_screen_controller.dart';
 import 'package:reservilla/router/route_variables.dart';
 
@@ -173,7 +174,10 @@ class _BookingCardState extends State<BookingCard> {
                                       style: bodyMd(),
                                     ),
                                     Text(
-                                      widget.bookingList[index].bookingStartDate,
+                                      DateFormatter.monthNameIncluded(
+                                        DateFormat('dd-MM-yyyy').parse(widget.bookingList[index].bookingStartDate), 
+                                        'id_ID'
+                                      ),
                                       style: bodyMd(
                                         fontWeight: FontWeight.bold,
                                         color: contextOrange
@@ -197,7 +201,10 @@ class _BookingCardState extends State<BookingCard> {
                                       style: bodyMd(),
                                     ),
                                     Text(
-                                      widget.bookingList[index].bookingEndDate,
+                                      DateFormatter.monthNameIncluded(
+                                        DateFormat('dd-MM-yyyy').parse(widget.bookingList[index].bookingEndDate), 
+                                        'id_ID'
+                                      ),
                                       style: bodyMd(
                                         fontWeight: FontWeight.bold,
                                         color: contextOrange

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:reservilla/core/colors.dart';
 import 'package:reservilla/core/font_sizes.dart';
+import 'package:reservilla/helpers/currency_formatter.dart';
 import 'package:reservilla/helpers/date_formatter.dart';
 import 'package:reservilla/modules/controller/contents/villas/book_villa_screen_controller.dart';
 import 'package:reservilla/widgets/back_button.dart';
@@ -174,12 +175,104 @@ class _BookVillaScreenState extends State<BookVillaScreen> {
                   thickness: 10,
                   color: backgroundColorPrimary,
                 ),
-                /*Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
                   child: Text(
-
+                    'Rincian',
+                    style: h4(color: contextOrange),
                   ),
-                )*/
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Check-In',
+                        style: bodyMd(),
+                      ),
+                      Obx(() => Text(
+                        !controller.bookingStartDateUpdated ? 'N/A'
+                            : DateFormatter.monthNameAndDaysIncluded(
+                                controller.currentDateStart, 'id_ID'
+                              ),
+                        style: h5(color: contextOrange)
+                      ))
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Check-Out',
+                        style: bodyMd(),
+                      ),
+                      Obx(() => Text(
+                        !controller.bookingEndDateUpdated ? 'N/A'
+                            : DateFormatter.monthNameAndDaysIncluded(
+                                controller.currentDateEnd, 'id_ID'
+                              ),
+                        style: h5(color: contextOrange)
+                      ))
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Metode Pembayaran',
+                        style: bodyMd(),
+                      ),
+                      Obx(() => Text(
+                        controller.selectedPaymentMethod == 'bca' ? 'BCA'
+                            : 'PERMATA',
+                        style: h5(color: contextOrange)
+                      ))
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+                  child: Obx(() => !controller.bookingStartDateUpdated && !controller.bookingEndDateUpdated ?
+                      const SizedBox.shrink() : Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Total',
+                            style: bodyMd(),
+                          ),
+                          const SizedBox(height: 5),
+                          Container(
+                            width: MediaQuery.of(context).size.width,
+                            padding: const EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                              color: contextOrange,
+                              borderRadius: BorderRadius.circular(15)
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  '${controller.stayingDays} hari x ${CurrencyFormatter.convertToIdr(controller.price, 2)} =',
+                                  style: h6(color: Colors.white),
+                                ),
+                                Text(
+                                  CurrencyFormatter.convertToIdr(controller.grossAmount, 2),
+                                  style: h5(color: Colors.white),
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
+                      )
+                  ),
+                )
               ],
             ),
           ),
@@ -187,7 +280,13 @@ class _BookVillaScreenState extends State<BookVillaScreen> {
       ),
       bottomNavigationBar: BottomNavBarButton(
         onPressed: () {
-
+          if (!controller.bookingStartDateUpdated) {
+            defaultSnackbar('Ups!', 'Tolong pilih tanggal check-in dulu');
+          } else if (!controller.bookingEndDateUpdated) {
+            defaultSnackbar('Ups!', 'Tolong pilih tanggal check-out dulu');
+          } else {
+            controller.initiateBook();
+          }
         }, 
         buttonColor: contextOrange, 
         buttonText: 'Ajukan Booking'
