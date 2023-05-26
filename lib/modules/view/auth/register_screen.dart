@@ -63,19 +63,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                   ),
                 ),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height,
-                  margin: EdgeInsets.only(top: MediaQuery.of(context).size.height / 6),
-                  padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(35),
-                      topRight: Radius.circular(35)
-                    )
-                  ),
-                  child: SingleChildScrollView(
+                SingleChildScrollView(
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    margin: EdgeInsets.only(top: MediaQuery.of(context).size.height / 6),
+                    padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(35),
+                        topRight: Radius.circular(35)
+                      )
+                    ),
                     child: Column(
                       children: [
                         Container(
@@ -115,7 +114,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   ),
                                   validator: (value) {
                                     bool validate = EmailValidator.validate(value!);
-    
+                    
                                     if (value.isEmpty) {
                                       return 'Kolom e-mail tidak boleh kosong';
                                     } else {
@@ -166,7 +165,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   ),
                                   validator: (value) {
                                     bool validate = CustomRegEx.validateOnlyLetters(value!);
-    
+                    
                                     if (value.isEmpty) {
                                       return 'Kolom nama tidak boleh kosong';
                                     } else {
@@ -201,7 +200,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   ),
                                   validator: (value) {
                                     bool validate = CustomRegEx.validatePassword(value!);
-    
+                    
                                     if (value.isEmpty) {
                                       return 'Kolom password tidak boleh kosong';
                                     } else {

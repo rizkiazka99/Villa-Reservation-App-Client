@@ -262,7 +262,7 @@ class _VillaDetailScreenState extends State<VillaDetailScreen> {
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(16),
                                     child: Image.network(
-                                      "http://10.0.2.2:3000/${item.imageName}",
+                                      "$baseUrlImg${item.imageName}",
                                       width: 150,
                                       height: 180,
                                       fit: BoxFit.cover,
