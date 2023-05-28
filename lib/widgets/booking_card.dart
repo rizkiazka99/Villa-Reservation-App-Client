@@ -141,7 +141,7 @@ class _BookingCardState extends State<BookingCard> {
                                     ),
                                     Text(
                                       'Booking ID: ${widget.bookingList[index].id}',
-                                      style: bodyMd(),
+                                      style: bodySm(),
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
                                     )

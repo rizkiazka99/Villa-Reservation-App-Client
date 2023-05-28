@@ -72,10 +72,12 @@ class EditProfileScreenController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    id = dashboardScreenController.user!.data.id.toString();
-    emailController.text = dashboardScreenController.user!.data.email;
-    nameController.text = dashboardScreenController.user!.data.name;
-    phoneController.text = '0${dashboardScreenController.user!.data.phone}';
+    if (dashboardScreenController.user != null) {
+      id = dashboardScreenController.user!.data.id.toString();
+      emailController.text = dashboardScreenController.user!.data.email;
+      nameController.text = dashboardScreenController.user!.data.name;
+      phoneController.text = '0${dashboardScreenController.user!.data.phone}';
+    }
   }
 
   @override

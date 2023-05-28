@@ -25,6 +25,7 @@ class BookVillaScreenController extends GetxController {
   RxInt _grossAmount = 0.obs;
   RxString _orderId = ''.obs;
   RxString _villaId = ''.obs;
+  RxString _villaName = ''.obs;
   RxString _bookingStartDate = ''.obs;
   RxString _bookingEndDate = ''.obs;
   RxString _selectedPaymentMethod = 'permata'.obs;
@@ -41,6 +42,7 @@ class BookVillaScreenController extends GetxController {
   int get grossAmount => _grossAmount.value;
   String get orderId => _orderId.value;
   String get villaId => _villaId.value;
+  String get villaName => _villaName.value;
   String get bookingStartDate => _bookingStartDate.value;
   String get bookingEndDate => _bookingEndDate.value;
   String get selectedPaymentMethod => _selectedPaymentMethod.value;
@@ -62,6 +64,7 @@ class BookVillaScreenController extends GetxController {
   set grossAmount(int grossAmount) => this._grossAmount.value = grossAmount;
   set orderId(String orderId) => this._orderId.value = orderId;
   set villaId(String villaId) => this._villaId.value = villaId;
+  set villaName(String villaName) => this._villaName.value = villaName;
   set bookingStartDate(String bookingStartDate) =>
       this._bookingStartDate.value = bookingStartDate;
   set bookingEndDate(String bookingEndDate) =>
@@ -88,6 +91,7 @@ class BookVillaScreenController extends GetxController {
   void onInit() {
     super.onInit();
     villaId = Get.arguments['villa_id'].toString();
+    villaName = Get.arguments['name'].toString();
     price = Get.arguments['price'];
     getUserData();
   }
@@ -112,8 +116,8 @@ class BookVillaScreenController extends GetxController {
   Future<Null> selectCheckInDate(BuildContext context) async {
     DateTime? newDate = await showDatePicker(
       context: context,
-      initialDate: currentDateStart,
-      firstDate: currentDateStart,
+      initialDate: bookingStartDateUpdated ? currentDateStart : DateTime.now(),
+      firstDate: DateTime.now(),
       lastDate: DateTime(currentDateStart.year, currentDateStart.month, currentDateStart.day + 122),
       builder: (context, child) {
         return Theme(
@@ -139,6 +143,8 @@ class BookVillaScreenController extends GetxController {
       currentDateStart = newDate;
       if (currentDateStart.isAfter(currentDateEnd)) {
         bookingEndDateUpdated = false;
+        stayingDays = 0;
+        totalPayment(stayingDays, price);
       }
       bookingStartDate = DateFormatter.monthNameExcluded(currentDateStart, 'id_ID');
     }
@@ -246,8 +252,13 @@ class BookVillaScreenController extends GetxController {
 
     if (bookData!.status) {
       Get.back();
-      Get.offAllNamed(dashboardScreenRoute);
-      defaultSnackbar('Sukses!', 'Booking Anda telah diajukan');
+      Get.offAllNamed(
+        bookSuccessScreenRoute,
+        arguments: {
+          'booking_id': bookData!.data!.id,
+          'name': villaName
+        }
+      );
     } else {
       if (bookData!.message == 'You already have a booking on the same Villa at the same date') {
         Get.back();

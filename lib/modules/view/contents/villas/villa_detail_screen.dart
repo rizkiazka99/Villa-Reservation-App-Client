@@ -349,6 +349,7 @@ class _VillaDetailScreenState extends State<VillaDetailScreen> {
                     bookVillaScreenRoute,
                     arguments: {
                       'villa_id': controller.villaDetailData!.data.id,
+                      'name': controller.villaDetailData!.data.name,
                       'price': controller.villaDetailData!.data.price
                     }
                   );

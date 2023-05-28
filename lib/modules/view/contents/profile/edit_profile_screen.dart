@@ -13,8 +13,6 @@ import 'package:reservilla/widgets/back_button.dart';
 import 'package:reservilla/widgets/confirmation_dialog.dart';
 import 'package:reservilla/widgets/custom_form.dart';
 import 'package:reservilla/widgets/default_button.dart';
-import 'package:reservilla/widgets/error_state.dart';
-import 'package:reservilla/widgets/loading_state.dart';
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({super.key});
@@ -25,7 +23,6 @@ class EditProfileScreen extends StatefulWidget {
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
   EditProfileScreenController controller = Get.find<EditProfileScreenController>();
-  DashboardScreenController dashboardScreenController = Get.find<DashboardScreenController>();
 
   triggerModalBottomSheet(BuildContext context) async {
     showModalBottomSheet(
@@ -147,7 +144,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       topRight: Radius.circular(35)
                     )
                   ),
-                  child: Obx(() => !dashboardScreenController.userLoading && dashboardScreenController.user != null ? SingleChildScrollView(
+                  child: SingleChildScrollView(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -328,11 +325,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         )
                       ],
                     ),
-                  ) : dashboardScreenController.userLoading && dashboardScreenController.user == null ? 
-                    LoadingState(height: MediaQuery.of(context).size.height)
-                    : !dashboardScreenController.userLoading && dashboardScreenController.user == null ?
-                    ErrorState(iconSize: 100, color: contextRed, textStyle: h4())
-                    : const SizedBox.shrink()
                   ),
                 ),
               ],

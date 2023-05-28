@@ -13,3 +13,4 @@ const villaDetailScreenRoute = '/villaDetail';
 const locationDetailScreenRoute = '/locationDetail';
 const allVillasScreenRoute = '/allVillas';
 const bookVillaScreenRoute = '/bookVillas';
+const bookSuccessScreenRoute = '/bookSuccessScreen';
