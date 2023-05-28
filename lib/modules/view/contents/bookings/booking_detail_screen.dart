@@ -86,18 +86,18 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () {
-        if (Get.previousRoute != bookingsScreenRoute) {
+        if (Get.previousRoute != dashboardScreenRoute) {
           Get.offAllNamed(dashboardScreenRoute);
           return Future.value(false);
         } else {
-          Get.offAllNamed(bookingsScreenRoute);
+          Get.back();
           return Future.value(false);
         }
       },
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          leading: Get.previousRoute != bookingsScreenRoute ? const SizedBox.shrink() 
+          leading: Get.previousRoute != dashboardScreenRoute ? const SizedBox.shrink() 
               : backButton(),
           title: Obx(() => controller.bookingDetailLoading ? const Text('Booking') : 
             Text(

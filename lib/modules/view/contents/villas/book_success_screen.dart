@@ -26,6 +26,16 @@ class _BookSuccessScreenState extends State<BookSuccessScreen> {
           height: MediaQuery.of(context).size.height,
           child: Container(
             padding: const EdgeInsets.all(16),
+            margin: EdgeInsets.fromLTRB(
+              16, 
+              MediaQuery.of(context).size.height / 8, 
+              16, 
+              MediaQuery.of(context).size.height / 8
+            ),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(15),
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -50,7 +60,7 @@ class _BookSuccessScreenState extends State<BookSuccessScreen> {
                       }
                     );
                   }, 
-                  color: Colors.white, 
+                  color: contextOrange, 
                   buttonText: 'Lihat Detail Booking'
                 ),
                 const SizedBox(height: 10),

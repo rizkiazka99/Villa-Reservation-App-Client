@@ -32,6 +32,7 @@ class BookingDetailController extends GetxController {
   void onInit() {
     super.onInit();
     getBookingDetail();
+    print(Get.previousRoute);
   }
 
   @override

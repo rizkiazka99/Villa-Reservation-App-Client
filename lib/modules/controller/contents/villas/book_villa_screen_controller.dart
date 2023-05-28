@@ -263,6 +263,9 @@ class BookVillaScreenController extends GetxController {
       if (bookData!.message == 'You already have a booking on the same Villa at the same date') {
         Get.back();
         defaultSnackbar('Ups!', 'Anda telah booking villa ini pada tanggal yang sama');
+      } else if (bookData!.message == 'This villa has been booked on the date of your choosing') {
+        Get.back();
+        defaultSnackbar('Ups!', 'Villa telah di-booking pada tanggal yang Anda pilih');
       } else {
         Get.back();
         defaultSnackbar('Ups!', 'Terjadi kesalahan, silahkan coba lagi');
