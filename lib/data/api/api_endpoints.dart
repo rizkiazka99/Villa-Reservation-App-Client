@@ -142,20 +142,20 @@ class Methods {
     }
   }
 
-  // File Upload
-  dioUpload(String url, FormData formData, dynamic onSendProgress) async {
+  // Profile Picture Upload
+  dioUploadProfilePicture(String url, FormData formData, dynamic onSendProgress) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.reload();
     String? accessToken = prefs.getString('access_token');
 
     try {
-      final response = await dio.post(
+      final response = await dio.put(
         baseUrlImg + url,
         data: formData,
         onSendProgress: onSendProgress,
         options: Options(
           headers: {
-            'Content-Type': 'multipart/form-data',
+            //'Content-Type': 'multipart/form-data',
             'access_token': accessToken
           }
         )
@@ -169,8 +169,8 @@ class Methods {
 }
 
 class Upload extends Methods {
-  Future uploadFile(FormData formData, Function onSendProgress) async {
-    return await dioUpload('uploads', formData, onSendProgress);
+  Future uploadProfilePicture(String id, FormData formData, Function onSendProgress) async {
+    return await dioUploadProfilePicture('users/update/$id', formData, onSendProgress);
   }
 }
 
@@ -185,6 +185,10 @@ class Users extends Methods {
 
   Future getUserById(id) async {
     return await dioGet('users/$id');
+  }
+
+  Future verifyPassword(data) async {
+    return await dioPost('users/verifyPassword', data);
   }
 
   Future editProfile(id, data) async {

@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:reservilla/data/api/api_endpoints.dart';
 import 'package:reservilla/data/models/auth/login_response.dart';
 import 'package:reservilla/data/models/auth/register_response.dart';
+import 'package:reservilla/data/models/auth/verify_password_response.dart';
 import 'package:reservilla/data/models/contents/bookings/book_response.dart';
 import 'package:reservilla/data/models/contents/bookings/booking_detail_response.dart';
 import 'package:reservilla/data/models/contents/bookings/bookings_response.dart';
@@ -25,6 +26,7 @@ class Repository {
   Bookings bookingsApi = Bookings();
   Reviews reviewsApi = Reviews();
   
+  // Users/Auth
   Future<LoginResponse> login(data) async {
     final response = await usersApi.login(data);
     return LoginResponse.fromJson(response);
@@ -35,11 +37,28 @@ class Repository {
     return RegisterResponse.fromJson(response);
   }
 
-  Future uploadFile(FormData formData, Function onSendProgress) async {
-    final response = await uploadApi.uploadFile(formData, onSendProgress);
-    return response;
+  Future<VerifyPasswordResponse> verifyPassword(data) async {
+    final response = await usersApi.verifyPassword(data);
+    return VerifyPasswordResponse.fromJson(response);
   }
 
+  Future<EditProfileResponse> editProfile(id, data) async {
+    final response = await usersApi.editProfile(id, data);
+    return EditProfileResponse.fromJson(response);
+  }
+
+  Future<EditProfileResponse> uploadProfilePicture(String id, FormData formData, Function onSendProgress) async {
+    final response = await uploadApi.uploadProfilePicture(id, formData, onSendProgress);
+    print(response);
+    return EditProfileResponse.fromJson(response);
+  }
+
+  Future<UserResponse> getUserById(id) async {
+    final response = await usersApi.getUserById(id);
+    return UserResponse.fromJson(response);
+  }
+
+  // Locations
   Future<LocationsResponse> getLocations() async {
     final response = await locationsApi.getLocations();
     return LocationsResponse.fromJson(response);
@@ -50,6 +69,7 @@ class Repository {
     return LocationDetailResponse.fromJson(response);
   }
 
+  // Villas
   Future<VillasResponse> getVillas() async {
     final response = await villasApi.getVillas();
     return VillasResponse.fromJson(response);
@@ -65,6 +85,7 @@ class Repository {
     return VillaSearchResponse.fromJson(response);
   }
 
+  // Bookings
   Future<BookResponse> book(data) async {
     final response = await bookingsApi.book(data);
     print(response);
@@ -86,11 +107,7 @@ class Repository {
     return PaymentCheckResponse.fromJson(response);
   }
 
-  Future<UserResponse> getUserById(id) async {
-    final response = await usersApi.getUserById(id);
-    return UserResponse.fromJson(response);
-  }
-
+  // Reviews
   Future<AddReviewResponse> addReview(data) async {
     final response = await reviewsApi.addReview(data);
     return AddReviewResponse.fromJson(response);
@@ -99,10 +116,5 @@ class Repository {
   Future<UserReviewsResponse> getUserReviews() async {
     final response = await reviewsApi.getUserReviews();
     return UserReviewsResponse.fromJson(response);
-  }
-
-  Future<EditProfileResponse> editProfile(id, data) async {
-    final response = await usersApi.editProfile(id, data);
-    return EditProfileResponse.fromJson(response);
   }
 }

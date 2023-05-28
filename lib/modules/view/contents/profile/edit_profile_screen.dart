@@ -7,7 +7,6 @@ import 'package:reservilla/core/colors.dart';
 import 'package:reservilla/core/font_sizes.dart';
 import 'package:reservilla/helpers/regex.dart';
 import 'package:reservilla/modules/controller/contents/profile/edit_profile_screen_controller.dart';
-import 'package:reservilla/modules/controller/miscellaneous/dashboard_screen_controller.dart';
 import 'package:reservilla/router/route_variables.dart';
 import 'package:reservilla/widgets/back_button.dart';
 import 'package:reservilla/widgets/confirmation_dialog.dart';
@@ -94,7 +93,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () {
-        if (controller.emailController.text.isNotEmpty || controller.phoneController.text.isNotEmpty ||
+        if (controller.phoneController.text.isNotEmpty ||
                 controller.nameController.text.isNotEmpty) {
             Get.dialog(
               ConfirmationDialog(
@@ -186,7 +185,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                     Center(
                                       child: Image.file(
                                         controller.image!,
-                                        fit: BoxFit.contain
+                                        fit: BoxFit.contain,
+                                        height: 200,
                                       )
                                     ),
                                     Positioned(
@@ -221,31 +221,31 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           ),
                         ),
                         Container(
-                          padding: const EdgeInsets.only(top: 15, bottom: 15),
+                          padding: const EdgeInsets.only(top: 15),
                           child: CustomForm(
-                            formKey: controller.emailFormKey, 
-                            autovalidateMode: controller.autoValidateEmail, 
-                            controller: controller.emailController, 
-                            hintText: 'E-mail', 
+                            formKey: controller.nameFormKey, 
+                            autovalidateMode: controller.autoValidateName, 
+                            controller: controller.nameController, 
+                            hintText: 'Nama', 
                             prefixIcon: const Icon(
-                              Icons.email,
+                              Icons.person,
                               color: contextOrange,
                             ),
                             validator: (value) {
-                              bool validate = EmailValidator.validate(value!);
+                              bool validate = CustomRegEx.validateOnlyLetters(value!);
     
                               if (value.isEmpty) {
-                                return 'Kolom e-mail tidak boleh kosong';
+                                return 'Kolom nama tidak boleh kosong';
                               } else {
                                 if (!validate) {
-                                  return 'E-mail tidak valid';
+                                  return 'Nama hanya boleh terdiri dari karakter huruf A-Z atau a-z';
                                 }
                               }
                             }
                           )
                         ),
                         Container(
-                          padding: const EdgeInsets.only(bottom: 15),
+                          padding: const EdgeInsets.only(top: 15, bottom: 15),
                           child: CustomForm(
                             formKey: controller.phoneFormKey, 
                             autovalidateMode: controller.autoValidatePhone, 
@@ -271,30 +271,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             }
                           ),
                         ),
-                        Container(
-                          padding: const EdgeInsets.only(bottom: 15),
-                          child: CustomForm(
-                            formKey: controller.nameFormKey, 
-                            autovalidateMode: controller.autoValidateName, 
-                            controller: controller.nameController, 
-                            hintText: 'Nama', 
-                            prefixIcon: const Icon(
-                              Icons.person,
-                              color: contextOrange,
-                            ),
-                            validator: (value) {
-                              bool validate = CustomRegEx.validateOnlyLetters(value!);
-    
-                              if (value.isEmpty) {
-                                return 'Kolom nama tidak boleh kosong';
-                              } else {
-                                if (!validate) {
-                                  return 'Nama hanya boleh terdiri dari karakter huruf A-Z atau a-z';
-                                }
-                              }
-                            }
-                          )
-                        ),
                         DefaultButton(
                           onTap: () {
                             controller.initiateEditProfile();
@@ -305,7 +281,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         const SizedBox(height: 15),
                         DefaultButton(
                           onTap: () {
-                            if (controller.emailController.text.isNotEmpty || controller.phoneController.text.isNotEmpty ||
+                            if (controller.phoneController.text.isNotEmpty ||
                                     controller.nameController.text.isNotEmpty) {
                                 Get.dialog(
                                   ConfirmationDialog(
