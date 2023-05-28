@@ -11,6 +11,7 @@ import 'package:reservilla/data/models/contents/locations/locations_response.dar
 import 'package:reservilla/data/models/contents/profile/edit_profile_response.dart';
 import 'package:reservilla/data/models/contents/reviews/add_review_response.dart';
 import 'package:reservilla/data/models/contents/villas/villa_detail_response.dart';
+import 'package:reservilla/data/models/contents/villas/villa_search_response.dart';
 import 'package:reservilla/data/models/contents/villas/villas_response.dart';
 import 'package:reservilla/data/models/miscellaneous/user_response.dart';
 
@@ -57,6 +58,11 @@ class Repository {
   Future<VillaDetailResponse> getVillaDetail(villaId) async {
     final response = await villasApi.getVillaDetail(villaId);
     return VillaDetailResponse.fromJson(response);
+  }
+
+  Future<VillaSearchResponse> searchVilla(query) async {
+    final response = await villasApi.searchVilla(query);
+    return VillaSearchResponse.fromJson(response);
   }
 
   Future<BookResponse> book(data) async {

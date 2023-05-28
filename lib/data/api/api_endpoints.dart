@@ -90,7 +90,7 @@ class Methods {
           }
         )
       );
-
+      print(response.data);
       return response.data;
     } catch(err) {
       return handleError(err);
@@ -199,6 +199,10 @@ class Villas extends Methods {
 
   Future getVillaDetail(villaId) async {
     return await dioGet('villas/$villaId');
+  }
+
+  Future searchVilla(query) async {
+    return await dioGet('villas/search/$query');
   }
 }
 

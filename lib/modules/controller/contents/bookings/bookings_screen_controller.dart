@@ -79,8 +79,7 @@ class BookingsScreenController extends GetxController {
   getBooked() {
     if (bookingsData!.data.isNotEmpty) {
       booked = bookingsData!.data.where((booking) {
-        DateTime formattedBookingStartDate = DateFormat('dd-MM-yyyy').parse(booking.bookingStartDate);
-        return formattedBookingStartDate.isAfter(DateTime.now()) && booking.status != 'expire';
+        return booking.status != 'expire';
       }).toList();
 
       if (selectedStatus == 'Semua') {
@@ -95,7 +94,7 @@ class BookingsScreenController extends GetxController {
     if (bookingsData!.data.isNotEmpty) {
       pastBooking = bookingsData!.data.where((booking) {
         DateTime formattedBookingEndDate = DateFormat('dd-MM-yyyy').parse(booking.bookingEndDate);
-        return formattedBookingEndDate.isBefore(DateTime.now()) && booking.status != 'expire';
+        return formattedBookingEndDate.isBefore(DateTime.now()) && booking.status == 'settlement';
       }).toList();
     } else {
       pastBooking = [];

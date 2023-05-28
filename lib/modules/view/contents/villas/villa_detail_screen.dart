@@ -16,8 +16,6 @@ import 'package:reservilla/widgets/custom_icon_button.dart';
 import 'package:reservilla/widgets/empty_state.dart';
 import 'package:reservilla/widgets/facility_item.dart';
 import 'package:reservilla/widgets/loading_state.dart';
-import 'package:reservilla/widgets/rating_item.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class VillaDetailScreen extends StatefulWidget {
   const VillaDetailScreen({super.key});
@@ -31,42 +29,6 @@ class _VillaDetailScreenState extends State<VillaDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Future<void> handleBook(Data space) async {
-      return showDialog<void>(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('Konfirmasi'),
-            content: SingleChildScrollView(
-              child: ListBody(
-                children: <Widget>[
-                  Text('Apakah kamu ingin menghubungi pemilik villa?'),
-                ],
-              ),
-            ),
-            actions: <Widget>[
-              TextButton(
-                child: Text(
-                  'Nanti',
-                  style: greyTextStyle,
-                ),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-              TextButton(
-                child: Text('Hubungi'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  // launchUrl('tel:${space.phone}');
-                },
-              ),
-            ],
-          );
-        },
-      );
-    }
-
     return Scaffold(
       backgroundColor: whiteColor,
       body: SafeArea(
@@ -196,7 +158,7 @@ class _VillaDetailScreenState extends State<VillaDetailScreen> {
                               children: [
                                 FacilityItem(
                                   name: 'Pool',
-                                  imageUrl: 'assets/icons/icon_kitchen.png',
+                                  imageUrl: 'assets/icons/icon_swimming_pool.webp',
                                   total: controller
                                           .villaDetailData!.data.swimmingPool
                                       ? "Available"
@@ -210,7 +172,7 @@ class _VillaDetailScreenState extends State<VillaDetailScreen> {
                                 ),
                                 FacilityItem(
                                   name: 'Bathroom',
-                                  imageUrl: 'assets/icons/icon_cupboard.png',
+                                  imageUrl: 'assets/icons/icon_bathroom.png',
                                   total:
                                       '${controller.villaDetailData!.data.bathroom}',
                                 ),

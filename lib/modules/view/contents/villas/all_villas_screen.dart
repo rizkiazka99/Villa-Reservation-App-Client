@@ -82,8 +82,8 @@ class _AllVillasScreenState extends State<AllVillasScreen> {
                             validator: (value) {
 
                             },
-                            onChanged: (query) {
-                              controller.searchVilla(query);
+                            onChanged: (query) async {
+                              await controller.searchVilla(query);
                             },
                           )
                       ),
@@ -95,14 +95,25 @@ class _AllVillasScreenState extends State<AllVillasScreen> {
                             if (controller.searchController.text.isEmpty) {
                               return VillaCard(controller.villasData!.data);
                             } else {
-                              if (controller.searchResult.isEmpty) {
-                                return EmptyState(
-                                  height: MediaQuery.of(context).size.height / 1.7,
-                                  imageAsset: 'assets/images/no_villa_available.webp',
-                                  message: 'Villa dengan nama "${controller.searchController.text}" tidak ditemukan',
+                              if (controller.searchLoading) {
+                                return LoadingState(
+                                  height: MediaQuery.of(context).size.height / 1.7
                                 );
                               } else {
+                                if (controller.searchResult!.data.isEmpty) {
+                                  return EmptyState(
+                                    height: MediaQuery.of(context).size.height / 1.7,
+                                    imageAsset: 'assets/images/no_villa_available.webp',
+                                    message: 'Villa dengan nama "${controller.searchController.text}" tidak ditemukan',
+                                  );
+                              } else {
+                                // API Search
+                                return SearchedVillaCard(controller.searchResult!.data);
+
+                                /*// Local Search
                                 return VillaCard(controller.searchResult);
+                                */
+                              }
                               }
                             }
                           }),
