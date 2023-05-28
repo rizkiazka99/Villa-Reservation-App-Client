@@ -61,6 +61,7 @@ class Repository {
 
   Future<BookResponse> book(data) async {
     final response = await bookingsApi.book(data);
+    print(response);
     return BookResponse.fromJson(response);
   }
 

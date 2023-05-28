@@ -112,7 +112,8 @@ class Methods {
           }
         )
       );
-
+      
+      print(response.data);
       return response.data;
     } catch(err) {
       return handleError(err);

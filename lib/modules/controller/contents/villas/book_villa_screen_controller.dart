@@ -11,7 +11,6 @@ import 'package:reservilla/helpers/days_between_dates.dart';
 import 'package:reservilla/router/route_variables.dart';
 import 'package:reservilla/widgets/default_snackbar.dart';
 import 'package:reservilla/widgets/loader_dialog.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class BookVillaScreenController extends GetxController {
   Repository repository = Repository();
@@ -138,6 +137,9 @@ class BookVillaScreenController extends GetxController {
     } else {
       bookingStartDateUpdated = true;
       currentDateStart = newDate;
+      if (currentDateStart.isAfter(currentDateEnd)) {
+        bookingEndDateUpdated = false;
+      }
       bookingStartDate = DateFormatter.monthNameExcluded(currentDateStart, 'id_ID');
     }
   }
@@ -145,7 +147,8 @@ class BookVillaScreenController extends GetxController {
   Future<Null> selectCheckOutDate(BuildContext context) async {
     DateTime? newDate = await showDatePicker(
       context: context,
-      initialDate: !bookingEndDateUpdated ? currentDateStart.add(const Duration(days: 1)) : currentDateEnd,
+      initialDate: !bookingEndDateUpdated ? currentDateStart.add(const Duration(days: 1)) : 
+          currentDateStart.isAfter(currentDateEnd) ? currentDateStart.add(const Duration(days: 1)) : currentDateEnd,
       firstDate: currentDateStart.add(const Duration(days: 1)),
       lastDate: DateTime(currentDateStart.year, currentDateStart.month, currentDateStart.day + 121),
       builder: (context, child) {
@@ -179,7 +182,7 @@ class BookVillaScreenController extends GetxController {
   generateOrderId()  {
     String id = user!.id.toString();
     String bookTime = DateFormatter.monthNameExcludedUndashed(DateTime.now(), 'id_ID');
-    orderId = 'C$id$villaId$bookTime';
+    orderId = 'C$id$villaId$bookTime${DateTime.now().microsecond}';
 
     return orderId;
   }
@@ -223,8 +226,10 @@ class BookVillaScreenController extends GetxController {
     bookLoading = true;
     if (selectedPaymentMethod == 'bca') {
       res = await repository.book(dataBca);
+      print(dataBca);
     } else {
       res = await repository.book(dataPermata);
+      print(dataPermata);
     }
     bookData = res;
     bookLoading = false;
@@ -244,8 +249,13 @@ class BookVillaScreenController extends GetxController {
       Get.offAllNamed(dashboardScreenRoute);
       defaultSnackbar('Sukses!', 'Booking Anda telah diajukan');
     } else {
-      Get.back();
-      defaultSnackbar('Ups!', 'Terjadi kesalahan, silahkan coba lagi');
+      if (bookData!.message == 'You already have a booking on the same Villa at the same date') {
+        Get.back();
+        defaultSnackbar('Ups!', 'Anda telah booking villa ini pada tanggal yang sama');
+      } else {
+        Get.back();
+        defaultSnackbar('Ups!', 'Terjadi kesalahan, silahkan coba lagi');
+      }
     }
   }
 }

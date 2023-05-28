@@ -1,7 +1,7 @@
 class BookResponse {
     bool status;
     String message;
-    Data data;
+    Data? data;
 
     BookResponse({
         required this.status,
@@ -12,13 +12,13 @@ class BookResponse {
     factory BookResponse.fromJson(Map<String, dynamic> json) => BookResponse(
         status: json["status"],
         message: json["message"],
-        data: Data.fromJson(json["data"]),
+        data: json["data"] == null ? null : Data.fromJson(json["data"])
     );
 
     Map<String, dynamic> toJson() => {
         "status": status,
         "message": message,
-        "data": data.toJson(),
+        "data": data!.toJson(),
     };
 }
 
