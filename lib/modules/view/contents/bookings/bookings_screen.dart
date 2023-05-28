@@ -131,7 +131,7 @@ class _BookingsScreenState extends State<BookingsScreen> {
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          title: const Text('Bookings'),
+          title: const Text('Booking'),
           scrolledUnderElevation: 0,
         ),
         body: SafeArea(

@@ -39,64 +39,43 @@ class _DashboardScreenState extends State<DashboardScreen> {
           child: Obx(() => BottomNavigationBar(
             items: [
               BottomNavigationBarItem(
-                icon: IconButton(
-                  onPressed: () {
-                    if (controller.homeController.status == AnimationStatus.dismissed) {
-                      controller.homeController.reset();
-                      controller.homeController.animateTo(0.6);
-                    } else {
-                      controller.homeController.reverse();
-                    }
-                    controller.onItemTapped(0);
-                  },
-                  splashRadius: 50,
-                  splashColor: contextOrange,
-                  icon: Lottie.asset(
+                icon: Container(
+                  padding: const EdgeInsets.all(8),
+                  child: Lottie.asset(
                     Icons8.icons8_home_7_,
                     controller: controller.homeController,
                     width: 35,
                     height: 35
-                  )
+                  ),
                 ),
-                label: 'Home'
+                label: 'Beranda'
               ),
               BottomNavigationBarItem(
-                icon: IconButton(
-                  onPressed: () {
-                    controller.bookingsController.reset();
-                    controller.bookingsController.forward();
-                    controller.onItemTapped(1);
-                  },
-                  splashRadius: 50,
-                  splashColor: contextOrange,
-                  icon: Lottie.asset(
+                icon: Container(
+                  padding: const EdgeInsets.all(8),
+                  child: Lottie.asset(
                     Icons8.list,
                     controller: controller.bookingsController,
                     width: 35,
                     height: 35
                   ),
                 ),
-                label: 'Bookings'
+                label: 'Booking'
               ),
               BottomNavigationBarItem(
-                icon: IconButton(
-                  onPressed: () {
-                    controller.profileController.reset();
-                    controller.profileController.forward();
-                    controller.onItemTapped(2);
-                  },
-                  splashRadius: 50,
-                  splashColor: contextOrange, 
-                  icon: Lottie.asset(
+                icon: Container(
+                  padding: const EdgeInsets.all(8),
+                  child: Lottie.asset(
                     Icons8.icons8_user_male,
                     controller: controller.profileController,
                     width: 35,
                     height: 35
-                  )
+                  ),
                 ),
-                label: 'Profile'
+                label: 'Profil'
               )
             ],
+            onTap: controller.onItemTapped,
             currentIndex: controller.selectedIndex,
             elevation: 0
           )),

@@ -69,7 +69,25 @@ class DashboardScreenController extends GetxController with GetTickerProviderSta
   }
   
   void onItemTapped(int index) {
-    selectedIndex = index;
+    if (index == 0) {
+      if (homeController.status == AnimationStatus.dismissed) {
+        homeController.reset();
+        homeController.animateTo(0.6);
+      } else {
+        homeController.reverse();
+      }
+      selectedIndex = index;
+    } else {
+      if (index == 1) {
+        bookingsController.reset();
+        bookingsController.forward();
+        selectedIndex = index;
+      } else {
+        profileController.reset();
+        profileController.forward();
+        selectedIndex = index;
+      }
+    }
   }
 
   Future<UserResponse?> getUserById() async {
