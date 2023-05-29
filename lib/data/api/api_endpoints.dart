@@ -247,3 +247,9 @@ class Reviews extends Methods {
     return await dioGet('villaReviews/users');
   }
 }
+
+class Favorites extends Methods {
+  Future getFavorites() async {
+    return await dioGet('favorites/users');
+  }
+}

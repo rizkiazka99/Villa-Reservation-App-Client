@@ -61,7 +61,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       ProfileSectionButton(
                         onTap: () {
-
+                          Get.toNamed(userFavoritesScreenRoute);
                         }, 
                         icon: Icons.favorite_rounded, 
                         buttonText: 'Favorit'

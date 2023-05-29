@@ -3,6 +3,7 @@ import 'package:reservilla/modules/binding/auth/login_screen_binding.dart';
 import 'package:reservilla/modules/binding/auth/register_screen_binding.dart';
 import 'package:reservilla/modules/binding/contents/bookings/booking_detail_binding.dart';
 import 'package:reservilla/modules/binding/contents/bookings/bookings_screen_binding.dart';
+import 'package:reservilla/modules/binding/contents/favorites/user_favorites_screen_binding.dart';
 import 'package:reservilla/modules/binding/contents/home_screen_binding.dart';
 import 'package:reservilla/modules/binding/contents/locations/location_detail_binding.dart';
 import 'package:reservilla/modules/binding/contents/profile/edit_profile_screen_binding.dart';
@@ -19,6 +20,7 @@ import 'package:reservilla/modules/view/auth/login_screen.dart';
 import 'package:reservilla/modules/view/auth/register_screen.dart';
 import 'package:reservilla/modules/view/contents/bookings/booking_detail_screen.dart';
 import 'package:reservilla/modules/view/contents/bookings/bookings_screen.dart';
+import 'package:reservilla/modules/view/contents/favorites/user_favorites_screen.dart';
 import 'package:reservilla/modules/view/contents/home_screen.dart';
 import 'package:reservilla/modules/view/contents/location/location_detail_screen.dart';
 import 'package:reservilla/modules/view/contents/profile/edit_profile_screen.dart';
@@ -119,6 +121,11 @@ class AppPages {
       name: bookSuccessScreenRoute,
       page: () => const BookSuccessScreen(),
       binding: BookSuccessScreenBinding()
+    ),
+    GetPage(
+      name: userFavoritesScreenRoute,
+      page: () => const UserFavoritesScreen(),
+      binding: UserFavoritesScreenBinding()
     )
   ];
 }
