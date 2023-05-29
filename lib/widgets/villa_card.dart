@@ -470,9 +470,7 @@ class _SearchedVillaCardState extends State<SearchedVillaCard> {
                             ],
                           ),
                         ),
-                        const SizedBox(
-                          height: 4,
-                        ),
+                        const SizedBox(height: 4),
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [

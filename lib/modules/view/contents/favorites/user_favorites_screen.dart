@@ -30,7 +30,7 @@ class _UserFavoritesScreenState extends State<UserFavoritesScreen> {
         leading: backButton(),
         title: const Text('Favorit Saya'),
         actions: [
-          Obx(() => IconButton(
+          Obx(() => controller.favoritesData!.data.isNotEmpty ? IconButton(
             splashColor: contextOrange,
             onPressed:  () {
               controller.showSearchBar = !controller.showSearchBar;
@@ -41,7 +41,7 @@ class _UserFavoritesScreenState extends State<UserFavoritesScreen> {
               color: contextOrange,
               size: 25,
             ),
-          ))
+          ) : const SizedBox.shrink())
         ],
       ),
       body: SafeArea(
@@ -50,19 +50,25 @@ class _UserFavoritesScreenState extends State<UserFavoritesScreen> {
           width: MediaQuery.of(context).size.width,
           child: Container(
             padding: const EdgeInsets.all(16),
-            child: /*Obx(() {
+            child: Obx(() {
               if (controller.favoritesLoading) {
-                return LoadingState(
-                  height: MediaQuery.of(context).size.height
+                return Container(
+                  margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height / 8),
+                  child: LoadingState(
+                    height: MediaQuery.of(context).size.height
+                  ),
                 );
               } else {
                 if (!controller.isFetched && controller.favoritesData == null) {
                   return const SizedBox.shrink();
                 } else if (controller.isFetched && controller.favoritesData!.data.isEmpty) {
-                  return EmptyState(
-                    height: MediaQuery.of(context).size.height, 
-                    imageAsset: 'assets/images/empty_favorite.webp', 
-                    message: 'Anda belum memiliki villa favorit'
+                  return Container(
+                    margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height / 6),
+                    child: EmptyState(
+                      height: MediaQuery.of(context).size.height, 
+                      imageAsset: 'assets/images/empty_favorite.webp', 
+                      message: 'Anda belum memiliki villa favorit'
+                    ),
                   );
                 } else {
                   return Column(
@@ -72,7 +78,10 @@ class _UserFavoritesScreenState extends State<UserFavoritesScreen> {
                             formKey: controller.searchFormKey, 
                             autovalidateMode: controller.autoValidateSearch, 
                             controller: controller.searchController, 
-                            hintText: 'Cari Villa Favorit', 
+                            hintText: 'Cari Villa Favorit',
+                            onChanged: (query) {
+                              controller.searchFavorite(query);
+                            },
                             validator: (value) {
 
                             }
@@ -84,40 +93,21 @@ class _UserFavoritesScreenState extends State<UserFavoritesScreen> {
                           physics: const BouncingScrollPhysics(),
                           child: Obx(() {
                             if (controller.searchController.text.isEmpty) {
-                              /*return FavoriteCard(
+                              return FavoriteCard(
                                 favorites: controller.favoritesData!,
-                              );*/
-                              return StreamBuilder<UserFavoritesResponse?>(
-                                stream: controller.getRealtimeUserFavorites(),
-                                builder: (context, snapshot) {
-                                  switch (snapshot.connectionState) {
-                                    case ConnectionState.waiting:
-                                      return LoadingState(
-                                        height: MediaQuery.of(context).size.height
-                                      );
-                                      default: 
-                                        if (snapshot.hasError) {
-                                          return ErrorState(
-                                            iconSize: 100,
-                                            color: contextRed,
-                                            textStyle: h4(),
-                                          );
-                                        } else if (!snapshot.hasData) {
-                                          return EmptyState(
-                                            height: MediaQuery.of(context).size.height, 
-                                            imageAsset: 'assets/images/empty_favorite.webp', 
-                                            message: 'Anda belum memiliki villa favorit'
-                                          );
-                                        } else {
-                                          return FavoriteCard(
-                                            favorites: snapshot.data!
-                                          );
-                                        }
-                                  }
-                                }
                               );
                             } else {
-                              return Text('');
+                              if (controller.searchResult.isEmpty) {
+                                return EmptyState(
+                                  height: MediaQuery.of(context).size.height / 1.7, 
+                                  imageAsset: 'assets/images/empty_favorite.webp', 
+                                  message: 'Villa dengan nama "${controller.searchController.text} tidak ditemukan'
+                                );
+                              } else {
+                                return SearchedFavoriteCard(
+                                  favorites: controller.searchResult
+                                );
+                              }
                             }
                           }),
                         )
@@ -126,8 +116,8 @@ class _UserFavoritesScreenState extends State<UserFavoritesScreen> {
                   );
                 }
               }
-            })*/
-            Column(
+            })
+            /*Column(
               children: [
                 Obx(() => !controller.showSearchBar ? const SizedBox.shrink() : 
                       CustomForm(
@@ -176,7 +166,7 @@ class _UserFavoritesScreenState extends State<UserFavoritesScreen> {
                   )
                 )
               ],
-            )
+            )*/
           ),
         ),
       ),

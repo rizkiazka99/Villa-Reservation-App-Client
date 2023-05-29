@@ -142,6 +142,27 @@ class Methods {
     }
   }
 
+  Future dioDelete(url) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.reload();
+    String? accessToken = prefs.getString('access_token');
+
+    try {
+      final response = await dio.delete(
+        baseUrl + url,
+        options: Options(
+          headers: {
+            'access_token': accessToken
+          }
+        )
+      );
+
+      return response.data;
+    } catch(err) {
+      return handleError(err);
+    }
+  }
+
   // Profile Picture Upload
   dioUploadProfilePicture(String url, FormData formData, dynamic onSendProgress) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -251,5 +272,13 @@ class Reviews extends Methods {
 class Favorites extends Methods {
   Future getFavorites() async {
     return await dioGet('favorites/users');
+  }
+
+  Future addToFavorite(data) async {
+    return await dioPost('favorites/add', data);
+  }
+
+  Future removeFromFavorite(id) async {
+    return await dioDelete('favorites/delete/$id');
   }
 }

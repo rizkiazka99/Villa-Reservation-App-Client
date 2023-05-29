@@ -7,6 +7,8 @@ import 'package:reservilla/data/models/contents/bookings/book_response.dart';
 import 'package:reservilla/data/models/contents/bookings/booking_detail_response.dart';
 import 'package:reservilla/data/models/contents/bookings/bookings_response.dart';
 import 'package:reservilla/data/models/contents/bookings/payment_check_response.dart';
+import 'package:reservilla/data/models/contents/favorites/add_to_favorite_response.dart';
+import 'package:reservilla/data/models/contents/favorites/remove_from_favorite_response.dart';
 import 'package:reservilla/data/models/contents/favorites/user_favorites_response.dart';
 import 'package:reservilla/data/models/contents/locations/location_detail_response.dart';
 import 'package:reservilla/data/models/contents/locations/locations_response.dart';
@@ -124,5 +126,15 @@ class Repository {
   Future<UserFavoritesResponse> getUserFavorites() async {
     final response = await favoritesApi.getFavorites();
     return UserFavoritesResponse.fromJson(response);
+  }
+
+  Future<AddToFavoriteResponse> addToFavorite(data) async {
+    final response = await favoritesApi.addToFavorite(data);
+    return AddToFavoriteResponse.fromJson(response);
+  }
+
+  Future<RemoveFromFavoriteResponse> removeFromFavorite(id) async {
+    final response = await favoritesApi.removeFromFavorite(id);
+    return RemoveFromFavoriteResponse.fromJson(response);
   }
 }
