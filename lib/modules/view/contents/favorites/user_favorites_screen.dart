@@ -30,7 +30,8 @@ class _UserFavoritesScreenState extends State<UserFavoritesScreen> {
         leading: backButton(),
         title: const Text('Favorit Saya'),
         actions: [
-          Obx(() => controller.favoritesData!.data.isNotEmpty ? IconButton(
+          Obx(() => controller.favoritesData == null ? const SizedBox.shrink() :
+           controller.favoritesData!.data.isNotEmpty ? IconButton(
             splashColor: contextOrange,
             onPressed:  () {
               controller.showSearchBar = !controller.showSearchBar;
@@ -101,7 +102,7 @@ class _UserFavoritesScreenState extends State<UserFavoritesScreen> {
                                 return EmptyState(
                                   height: MediaQuery.of(context).size.height / 1.7, 
                                   imageAsset: 'assets/images/empty_favorite.webp', 
-                                  message: 'Villa dengan nama "${controller.searchController.text} tidak ditemukan'
+                                  message: 'Villa dengan nama "${controller.searchController.text}" tidak ditemukan'
                                 );
                               } else {
                                 return SearchedFavoriteCard(

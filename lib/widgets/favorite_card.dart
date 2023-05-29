@@ -11,6 +11,8 @@ import 'package:reservilla/helpers/currency_formatter.dart';
 import 'package:reservilla/modules/controller/contents/favorites/user_favorites_screen_controller.dart';
 import 'package:reservilla/router/route_variables.dart';
 import 'package:reservilla/widgets/confirmation_dialog.dart';
+import 'package:reservilla/widgets/default_snackbar.dart';
+import 'package:reservilla/widgets/loader_dialog.dart';
 
 class FavoriteCard extends StatefulWidget {
   final UserFavoritesResponse favorites;

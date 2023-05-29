@@ -97,8 +97,9 @@ class UserFavoritesScreenController extends GetxController {
       'Mohon tunggu...'
     );
     await removeFromFavorite(id);
+    await getUserFavorites();
 
-    if (removeFromFavoriteData!.status) {
+    if (removeFromFavoriteData!.status && favoritesData!.message.isNotEmpty) {
       Get.back();
       defaultSnackbar('Sukses!', 'Berhasil menghilangkan $villaName dari favorit');
     } else {

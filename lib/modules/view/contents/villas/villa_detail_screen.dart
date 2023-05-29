@@ -6,12 +6,13 @@ import 'package:get/get.dart';
 import 'package:reservilla/core/colors.dart';
 import 'package:reservilla/core/font_sizes.dart';
 import 'package:reservilla/core/theme.dart';
-import 'package:reservilla/data/models/contents/villas/villa_detail_response.dart';
+import 'package:reservilla/data/models/miscellaneous/user_response.dart';
 import 'package:reservilla/helpers/common_variables.dart';
 import 'package:reservilla/helpers/currency_formatter.dart';
 import 'package:reservilla/modules/controller/contents/villas/villa_detail_controller.dart';
 import 'package:reservilla/router/route_variables.dart';
 import 'package:reservilla/widgets/bottom_navbar_button.dart';
+import 'package:reservilla/widgets/confirmation_dialog.dart';
 import 'package:reservilla/widgets/custom_icon_button.dart';
 import 'package:reservilla/widgets/empty_state.dart';
 import 'package:reservilla/widgets/facility_item.dart';
@@ -29,11 +30,11 @@ class _VillaDetailScreenState extends State<VillaDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: whiteColor,
-      body: SafeArea(
-        bottom: false,
-        child: Obx(() {
+    return SafeArea(
+      bottom: false,
+      child: Scaffold(
+        backgroundColor: whiteColor,
+        body: Obx(() {
           if (controller.villaDetailLoading) {
             return LoadingState(
               height: MediaQuery.of(context).size.height,
@@ -283,6 +284,112 @@ class _VillaDetailScreenState extends State<VillaDetailScreen> {
                           width: 40,
                         ),
                       ),
+                      /*Obx(() => controller.userData != null ? Column(
+                        children: List.generate(controller.userData!.data.favorites.length, (index) => Obx(() {
+                          if (controller.userData!.data.favorites[index].villaId == controller.villaDetailData!.data.id) {
+                            return InkWell(
+                              onTap: () async {
+                                Get.dialog(
+                                  ConfirmationDialog(
+                                    title: 'Tunggu Sebentar!', 
+                                    content: 'Apakah Anda yakin ingin menghilangkan ${controller.villaDetailData!.data.name} dari favorit?', 
+                                    onConfirmation: () {
+                                      controller.initiateRemoveFromFavorite(
+                                        controller.userData!.data.favorites[index].id,
+                                        controller.villaDetailData!.data.name
+                                      );
+                                      Get.back();
+                                    }
+                                  )
+                                );
+                              },
+                              child: Image.asset(
+                                'assets/icons/btn_wishlist_active.png',
+                                width: 40,
+                              ),
+                            );
+                          } else {
+                            return InkWell(
+                              onTap: () async {
+                                controller.initiateAddToFavorite(
+                                  controller.villaDetailData!.data.id, 
+                                  controller.villaDetailData!.data.name
+                                );
+                              },
+                              child: Image.asset(
+                                'assets/icons/btn_wishlist.png',
+                                width: 40,
+                              ),
+                            );
+                          }
+                        })),
+                      ) : Container(
+                        height: 40,
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100),
+                          color: Colors.white
+                        ),
+                        child: const SpinKitRing(
+                          color: contextOrange,
+                          lineWidth: 5,
+                          size: 50,
+                        ),
+                      ))*/
+                      /*StreamBuilder<UserResponse?>(
+                        stream: controller.getRealtimeUserData(),
+                        builder: (context, snapshot) {
+                          switch(snapshot.connectionState) {
+                            case ConnectionState.waiting: 
+                              return Container(
+                                height: 40,
+                                padding: const EdgeInsets.all(8),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(100),
+                                  color: Colors.white
+                                ),
+                                child: const SpinKitRing(
+                                  color: contextOrange,
+                                  lineWidth: 5,
+                                  size: 50,
+                                ),
+                              );
+                            default: 
+                              if (snapshot.hasError) {
+                                return Container(
+                                  padding: const EdgeInsets.all(8),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(100),
+                                    color: Colors.white
+                                  ),
+                                  child: const Icon(
+                                    Icons.error,
+                                    color: contextOrange,
+                                  ),
+                                );
+                              } else if (!snapshot.hasData) {
+                                return const SizedBox.shrink();
+                              } else {
+                                return Container(
+                                  padding: const EdgeInsets.all(8),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(100),
+                                    color: Colors.white
+                                  ),
+                                  child: InkWell(
+                                    onTap: () async {
+                                      await controller.addToFavorite(controller.villaDetailData!.data.id);
+                                    },
+                                    child: const Icon(
+                                      Icons.favorite_outline_rounded,
+                                      size: 40,
+                                    ),
+                                  ),
+                                );
+                              }
+                          }
+                        },
+                      )*/
                       InkWell(
                         child: Image.asset(
                           'assets/icons/btn_wishlist.png',
@@ -296,61 +403,61 @@ class _VillaDetailScreenState extends State<VillaDetailScreen> {
             );
           }
         }),
-      ),
-      bottomNavigationBar: Container(
-        width: MediaQuery.of(context).size.width,
-        padding: const EdgeInsets.all(8),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Obx(() => BottomNavBarButton(
-              onPressed: ()  {
-                if (!controller.villaDetailLoading) {
-                  Get.toNamed(
-                    bookVillaScreenRoute,
-                    arguments: {
-                      'villa_id': controller.villaDetailData!.data.id,
-                      'name': controller.villaDetailData!.data.name,
-                      'price': controller.villaDetailData!.data.price
-                    }
-                  );
-                }
-              },
-              width: MediaQuery.of(context).size.width / 1.6,
-              buttonColor: controller.villaDetailLoading ? contextGrey : contextOrange,
-              buttonText: 'Book Villa',
-            )),
-            Row(
-              children: [
-                Obx(() => CustomIconButton(
-                  onTap: () {
-                    if (!controller.villaDetailLoading) {
-                      String mapsUrl = controller.villaDetailData!.data.mapUrl;
-                      controller.launchMaps(mapsUrl);
-                    }
-                  },
-                  radius: 100, 
-                  icon: Icons.location_on,
-                  iconColor: controller.villaDetailLoading ? contextGrey : contextOrange,
-                  borderColor: controller.villaDetailLoading ? contextGrey : contextOrange,
-                )),
-                const SizedBox(width: 8),
-                Obx(() => CustomIconButton(
-                  onTap: () {
-                    if (!controller.villaDetailLoading) {
-                      String phoneNumber = controller.villaDetailData!.data.phone;
-                      controller.launchDialer(phoneNumber);
-                    }
-                  },
-                  radius: 100,
-                  icon: Icons.phone,
-                  iconColor: controller.villaDetailLoading ? contextGrey : contextOrange,
-                  borderColor: controller.villaDetailLoading ? contextGrey : contextOrange,
-                )),
-              ],
-            )
-          ],
+        bottomNavigationBar: Container(
+          width: MediaQuery.of(context).size.width,
+          padding: const EdgeInsets.all(8),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Obx(() => BottomNavBarButton(
+                onPressed: ()  {
+                  if (!controller.villaDetailLoading) {
+                    Get.toNamed(
+                      bookVillaScreenRoute,
+                      arguments: {
+                        'villa_id': controller.villaDetailData!.data.id,
+                        'name': controller.villaDetailData!.data.name,
+                        'price': controller.villaDetailData!.data.price
+                      }
+                    );
+                  }
+                },
+                width: MediaQuery.of(context).size.width / 1.6,
+                buttonColor: controller.villaDetailLoading ? contextGrey : contextOrange,
+                buttonText: 'Book Villa',
+              )),
+              Row(
+                children: [
+                  Obx(() => CustomIconButton(
+                    onTap: () {
+                      if (!controller.villaDetailLoading) {
+                        String mapsUrl = controller.villaDetailData!.data.mapUrl;
+                        controller.launchMaps(mapsUrl);
+                      }
+                    },
+                    radius: 100, 
+                    icon: Icons.location_on,
+                    iconColor: controller.villaDetailLoading ? contextGrey : contextOrange,
+                    borderColor: controller.villaDetailLoading ? contextGrey : contextOrange,
+                  )),
+                  const SizedBox(width: 8),
+                  Obx(() => CustomIconButton(
+                    onTap: () {
+                      if (!controller.villaDetailLoading) {
+                        String phoneNumber = controller.villaDetailData!.data.phone;
+                        controller.launchDialer(phoneNumber);
+                      }
+                    },
+                    radius: 100,
+                    icon: Icons.phone,
+                    iconColor: controller.villaDetailLoading ? contextGrey : contextOrange,
+                    borderColor: controller.villaDetailLoading ? contextGrey : contextOrange,
+                  )),
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );
