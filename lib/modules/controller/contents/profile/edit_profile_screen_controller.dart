@@ -22,14 +22,17 @@ class EditProfileScreenController extends GetxController {
 
   TextEditingController nameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
+  TextEditingController verifyPasswordController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   
   final nameFormKey = GlobalKey<FormState>();
   final phoneFormKey = GlobalKey<FormState>();
+  final verifyPasswordFormKey = GlobalKey<FormState>();
   final passwordFormKey = GlobalKey<FormState>();
 
   var autoValidateName = AutovalidateMode.disabled;
   var autoValidatePhone = AutovalidateMode.disabled;
+  var autoValidateVerifyPassword = AutovalidateMode.disabled;
   var autoValidatePassword = AutovalidateMode.disabled;
 
   File? _image;
@@ -46,6 +49,8 @@ class EditProfileScreenController extends GetxController {
   RxInt _uploadProgressTotal = 1.obs;
   RxBool _showPasswordForm = false.obs;
   RxBool _isPasswordVerified = false.obs;
+  RxBool _isVerifyPasswordVisible = true.obs;
+  RxBool _isPasswordVisible = true.obs;
   Rxn<EditProfileResponse> _editProfileData = Rxn<EditProfileResponse>();
   Rxn<VerifyPasswordResponse> _verifyPasswordData = Rxn<VerifyPasswordResponse>();
 
@@ -59,6 +64,8 @@ class EditProfileScreenController extends GetxController {
   int get uploadProgressTotal => _uploadProgressTotal.value;
   bool get showPasswordForm => _showPasswordForm.value;
   bool get isPasswordVerified => _isPasswordVerified.value;
+  bool get isVerifyPasswordVisible => _isVerifyPasswordVisible.value;
+  bool get isPasswordVisible => _isPasswordVisible.value;
   EditProfileResponse? get editProfileData => _editProfileData.value;
   VerifyPasswordResponse? get verifyPasswordData => _verifyPasswordData.value;
 
@@ -81,6 +88,10 @@ class EditProfileScreenController extends GetxController {
       this._showPasswordForm.value = showPasswordForm;
   set isPasswordVerified(bool isPasswordVerified) =>
       this._isPasswordVerified.value = isPasswordVerified;
+  set isVerifyPasswordVisible(bool isVerifyPasswordVisible) => 
+      this._isVerifyPasswordVisible.value = isVerifyPasswordVisible;
+  set isPasswordVisible(bool isPasswordVisible) => 
+      this._isPasswordVisible.value = isPasswordVisible;
   set editProfileData(EditProfileResponse? editProfileData) =>
       this._editProfileData.value = editProfileData;
   set verifyPasswordData(VerifyPasswordResponse? verifyPasswordData) =>
@@ -100,6 +111,7 @@ class EditProfileScreenController extends GetxController {
   void dispose() {
     nameController.dispose();
     phoneController.dispose();
+    passwordController.dispose();
     super.dispose();
   }
 
@@ -141,6 +153,12 @@ class EditProfileScreenController extends GetxController {
       ),
       'type': 'profile-picture'
     });
+    print(formData.files[0].value.contentType);
+    print(formData.files[0].value.filename);
+    print(formData.files[0].value.headers);
+    print(formData.fields[0].value);
+    print(formData.boundary);
+    print(formData.camelCaseContentDisposition);
     EditProfileResponse res = await repository.uploadProfilePicture(id, formData, onSendProgress);
     /*if (res['error']) {
       picture = res['data']['url'];
@@ -152,10 +170,18 @@ class EditProfileScreenController extends GetxController {
     
     return editProfileData;
   }
+  
+  void showAndHidePassword() {
+    isPasswordVisible = !isPasswordVisible;
+  }
+
+  void showAndHideVerifyPassword() {
+    isVerifyPasswordVisible = !isVerifyPasswordVisible;
+  }
 
   Future<VerifyPasswordResponse?> verifyPassword() async {
     dynamic data = {
-      'password': passwordController.text
+      'password': verifyPasswordController.text
     };
 
     verifyPasswordLoading = true;
@@ -166,14 +192,52 @@ class EditProfileScreenController extends GetxController {
     return verifyPasswordData;
   }
 
+  initiateVerifyPassword() async {
+    final isVerifyPasswordValid = verifyPasswordFormKey.currentState!.validate();
+
+    if (isVerifyPasswordValid) {
+      loaderDialog(
+        const SpinKitRing(color: contextOrange), 
+        'Mohon tunggu...'
+      );
+      await verifyPassword();
+
+      if (verifyPasswordData!.status) {
+        Get.back();
+        isPasswordVerified = true;
+        showPasswordForm = true;
+        Get.back();
+        print(isPasswordVerified);
+      } else {
+        Get.back();
+        defaultSnackbar('Ups', 'Password tidak terverifikasi, tolong periksa kembali password Anda');
+        print(isPasswordVerified);
+      }
+    } else {
+      autoValidateVerifyPassword = AutovalidateMode.always;
+    }
+  }
+
   Future<EditProfileResponse?> editProfile() async {
-    dynamic data = {
+    dynamic dataWithoutPassword = {
       'name': nameController.text,
       'phone': phoneController.text
     };
 
+    dynamic dataWithPassword = {
+      'name': nameController.text,
+      'phone': phoneController.text,
+      'password': passwordController.text
+    };
+
+    EditProfileResponse? res;
+
     editProfileLoading = true;
-    EditProfileResponse?  res = await repository.editProfile(id, data);
+    if (!isPasswordVerified && !showPasswordForm) {
+      res = await repository.editProfile(id, dataWithoutPassword);
+    } else {
+      res = await repository.editProfile(id, dataWithPassword);
+    }
     editProfileData = res;
     editProfileLoading = false;
 
@@ -183,19 +247,30 @@ class EditProfileScreenController extends GetxController {
   initiateEditProfile() async {
     final isNameValid = nameFormKey.currentState!.validate();
     final isPhoneValid = phoneFormKey.currentState!.validate();
+    
 
-    if (isNameValid && isPhoneValid) {
-      if (_picturePath.value.isNotEmpty) {
-        Get.dialog(Obx(() => UploadDialog(
-          title: 'Mengunggah Foto Profil', 
-          received: _uploadProgressReceived.value, 
-          total: _uploadProgressTotal.value
-        )));
-        await uploadProfilePicture();
+    if (isPasswordVerified && showPasswordForm) {
+      final isPasswordValid = passwordFormKey.currentState!.validate();
 
-        if (!editProfileData!.status) {
-          Get.until((route) => !Get.isDialogOpen!);
-          defaultSnackbar('Ups!', 'Terjadi kesalahan saat proses pengunggahan foto profil');
+      if (isNameValid && isPhoneValid && isPasswordValid) {
+        if (_picturePath.value.isNotEmpty) {
+          Get.dialog(Obx(() => UploadDialog(
+            title: 'Mengunggah Foto Profil', 
+            received: _uploadProgressReceived.value, 
+            total: _uploadProgressTotal.value
+          )));
+          await uploadProfilePicture();
+
+          if (!editProfileData!.status) {
+            Get.until((route) => !Get.isDialogOpen!);
+            defaultSnackbar('Ups!', 'Terjadi kesalahan saat proses pengunggahan foto profil');
+          } else {
+            loaderDialog(
+              const SpinKitRing(color: contextOrange), 
+              'Mohon tunggu...'
+            );
+            await editProfile();
+          }
         } else {
           loaderDialog(
             const SpinKitRing(color: contextOrange), 
@@ -203,29 +278,70 @@ class EditProfileScreenController extends GetxController {
           );
           await editProfile();
         }
-      } else {
-        loaderDialog(
-          const SpinKitRing(color: contextOrange), 
-          'Mohon tunggu...'
-        );
-        await editProfile();
-      }
       
-      if (editProfileData!.status) {
-        Get.back();
-        Get.offAllNamed(dashboardScreenRoute);
-        defaultSnackbar('Sukses!', 'Profil Anda telah diperbarui');
+        if (editProfileData!.status) {
+          Get.back();
+          Get.offAllNamed(dashboardScreenRoute);
+          defaultSnackbar('Sukses!', 'Profil Anda telah diperbarui');
+        } else {
+          Get.back();
+          defaultSnackbar('Ups!', 'Terjadi kesalahan, profil Anda gagal diperbarui');
+        }
+      } else if (!isNameValid) {
+        autoValidateName = AutovalidateMode.always;
+      } else if (!isPhoneValid) {
+        autoValidatePhone = AutovalidateMode.always;
+      } else if (!isPasswordValid) {
+        autoValidatePassword = AutovalidateMode.always;
       } else {
-        Get.back();
-        defaultSnackbar('Ups!', 'Terjadi kesalahan, profil Anda gagal diperbarui');
+        autoValidateName = AutovalidateMode.always;
+        autoValidatePhone = AutovalidateMode.always;
+        autoValidatePassword = AutovalidateMode.always;
       }
-    } else if (!isNameValid) {
-      autoValidateName = AutovalidateMode.always;
-    } else if (!isPhoneValid) {
-      autoValidatePhone = AutovalidateMode.always;
     } else {
-      autoValidateName = AutovalidateMode.always;
-      autoValidatePhone = AutovalidateMode.always;
+      if (isNameValid && isPhoneValid) {
+        if (_picturePath.value.isNotEmpty) {
+          Get.dialog(Obx(() => UploadDialog(
+            title: 'Mengunggah Foto Profil', 
+            received: _uploadProgressReceived.value, 
+            total: _uploadProgressTotal.value
+          )));
+          await uploadProfilePicture();
+
+          if (!editProfileData!.status) {
+            Get.until((route) => !Get.isDialogOpen!);
+            defaultSnackbar('Ups!', 'Terjadi kesalahan saat proses pengunggahan foto profil');
+          } else {
+            loaderDialog(
+              const SpinKitRing(color: contextOrange), 
+              'Mohon tunggu...'
+            );
+            await editProfile();
+          }
+        } else {
+          loaderDialog(
+            const SpinKitRing(color: contextOrange), 
+            'Mohon tunggu...'
+          );
+          await editProfile();
+        }
+      
+        if (editProfileData!.status) {
+          Get.back();
+          Get.offAllNamed(dashboardScreenRoute);
+          defaultSnackbar('Sukses!', 'Profil Anda telah diperbarui');
+        } else {
+          Get.back();
+          defaultSnackbar('Ups!', 'Terjadi kesalahan, profil Anda gagal diperbarui');
+        }
+      } else if (!isNameValid) {
+        autoValidateName = AutovalidateMode.always;
+      } else if (!isPhoneValid) {
+        autoValidatePhone = AutovalidateMode.always;
+      } else {
+        autoValidateName = AutovalidateMode.always;
+        autoValidatePhone = AutovalidateMode.always;
+      }
     }
   }
 }

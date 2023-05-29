@@ -155,7 +155,7 @@ class Methods {
         onSendProgress: onSendProgress,
         options: Options(
           headers: {
-            //'Content-Type': 'multipart/form-data',
+            'Content-Type': 'multipart/form-data',
             'access_token': accessToken
           }
         )

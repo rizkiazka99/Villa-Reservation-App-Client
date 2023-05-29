@@ -89,6 +89,97 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     );
   }
 
+  Widget verifyPasswordDialog() {
+    return Container(
+      margin: const EdgeInsets.all(10),
+      child: Dialog(
+        backgroundColor: Colors.white,
+        surfaceTintColor: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15)
+        ),
+        insetPadding: const EdgeInsets.all(10),
+        child: SizedBox(
+          height: 560,
+          width: MediaQuery.of(context).size.width,
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(16),
+            physics: const BouncingScrollPhysics(),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Verifikasi Password',
+                  style: h4(),
+                ),
+                Center(
+                  child: Image.asset(
+                    'assets/images/verify_password.png',
+                    width: 300,
+                    height: 200
+                  ),
+                ),
+                const SizedBox(height: 15),
+                Text(
+                  'Sebelum Anda memperbarui Password, tolong masukkan password Anda terlebih dahulu untuk verifikasi pengguna',
+                  style: bodyMd(),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 15),
+                Obx(() => Container(
+                  padding: const EdgeInsets.only(bottom: 15),
+                  child: CustomForm(
+                    formKey: controller.verifyPasswordFormKey,
+                    autovalidateMode: controller.autoValidateVerifyPassword,
+                    controller: controller.verifyPasswordController,
+                    hintText: 'Password',
+                    obscureText: controller.isVerifyPasswordVisible,
+                    prefixIcon: const Icon(
+                      Icons.lock,
+                      color: contextOrange,
+                    ),
+                    suffixIcon: IconButton(
+                      onPressed: () {
+                        controller.showAndHideVerifyPassword();
+                      },
+                      icon: Icon(
+                        controller.isVerifyPasswordVisible
+                          ? Icons.visibility
+                          : Icons.visibility_off,
+                        color: contextOrange
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Kolom password tidak boleh kosong';
+                      } 
+                    }
+                  ),
+                )),
+                DefaultButton(
+                  onTap: () {
+                    controller.initiateVerifyPassword();
+                  }, 
+                  color: contextOrange, 
+                  buttonText: 'Verifikasi'
+                ),
+                const SizedBox(height: 15),
+                DefaultButton(
+                  onTap: () {
+                    Get.back();
+                  }, 
+                  color: contextRed, 
+                  buttonText: 'Batal'
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -245,7 +336,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           )
                         ),
                         Container(
-                          padding: const EdgeInsets.only(top: 15, bottom: 15),
+                          padding: const EdgeInsets.only(top: 15),
                           child: CustomForm(
                             formKey: controller.phoneFormKey, 
                             autovalidateMode: controller.autoValidatePhone, 
@@ -271,6 +362,63 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             }
                           ),
                         ),
+                        Row(
+                          children: [
+                            Obx(() => Switch(
+                              value: controller.showPasswordForm,
+                              activeColor: contextOrange, 
+                              onChanged: (bool value) {
+                                print(controller.isPasswordVerified);
+                                if (!controller.isPasswordVerified) {
+                                  Get.dialog(verifyPasswordDialog());
+                                } else {
+                                  controller.showPasswordForm = value;
+                                }
+                                print(controller.showPasswordForm);
+                              }
+                            )),
+                            const SizedBox(width: 5),
+                            Text(
+                              'Perbarui Password?',
+                              style: bodyMd(),
+                            )
+                          ],
+                        ),
+                        Obx(() => controller.showPasswordForm ? Container(
+                          padding: const EdgeInsets.only(bottom: 15),
+                          child: CustomForm(
+                            formKey: controller.passwordFormKey, 
+                            autovalidateMode: controller.autoValidatePassword,
+                            controller: controller.passwordController, 
+                            hintText: 'Password',
+                            obscureText: controller.isPasswordVisible,
+                            prefixIcon: const Icon(
+                              Icons.lock,
+                              color: contextOrange,
+                            ),
+                            suffixIcon: IconButton(
+                              onPressed: () {
+                                controller.showAndHidePassword();
+                              },
+                            icon: Icon(
+                              controller.isPasswordVisible ? Icons.visibility :
+                                Icons.visibility_off,
+                                color: contextOrange
+                              ),
+                            ),
+                            validator: (value) {
+                              bool validate = CustomRegEx.validatePassword(value!);
+
+                              if (value.isEmpty) {
+                                return 'Kolom password tidak boleh kosong';
+                              } else {
+                                if (!validate) {
+                                  return 'Password harus terdiri dari 8 katakter, 1 huruf besar, 1 huruf kecil dan 1 angka';
+                                }
+                              }
+                            }
+                          ),
+                        ) : const SizedBox.shrink()),
                         DefaultButton(
                           onTap: () {
                             controller.initiateEditProfile();
