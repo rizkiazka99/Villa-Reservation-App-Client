@@ -233,10 +233,14 @@ class EditProfileScreenController extends GetxController {
     EditProfileResponse? res;
 
     editProfileLoading = true;
-    if (!isPasswordVerified && !showPasswordForm) {
-      res = await repository.editProfile(id, dataWithoutPassword);
+    if (isPasswordVerified) {
+      if (showPasswordForm) {
+        res = await repository.editProfile(id, dataWithPassword);
+      } else {
+        res = await repository.editProfile(id, dataWithoutPassword);
+      }
     } else {
-      res = await repository.editProfile(id, dataWithPassword);
+      res = await repository.editProfile(id, dataWithoutPassword);
     }
     editProfileData = res;
     editProfileLoading = false;
