@@ -35,7 +35,7 @@ class _VillaDetailScreenState extends State<VillaDetailScreen> {
       child: Scaffold(
         backgroundColor: whiteColor,
         body: Obx(() {
-          if (controller.villaDetailLoading) {
+          if (controller.villaDetailLoading && controller.favoriteLoading) {
             return LoadingState(
               height: MediaQuery.of(context).size.height,
             );
@@ -284,10 +284,7 @@ class _VillaDetailScreenState extends State<VillaDetailScreen> {
                           width: 40,
                         ),
                       ),
-                      /*Obx(() => controller.userData != null ? Column(
-                        children: List.generate(controller.userData!.data.favorites.length, (index) => Obx(() {
-                          if (controller.userData!.data.favorites[index].villaId == controller.villaDetailData!.data.id) {
-                            return InkWell(
+                      Obx(() => controller.isFavorite ? InkWell(
                               onTap: () async {
                                 Get.dialog(
                                   ConfirmationDialog(
@@ -295,7 +292,7 @@ class _VillaDetailScreenState extends State<VillaDetailScreen> {
                                     content: 'Apakah Anda yakin ingin menghilangkan ${controller.villaDetailData!.data.name} dari favorit?', 
                                     onConfirmation: () {
                                       controller.initiateRemoveFromFavorite(
-                                        controller.userData!.data.favorites[index].id,
+                                        controller.favoriteId,
                                         controller.villaDetailData!.data.name
                                       );
                                       Get.back();
@@ -307,9 +304,7 @@ class _VillaDetailScreenState extends State<VillaDetailScreen> {
                                 'assets/icons/btn_wishlist_active.png',
                                 width: 40,
                               ),
-                            );
-                          } else {
-                            return InkWell(
+                            ) : InkWell(
                               onTap: () async {
                                 controller.initiateAddToFavorite(
                                   controller.villaDetailData!.data.id, 
@@ -320,82 +315,7 @@ class _VillaDetailScreenState extends State<VillaDetailScreen> {
                                 'assets/icons/btn_wishlist.png',
                                 width: 40,
                               ),
-                            );
-                          }
-                        })),
-                      ) : Container(
-                        height: 40,
-                        padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(100),
-                          color: Colors.white
-                        ),
-                        child: const SpinKitRing(
-                          color: contextOrange,
-                          lineWidth: 5,
-                          size: 50,
-                        ),
-                      ))*/
-                      /*StreamBuilder<UserResponse?>(
-                        stream: controller.getRealtimeUserData(),
-                        builder: (context, snapshot) {
-                          switch(snapshot.connectionState) {
-                            case ConnectionState.waiting: 
-                              return Container(
-                                height: 40,
-                                padding: const EdgeInsets.all(8),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(100),
-                                  color: Colors.white
-                                ),
-                                child: const SpinKitRing(
-                                  color: contextOrange,
-                                  lineWidth: 5,
-                                  size: 50,
-                                ),
-                              );
-                            default: 
-                              if (snapshot.hasError) {
-                                return Container(
-                                  padding: const EdgeInsets.all(8),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(100),
-                                    color: Colors.white
-                                  ),
-                                  child: const Icon(
-                                    Icons.error,
-                                    color: contextOrange,
-                                  ),
-                                );
-                              } else if (!snapshot.hasData) {
-                                return const SizedBox.shrink();
-                              } else {
-                                return Container(
-                                  padding: const EdgeInsets.all(8),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(100),
-                                    color: Colors.white
-                                  ),
-                                  child: InkWell(
-                                    onTap: () async {
-                                      await controller.addToFavorite(controller.villaDetailData!.data.id);
-                                    },
-                                    child: const Icon(
-                                      Icons.favorite_outline_rounded,
-                                      size: 40,
-                                    ),
-                                  ),
-                                );
-                              }
-                          }
-                        },
-                      )*/
-                      InkWell(
-                        child: Image.asset(
-                          'assets/icons/btn_wishlist.png',
-                          width: 40,
-                        ),
-                      ),
+                            ))
                     ],
                   ),
                 ),

@@ -5,49 +5,58 @@ import 'package:reservilla/core/colors.dart';
 import 'package:reservilla/data/api/repository.dart';
 import 'package:reservilla/data/models/contents/favorites/add_to_favorite_response.dart';
 import 'package:reservilla/data/models/contents/favorites/remove_from_favorite_response.dart';
+import 'package:reservilla/data/models/contents/favorites/user_favorites_response.dart';
 import 'package:reservilla/data/models/contents/villas/villa_detail_response.dart';
-import 'package:reservilla/data/models/miscellaneous/user_response.dart';
 import 'package:reservilla/widgets/default_snackbar.dart';
 import 'package:reservilla/widgets/loader_dialog.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class VillaDetailController extends GetxController {
   Repository repository = Repository();
 
   RxBool _villaDetailLoading = false.obs;
-  RxBool _userLoading = false.obs;
+  RxBool _favoriteLoading = false.obs;
   RxBool _addToFavoriteLoading = false.obs;
+  RxBool _isFavorite = false.obs;
   RxString _id = ''.obs;
+  RxInt _favoriteId = 0.obs;
   Rxn<VillaDetailResponse> _villaDetailData = Rxn<VillaDetailResponse>();
-  Rxn<UserResponse> _userData = Rxn<UserResponse>();
+  Rxn<UserFavoritesResponse> _userFavorites = Rxn<UserFavoritesResponse>();
   Rxn<AddToFavoriteResponse> _addToFavoriteData = Rxn<AddToFavoriteResponse>();
+  RxList<Datum> _favoriteData = <Datum>[].obs;
   RxBool _removeFromFavoriteLoading = false.obs;
   Rxn<RemoveFromFavoriteResponse> _removeFromFavoriteData = Rxn<RemoveFromFavoriteResponse>();
 
   bool get villaDetailLoading => _villaDetailLoading.value;
-  bool get userLoading => _userLoading.value;
+  bool get favoriteLoading => _favoriteLoading.value;
   bool get addToFavoriteLoading => _addToFavoriteLoading.value;
+  bool get isFavorite => _isFavorite.value;
   String get id => _id.value;
+  int get favoriteId => _favoriteId.value;
   VillaDetailResponse? get villaDetailData => _villaDetailData.value;
-  UserResponse? get userData => _userData.value;
+  UserFavoritesResponse? get userFavorites => _userFavorites.value;
   AddToFavoriteResponse? get addToFavoriteData => _addToFavoriteData.value;
+  List<Datum> get favoriteData => _favoriteData;
   bool get removeFromFavoriteLoading => _removeFromFavoriteLoading.value;
   RemoveFromFavoriteResponse? get removeFromFavoriteData => _removeFromFavoriteData.value;
 
   set villaDetailLoading(bool villaDetailLoading) =>
       this._villaDetailLoading.value = villaDetailLoading;
-  set userLoading(bool userLoading) =>
-      this._userLoading.value = userLoading;
+  set favoriteLoading(bool favoriteLoading) =>
+      this._favoriteLoading.value = favoriteLoading;
   set addToFavoriteLoading(bool addToFavoriteLoading) =>
       this._addToFavoriteLoading.value = addToFavoriteLoading;
+  set isFavorite(bool isFavorite) => this._isFavorite.value = isFavorite;
   set id(String id) => this._id.value = id;
+  set favoriteId(int favoriteId) => this._favoriteId.value = favoriteId;
   set villaDetailData(VillaDetailResponse? villaDetailData) =>
       this._villaDetailData.value = villaDetailData;
-  set userData(UserResponse? userData) =>
-      this._userData.value = userData;
+  set userFavorites(UserFavoritesResponse? userFavorites) =>
+      this._userFavorites.value = userFavorites;
   set addToFavoriteData(AddToFavoriteResponse? addToFavoriteData) =>
       this._addToFavoriteData.value = addToFavoriteData;
+  set favoriteData(List<Datum> favoriteData) =>
+      this._favoriteData.value = favoriteData;
   set removeFromFavoriteLoading(bool removeFromFavoriteLoading) =>
       this._removeFromFavoriteLoading.value = removeFromFavoriteLoading;
   set removeFromFavoriteData(RemoveFromFavoriteResponse? removeFromFavoriteData) =>
@@ -58,7 +67,7 @@ class VillaDetailController extends GetxController {
     super.onInit();
     id = Get.arguments['id'];
     getVillaDetail();
-    getUserData();
+    getUserFavorites();
   }
 
   @override
@@ -75,16 +84,22 @@ class VillaDetailController extends GetxController {
     return villaDetailData;
   }
 
-  Future<UserResponse?> getUserData() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String id = prefs.getInt('id').toString();
-    print(id);
-    userLoading = true;
-    UserResponse? res = await repository.getUserById(id);
-    userData = res;
-    userLoading = false;
+  setIsFavorite() {
+    isFavorite = userFavorites!.data.any((favorite) => favorite.villaId == villaDetailData!.data.id);
+    if (isFavorite) {
+      favoriteData = userFavorites!.data.where((favorite) => favorite.villaId == villaDetailData!.data.id).toList();
+      favoriteId = favoriteData[0].id;
+    }
+  }
 
-    return userData;
+  Future<UserFavoritesResponse?> getUserFavorites() async {
+    favoriteLoading = true;
+    UserFavoritesResponse? res = await repository.getUserFavorites();
+    userFavorites = res;
+    favoriteLoading = false;
+    setIsFavorite();
+
+    return userFavorites;
   }
 
   Future<AddToFavoriteResponse?> addToFavorite(villaId) async {
@@ -106,9 +121,9 @@ class VillaDetailController extends GetxController {
       'Mohon tunggu...'
     );
     await addToFavorite(villaId);
-    await getUserData();
+    await getUserFavorites();
 
-    if (addToFavoriteData!.status && userData!.message.isNotEmpty) {
+    if (addToFavoriteData!.status && userFavorites!.message.isNotEmpty) {
       Get.back();
       defaultSnackbar('Sukses!', 'Berhasil menambahkan $villaName ke favorit');
     } else {
@@ -132,9 +147,9 @@ class VillaDetailController extends GetxController {
       'Mohon tunggu...'
     );
     await removeFromFavorite(id);
-    await getUserData();
+    await getUserFavorites();
 
-    if (removeFromFavoriteData!.status && userData!.message.isNotEmpty) {
+    if (removeFromFavoriteData!.status && userFavorites!.message.isNotEmpty) {
       Get.back();
       defaultSnackbar('Sukses!', 'Berhasil menghilangkan $villaName dari favorit');
     } else {
