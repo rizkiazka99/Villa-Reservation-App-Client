@@ -184,6 +184,66 @@ class _VillaDetailScreenState extends State<VillaDetailScreen> {
                           Padding(
                             padding: EdgeInsets.only(left: edge),
                             child: Text(
+                              'Ulasan',
+                              style: regularTextStyle.copyWith(
+                                fontSize: 16
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 12),
+                          Row(
+                            children: [
+                              Container(
+                                width: MediaQuery.of(context).size.width / 4,
+                                margin: EdgeInsets.only(left: edge),
+                                color: contextRed,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Image.asset(
+                                          'assets/icons/icon_star.png'
+                                        )
+                                      ],
+                                    ),
+                                    const SizedBox(width: 8),
+                                    Text.rich(
+                                      TextSpan(
+                                        text: controller.villaDetailData!.data.averageRating.toString(),
+                                        style: oceanTextStyle.copyWith(
+                                          fontSize: 25,
+                                          fontWeight: FontWeight.bold,
+                                          color: contextOrange
+                                        ),
+                                        children: [
+                                          TextSpan(
+                                            text: ' / 5',
+                                            style: greyTextStyle.copyWith(
+                                              fontSize: 14
+                                            )
+                                          )
+                                        ]
+                                      )
+                                    )
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(width: 15),
+                              Container(
+                                width: MediaQuery.of(context).size.width / 2,
+                                margin: EdgeInsets.only(right: edge),
+                                color: contextOrange,
+                                child: Text(
+                                  'TEST'
+                                ),
+                              )
+                            ],
+                          ),
+                          const SizedBox(height: 30),
+                          Padding(
+                            padding: EdgeInsets.only(left: edge),
+                            child: Text(
                               'Deskripsi',
                               style: regularTextStyle.copyWith(
                                 fontSize: 16,

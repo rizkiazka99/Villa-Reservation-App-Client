@@ -79,7 +79,8 @@ class BookingsScreenController extends GetxController {
   getBooked() {
     if (bookingsData!.data.isNotEmpty) {
       booked = bookingsData!.data.where((booking) {
-        return booking.status != 'expire';
+        DateTime formattedBookingEndDate = DateFormat('dd-MM-yyyy').parse(booking.bookingEndDate);
+        return booking.status != 'expire' && formattedBookingEndDate.isAfter(DateTime.now());
       }).toList();
 
       if (selectedStatus == 'Semua') {
