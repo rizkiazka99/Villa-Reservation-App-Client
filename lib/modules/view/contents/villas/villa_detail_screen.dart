@@ -181,66 +181,78 @@ class _VillaDetailScreenState extends State<VillaDetailScreen> {
                             ),
                           ),
                           const SizedBox(height: 30),
-                          Padding(
-                            padding: EdgeInsets.only(left: edge),
-                            child: Text(
-                              'Ulasan',
-                              style: regularTextStyle.copyWith(
-                                fontSize: 16
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 12),
-                          Row(
+                          controller.villaDetailData!.data.averageRating != null ? Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Container(
-                                width: MediaQuery.of(context).size.width / 4,
-                                margin: EdgeInsets.only(left: edge),
-                                color: contextRed,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Row(
+                              Padding(
+                                padding: EdgeInsets.only(left: edge),
+                                child: Text(
+                                  'Ulasan',
+                                  style: regularTextStyle.copyWith(
+                                    fontSize: 16
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 12),
+                              Row(
+                                children: [
+                                  Container(
+                                    width: MediaQuery.of(context).size.width / 4,
+                                    margin: EdgeInsets.only(left: edge),
+                                    child: Column(
                                       children: [
-                                        Image.asset(
-                                          'assets/icons/icon_star.png'
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Image.asset(
+                                                  'assets/icons/icon_star.png'
+                                                )
+                                              ],
+                                            ),
+                                            const SizedBox(width: 8),
+                                            Text.rich(
+                                              TextSpan(
+                                                text: controller.villaDetailData!.data.averageRating.toString(),
+                                                style: oceanTextStyle.copyWith(
+                                                  fontSize: 25,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: contextOrange
+                                                ),
+                                                children: [
+                                                  TextSpan(
+                                                    text: ' / 5',
+                                                    style: greyTextStyle.copyWith(
+                                                      fontSize: 14
+                                                    )
+                                                  )
+                                                ]
+                                              )
+                                            )
+                                          ],
+                                        ),
+                                        Text(
+                                          '(${controller.villaDetailData!.data.villaReviews.length} ulasan)',
+                                          style: bodySm(color: Colors.grey),
                                         )
                                       ],
                                     ),
-                                    const SizedBox(width: 8),
-                                    Text.rich(
-                                      TextSpan(
-                                        text: controller.villaDetailData!.data.averageRating.toString(),
-                                        style: oceanTextStyle.copyWith(
-                                          fontSize: 25,
-                                          fontWeight: FontWeight.bold,
-                                          color: contextOrange
-                                        ),
-                                        children: [
-                                          TextSpan(
-                                            text: ' / 5',
-                                            style: greyTextStyle.copyWith(
-                                              fontSize: 14
-                                            )
-                                          )
-                                        ]
-                                      )
-                                    )
-                                  ],
-                                ),
+                                  ),
+                                  const SizedBox(width: 15),
+                                  Container(
+                                    width: MediaQuery.of(context).size.width / 2,
+                                    margin: EdgeInsets.only(right: edge),
+                                    color: contextOrange,
+                                    child: Text(
+                                      'TEST'
+                                    ),
+                                  )
+                                ],
                               ),
-                              const SizedBox(width: 15),
-                              Container(
-                                width: MediaQuery.of(context).size.width / 2,
-                                margin: EdgeInsets.only(right: edge),
-                                color: contextOrange,
-                                child: Text(
-                                  'TEST'
-                                ),
-                              )
+                              const SizedBox(height: 30),
                             ],
-                          ),
-                          const SizedBox(height: 30),
+                          ) : const SizedBox.shrink(),
                           Padding(
                             padding: EdgeInsets.only(left: edge),
                             child: Text(
