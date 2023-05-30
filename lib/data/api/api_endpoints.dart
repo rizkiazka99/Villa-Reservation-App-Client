@@ -269,15 +269,15 @@ class Reviews extends Methods {
   }
 
   Future getVillaReviews(id) async {
-    return await dioGet('villaReviews/villa/$id');
+    return await dioGet('villaReviews/villas/$id');
   }
 
   Future getVillaReviewsAsc(id) async {
-    return await dioGet('villaReviews/villa/$id/asc');
+    return await dioGet('villaReviews/villas/$id/asc');
   }
 
   Future getVillaReviewsDesc(id) async {
-    return await dioGet('villaReviews/villa/$id/desc');
+    return await dioGet('villaReviews/villas/$id/desc');
   }
 }
 

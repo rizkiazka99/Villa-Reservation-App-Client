@@ -4,6 +4,7 @@ import 'package:reservilla/core/colors.dart';
 class DefaultDropdown extends StatefulWidget {
   final String value;
   final EdgeInsetsGeometry? margin;
+  final Color? backgroundColor;
   final void Function(String?)? onChanged;
   final List<DropdownMenuItem<String>>? items;
   
@@ -11,6 +12,7 @@ class DefaultDropdown extends StatefulWidget {
     super.key, 
     required this.value,
     this.margin,
+    this.backgroundColor,
     required this.onChanged, 
     required this.items
   });
@@ -26,6 +28,7 @@ class _DefaultDropdownState extends State<DefaultDropdown> {
       width: MediaQuery.of(context).size.width,
       margin: widget.margin,
       decoration: BoxDecoration(
+        color: widget.backgroundColor,
         borderRadius: BorderRadius.circular(15),
         border: Border.all(
           width: 2, 

@@ -1,7 +1,7 @@
 class VillaReviewsResponse {
     bool status;
     String message;
-    Data data;
+    Data? data;
 
     VillaReviewsResponse({
         required this.status,
@@ -12,13 +12,13 @@ class VillaReviewsResponse {
     factory VillaReviewsResponse.fromJson(Map<String, dynamic> json) => VillaReviewsResponse(
         status: json["status"],
         message: json["message"],
-        data: Data.fromJson(json["data"]),
+        data: json['data'] == null ? null : Data.fromJson(json["data"]),
     );
 
     Map<String, dynamic> toJson() => {
         "status": status,
         "message": message,
-        "data": data.toJson(),
+        "data": data!.toJson(),
     };
 }
 
@@ -46,7 +46,7 @@ class Review {
     int id;
     int villaId;
     int userId;
-    int rating;
+    double rating;
     String comment;
     DateTime createdAt;
     DateTime updatedAt;
@@ -67,7 +67,7 @@ class Review {
         id: json["id"],
         villaId: json["VillaId"],
         userId: json["UserId"],
-        rating: json["rating"],
+        rating: json["rating"] is double ? json["rating"] : (json['rating'] as int).toDouble(),
         comment: json["comment"],
         createdAt: DateTime.parse(json["createdAt"]),
         updatedAt: DateTime.parse(json["updatedAt"]),

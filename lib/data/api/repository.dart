@@ -135,6 +135,7 @@ class Repository {
 
   Future<VillaReviewsResponse> getVillaReviewsDesc(id) async {
     final response = await reviewsApi.getVillaReviewsDesc(id);
+    print(response);
     return VillaReviewsResponse.fromJson(response);
   }
 
