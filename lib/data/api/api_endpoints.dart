@@ -90,7 +90,7 @@ class Methods {
           }
         )
       );
-      
+
       return response.data;
     } catch(err) {
       return handleError(err);
@@ -266,6 +266,18 @@ class Reviews extends Methods {
 
   Future getUserReviews() async {
     return await dioGet('villaReviews/users');
+  }
+
+  Future getVillaReviews(id) async {
+    return await dioGet('villaReviews/villa/$id');
+  }
+
+  Future getVillaReviewsAsc(id) async {
+    return await dioGet('villaReviews/villa/$id/asc');
+  }
+
+  Future getVillaReviewsDesc(id) async {
+    return await dioGet('villaReviews/villa/$id/desc');
   }
 }
 

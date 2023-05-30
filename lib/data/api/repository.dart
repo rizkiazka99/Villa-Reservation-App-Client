@@ -14,6 +14,7 @@ import 'package:reservilla/data/models/contents/locations/location_detail_respon
 import 'package:reservilla/data/models/contents/locations/locations_response.dart';
 import 'package:reservilla/data/models/contents/profile/edit_profile_response.dart';
 import 'package:reservilla/data/models/contents/reviews/add_review_response.dart';
+import 'package:reservilla/data/models/contents/reviews/villa_reviews_response.dart';
 import 'package:reservilla/data/models/contents/villas/villa_detail_response.dart';
 import 'package:reservilla/data/models/contents/villas/villa_search_response.dart';
 import 'package:reservilla/data/models/contents/villas/villas_response.dart';
@@ -120,6 +121,21 @@ class Repository {
   Future<UserReviewsResponse> getUserReviews() async {
     final response = await reviewsApi.getUserReviews();
     return UserReviewsResponse.fromJson(response);
+  }
+
+  Future<VillaReviewsResponse> getVillaReviews(id) async {
+    final response = await reviewsApi.getVillaReviews(id);
+    return VillaReviewsResponse.fromJson(response);
+  }
+
+  Future<VillaReviewsResponse> getVillaReviewsAsc(id) async {
+    final response = await reviewsApi.getVillaReviewsAsc(id);
+    return VillaReviewsResponse.fromJson(response);
+  }
+
+  Future<VillaReviewsResponse> getVillaReviewsDesc(id) async {
+    final response = await reviewsApi.getVillaReviewsDesc(id);
+    return VillaReviewsResponse.fromJson(response);
   }
 
   // Favorites
