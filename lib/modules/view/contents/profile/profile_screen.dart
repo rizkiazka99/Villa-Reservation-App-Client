@@ -151,10 +151,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             size: 100,
                           );
                         } else {
-                          return Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(100)
-                            ),
+                          return ClipRRect(
+                            borderRadius: BorderRadius.circular(100),
                             child: CachedNetworkImage(
                               height: MediaQuery.of(context).size.height / 8,
                               width: MediaQuery.of(context).size.width / 4,

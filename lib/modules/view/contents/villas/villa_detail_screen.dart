@@ -185,12 +185,31 @@ class _VillaDetailScreenState extends State<VillaDetailScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
-                                padding: EdgeInsets.only(left: edge),
-                                child: Text(
-                                  'Ulasan',
-                                  style: regularTextStyle.copyWith(
-                                    fontSize: 16
-                                  ),
+                                padding: EdgeInsets.only(left: edge, right: 8),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Ulasan',
+                                      style: regularTextStyle.copyWith(
+                                        fontSize: 16
+                                      ),
+                                    ),
+                                    TextButton(
+                                      onPressed: () {
+                                        Get.toNamed(
+                                          villaReviewsScreenRoute,
+                                          arguments: {
+                                            'id': controller.villaDetailData!.data.id
+                                          }
+                                        );
+                                      }, 
+                                      child: Text(
+                                        'Lihat Semua',
+                                        style: bodySm(color: contextOrange)
+                                      )
+                                    )
+                                  ],
                                 ),
                               ),
                               const SizedBox(height: 12),
@@ -239,13 +258,78 @@ class _VillaDetailScreenState extends State<VillaDetailScreen> {
                                       ],
                                     ),
                                   ),
+                                  const SizedBox(width: 5),
+                                  SizedBox(
+                                    height: 60,
+                                    width: 1,
+                                    child: Container(
+                                      color: contextOrange,
+                                    ),
+                                  ),
                                   const SizedBox(width: 15),
-                                  Container(
-                                    width: MediaQuery.of(context).size.width / 2,
-                                    margin: EdgeInsets.only(right: edge),
-                                    color: contextOrange,
-                                    child: Text(
-                                      'TEST'
+                                  Expanded(
+                                    child: Container(
+                                      width: MediaQuery.of(context).size.width / 2,
+                                      margin: EdgeInsets.only(right: edge),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              controller.villaDetailData!.data.villaReviews[0].user.profilePicture == null ?
+                                                const Icon(
+                                                  Icons.account_circle_rounded,
+                                                  color: backgroundColorPrimary,
+                                                  size: 40
+                                                ) : ClipRRect(
+                                                  borderRadius: BorderRadius.circular(100),
+                                                  child: CachedNetworkImage(
+                                                    height: 40,
+                                                    width: 40,
+                                                    imageUrl: baseUrlImg + controller.villaDetailData!.data.villaReviews[0].user.profilePicture,
+                                                    fadeInDuration: const Duration(milliseconds: 300),
+                                                    errorWidget: (context, url, error) => const Icon(
+                                                      Icons.error,
+                                                      size: 40
+                                                    ),
+                                                    placeholder: (context, url) => const SpinKitThreeBounce(
+                                                      color: contextOrange,
+                                                      size: 18
+                                                    ),
+                                                  ),
+                                                ),
+                                              const SizedBox(width: 5),
+                                              Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    controller.villaDetailData!.data.villaReviews[0].user.name,
+                                                    style: bodyMd()
+                                                  ),
+                                                  RatingBarIndicator(
+                                                    rating: controller.villaDetailData!.data.villaReviews[0].rating,
+                                                    itemCount: 5,
+                                                    itemSize: 15,
+                                                    itemBuilder: (context, index) {
+                                                      return const Icon(
+                                                        Icons.star_rounded,
+                                                        color: contextOrange
+                                                      );
+                                                    }
+                                                  )
+                                                ],
+                                              )
+                                            ],
+                                          ),
+                                          const SizedBox(height: 3),
+                                          Text(
+                                            controller.villaDetailData!.data.villaReviews[0].comment,
+                                            style: bodyMd(color: Colors.black),
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                          )
+                                        ],
+                                      )
                                     ),
                                   )
                                 ],
