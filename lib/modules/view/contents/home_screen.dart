@@ -7,6 +7,7 @@ import 'package:reservilla/modules/controller/contents/locations/location_screen
 import 'package:reservilla/modules/controller/contents/home_screen_controller.dart';
 import 'package:reservilla/modules/controller/miscellaneous/dashboard_screen_controller.dart';
 import 'package:reservilla/router/route_variables.dart';
+import 'package:reservilla/widgets/empty_state.dart';
 import 'package:reservilla/widgets/skeleton_loader.dart';
 import 'package:reservilla/widgets/villa_card.dart';
 import 'package:reservilla/widgets/city_card.dart';
@@ -126,6 +127,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       const SizedBox(height: 16),
                       Obx(() => controller.villasLoading ? Column(
                           children: List.generate(4, (index) => const SkeletonLoader()),
+                        ) : controller.isFetched && controller.villas.isEmpty ? EmptyState(
+                          height: MediaQuery.of(context).size.height / 3.5,
+                          imageAsset: 'assets/images/empty.png',
+                          message: 'Tidak ada rekomendasi villa untuk saat ini',
+                          imageHeight: 180,
                         ) : Padding(
                         padding: EdgeInsets.symmetric(horizontal: edge),
                         child: VillaCard(controller.villas),
