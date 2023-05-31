@@ -92,6 +92,8 @@ class UserFavoritesScreenController extends GetxController {
   }
 
   initiateRemoveFromFavorite(id, villaName) async {
+    Get.closeCurrentSnackbar();
+    Get.back();
     loaderDialog(
       const SpinKitRing(color: contextOrange), 
       'Mohon tunggu...'

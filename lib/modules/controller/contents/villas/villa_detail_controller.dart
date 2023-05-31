@@ -67,7 +67,6 @@ class VillaDetailController extends GetxController {
     super.onInit();
     id = Get.arguments['id'];
     getVillaDetail();
-    getUserFavorites();
   }
 
   @override
@@ -79,6 +78,7 @@ class VillaDetailController extends GetxController {
     villaDetailLoading = true;
     VillaDetailResponse? res = await repository.getVillaDetail(id);
     villaDetailData = res;
+    getUserFavorites();
     villaDetailLoading = false;
 
     return villaDetailData;
@@ -142,6 +142,7 @@ class VillaDetailController extends GetxController {
   }
 
   initiateRemoveFromFavorite(id, villaName) async {
+    Get.back();
     loaderDialog(
       const SpinKitRing(color: contextOrange), 
       'Mohon tunggu...'

@@ -135,6 +135,7 @@ class _FavoriteCardState extends State<FavoriteCard> {
                           ),
                           InkWell(
                             onTap: () {
+                              Get.closeAllSnackbars();
                               Get.dialog(
                                 ConfirmationDialog(
                                   title: 'Tunggu Sebentar!', 
@@ -144,7 +145,6 @@ class _FavoriteCardState extends State<FavoriteCard> {
                                       widget.favorites.data[index].id,
                                       widget.favorites.data[index].villa.name
                                     );
-                                    Get.back();
                                   }
                                 )
                               );
@@ -323,6 +323,7 @@ class _SearchedFavoriteCardState extends State<SearchedFavoriteCard> {
                           ),
                           InkWell(
                             onTap: () {
+                              Get.closeAllSnackbars();
                               Get.dialog(
                                 ConfirmationDialog(
                                   title: 'Tunggu Sebentar!', 
@@ -332,7 +333,6 @@ class _SearchedFavoriteCardState extends State<SearchedFavoriteCard> {
                                       widget.favorites[index].id,
                                       widget.favorites[index].villa.name
                                     );
-                                    Get.back();
                                   }
                                 )
                               );

@@ -35,7 +35,7 @@ class _VillaDetailScreenState extends State<VillaDetailScreen> {
       child: Scaffold(
         backgroundColor: whiteColor,
         body: Obx(() {
-          if (controller.villaDetailLoading && controller.favoriteLoading) {
+          if (controller.villaDetailLoading) {
             return LoadingState(
               height: MediaQuery.of(context).size.height,
             );
@@ -522,9 +522,22 @@ class _VillaDetailScreenState extends State<VillaDetailScreen> {
                             width: 40,
                           ),
                         ),
-                        Obx(() => controller.isFavorite
+                        Obx(() => controller.userFavorites == null ? Container(
+                          height: 40,
+                          width: 40,
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(100)
+                          ),
+                          child: const SpinKitRing(
+                            color: contextOrange,
+                            lineWidth: 4
+                          )
+                        ) : controller.isFavorite
                             ? InkWell(
                                 onTap: () async {
+                                  Get.closeAllSnackbars();
                                   Get.dialog(ConfirmationDialog(
                                       title: 'Tunggu Sebentar!',
                                       content:
@@ -534,7 +547,6 @@ class _VillaDetailScreenState extends State<VillaDetailScreen> {
                                             controller.favoriteId,
                                             controller
                                                 .villaDetailData!.data.name);
-                                        Get.back();
                                       }));
                                 },
                                 child: Image.asset(
@@ -544,6 +556,7 @@ class _VillaDetailScreenState extends State<VillaDetailScreen> {
                               )
                             : InkWell(
                                 onTap: () async {
+                                  Get.closeAllSnackbars();
                                   controller.initiateAddToFavorite(
                                       controller.villaDetailData!.data.id,
                                       controller.villaDetailData!.data.name);
