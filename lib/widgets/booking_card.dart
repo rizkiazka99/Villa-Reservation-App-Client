@@ -229,7 +229,9 @@ class _BookingCardState extends State<BookingCard> {
                                     ' BATAL',
                                 style: bodyMd(
                                   fontWeight: FontWeight.bold,
-                                  color: contextOrange
+                                  color: widget.bookingList[index].status == 'settlement' ? contextGreen :
+                                      widget.bookingList[index].status == 'pending' ? contextOrange :
+                                      contextRed
                                 )
                               ))
                             ],

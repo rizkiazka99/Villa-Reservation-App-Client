@@ -1,12 +1,14 @@
 import 'dart:async';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:reservilla/core/colors.dart';
 import 'package:reservilla/data/api/repository.dart';
 import 'package:reservilla/data/models/contents/favorites/add_to_favorite_response.dart';
 import 'package:reservilla/data/models/contents/favorites/remove_from_favorite_response.dart';
 import 'package:reservilla/data/models/contents/favorites/user_favorites_response.dart';
 import 'package:reservilla/data/models/contents/villas/villa_detail_response.dart';
+import 'package:reservilla/helpers/days_between_dates.dart';
 import 'package:reservilla/widgets/default_snackbar.dart';
 import 'package:reservilla/widgets/loader_dialog.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -26,6 +28,7 @@ class VillaDetailController extends GetxController {
   RxList<Datum> _favoriteData = <Datum>[].obs;
   RxBool _removeFromFavoriteLoading = false.obs;
   Rxn<RemoveFromFavoriteResponse> _removeFromFavoriteData = Rxn<RemoveFromFavoriteResponse>();
+  RxList _bookedDates = [].obs;
 
   bool get villaDetailLoading => _villaDetailLoading.value;
   bool get favoriteLoading => _favoriteLoading.value;
@@ -39,6 +42,7 @@ class VillaDetailController extends GetxController {
   List<Datum> get favoriteData => _favoriteData;
   bool get removeFromFavoriteLoading => _removeFromFavoriteLoading.value;
   RemoveFromFavoriteResponse? get removeFromFavoriteData => _removeFromFavoriteData.value;
+  List get bookedDates => _bookedDates;
 
   set villaDetailLoading(bool villaDetailLoading) =>
       this._villaDetailLoading.value = villaDetailLoading;
@@ -61,6 +65,7 @@ class VillaDetailController extends GetxController {
       this._removeFromFavoriteLoading.value = removeFromFavoriteLoading;
   set removeFromFavoriteData(RemoveFromFavoriteResponse? removeFromFavoriteData) =>
       this._removeFromFavoriteData.value = removeFromFavoriteData;
+  set bookedDates(List bookedDates) => this._bookedDates.value = bookedDates;
 
   @override
   void onInit() {
@@ -74,11 +79,36 @@ class VillaDetailController extends GetxController {
     super.dispose();
   }
 
+  getActiveBookingDates() {
+    if (villaDetailData!.data.bookings.isNotEmpty) {
+      for(var i = 0; i < villaDetailData!.data.bookings.length; i++) {
+        List dates = [];
+        DateTime bookingStartDate = DateFormat('dd-MM-yyyy').parse(villaDetailData!.data.bookings[i].bookingStartDate);
+        DateTime bookingEndDate = DateFormat('dd-MM-yyyy').parse(villaDetailData!.data.bookings[i].bookingEndDate);
+
+        if (bookingStartDate.isBefore(DateTime.now()) && bookingEndDate.isBefore(DateTime.now())) {
+
+        } else {
+          dates.add(getDaysInBetween(
+            DateFormat('dd-MM-yyyy').parse(villaDetailData!.data.bookings[i].bookingStartDate), 
+            DateFormat('dd-MM-yyyy').parse(villaDetailData!.data.bookings[i].bookingEndDate)
+          ));
+          dates.forEach((dates) => bookedDates.addAll(dates));
+        }
+      }
+    } else {
+      bookedDates = [];
+    }
+    
+    print(bookedDates);
+  }
+
   Future<VillaDetailResponse?> getVillaDetail() async {
     villaDetailLoading = true;
     VillaDetailResponse? res = await repository.getVillaDetail(id);
     villaDetailData = res;
     getUserFavorites();
+    getActiveBookingDates();
     villaDetailLoading = false;
 
     return villaDetailData;

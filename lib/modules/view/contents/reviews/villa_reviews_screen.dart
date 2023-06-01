@@ -124,10 +124,10 @@ class _VillaReviewsScreenState extends State<VillaReviewsScreen> {
                                       ],
                                     ),
                                     const SizedBox(height: 3),
-                                    Text(
+                                    controller.villaReviewsData!.data!.reviews[index].comment.isNotEmpty ? Text(
                                       controller.villaReviewsData!.data!.reviews[index].comment,
                                       style: bodyMd(color: Colors.black)
-                                    )
+                                    ) : const SizedBox.shrink()
                                   ],
                                 )),
                                 const Divider(

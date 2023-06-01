@@ -31,6 +31,7 @@ class BookVillaScreenController extends GetxController {
   RxString _selectedPaymentMethod = 'permata'.obs;
   RxInt _stayingDays = 0.obs;
   Rxn<UserData> _user = Rxn<UserData>();
+  RxList _bookedDates = [].obs;
   Rxn<BookResponse> _bookData = Rxn<BookResponse>();
 
   int get price => _price.value;
@@ -48,6 +49,7 @@ class BookVillaScreenController extends GetxController {
   String get selectedPaymentMethod => _selectedPaymentMethod.value;
   int get stayingDays => _stayingDays.value;
   UserData? get user => _user.value;
+  List get bookedDates => _bookedDates;
   BookResponse? get bookData => _bookData.value;
 
   set price(int price) => this._price.value = price;
@@ -73,8 +75,8 @@ class BookVillaScreenController extends GetxController {
       this._selectedPaymentMethod.value = selectedPaymentMethod;
   set stayingDays(int stayingDays) => this._stayingDays.value = stayingDays;
   set user(UserData? user) => this._user.value = user;
+  set bookedDates(List bookedDates) => this._bookedDates.value = bookedDates;
   set bookData(BookResponse? bookData) => this._bookData.value = bookData;
-  
 
   List paymentMethods = [
     {
@@ -93,7 +95,9 @@ class BookVillaScreenController extends GetxController {
     villaId = Get.arguments['villa_id'].toString();
     villaName = Get.arguments['name'].toString();
     price = Get.arguments['price'];
+    bookedDates = Get.arguments['active_booking_dates'];
     getUserData();
+    print(bookedDates);
   }
 
   @override

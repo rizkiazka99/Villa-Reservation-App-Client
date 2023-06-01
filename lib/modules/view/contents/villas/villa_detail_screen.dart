@@ -589,7 +589,8 @@ class _VillaDetailScreenState extends State<VillaDetailScreen> {
                       arguments: {
                         'villa_id': controller.villaDetailData!.data.id,
                         'name': controller.villaDetailData!.data.name,
-                        'price': controller.villaDetailData!.data.price
+                        'price': controller.villaDetailData!.data.price,
+                        'active_booking_dates': controller.bookedDates
                       }
                     );
                   }
