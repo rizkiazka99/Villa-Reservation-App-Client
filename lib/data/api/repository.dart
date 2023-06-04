@@ -60,6 +60,7 @@ class Repository {
 
   Future<UserResponse> getUserById(id) async {
     final response = await usersApi.getUserById(id);
+    print(response);
     return UserResponse.fromJson(response);
   }
 

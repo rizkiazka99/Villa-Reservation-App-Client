@@ -28,7 +28,7 @@ class VillaDetailController extends GetxController {
   RxList<Datum> _favoriteData = <Datum>[].obs;
   RxBool _removeFromFavoriteLoading = false.obs;
   Rxn<RemoveFromFavoriteResponse> _removeFromFavoriteData = Rxn<RemoveFromFavoriteResponse>();
-  RxList _bookedDates = [].obs;
+  RxList<DateTime> _bookedDates = <DateTime>[].obs;
 
   bool get villaDetailLoading => _villaDetailLoading.value;
   bool get favoriteLoading => _favoriteLoading.value;
@@ -42,7 +42,7 @@ class VillaDetailController extends GetxController {
   List<Datum> get favoriteData => _favoriteData;
   bool get removeFromFavoriteLoading => _removeFromFavoriteLoading.value;
   RemoveFromFavoriteResponse? get removeFromFavoriteData => _removeFromFavoriteData.value;
-  List get bookedDates => _bookedDates;
+  List<DateTime> get bookedDates => _bookedDates;
 
   set villaDetailLoading(bool villaDetailLoading) =>
       this._villaDetailLoading.value = villaDetailLoading;
@@ -65,7 +65,7 @@ class VillaDetailController extends GetxController {
       this._removeFromFavoriteLoading.value = removeFromFavoriteLoading;
   set removeFromFavoriteData(RemoveFromFavoriteResponse? removeFromFavoriteData) =>
       this._removeFromFavoriteData.value = removeFromFavoriteData;
-  set bookedDates(List bookedDates) => this._bookedDates.value = bookedDates;
+  set bookedDates(List<DateTime> bookedDates) => this._bookedDates.value = bookedDates;
 
   @override
   void onInit() {

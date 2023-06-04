@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:reservilla/core/colors.dart';
 import 'package:reservilla/data/api/repository.dart';
 import 'package:reservilla/data/local/storage_repository.dart';
@@ -31,7 +32,7 @@ class BookVillaScreenController extends GetxController {
   RxString _selectedPaymentMethod = 'permata'.obs;
   RxInt _stayingDays = 0.obs;
   Rxn<UserData> _user = Rxn<UserData>();
-  RxList _bookedDates = [].obs;
+  RxList<DateTime> _bookedDates = <DateTime>[].obs;
   Rxn<BookResponse> _bookData = Rxn<BookResponse>();
 
   int get price => _price.value;
@@ -49,7 +50,7 @@ class BookVillaScreenController extends GetxController {
   String get selectedPaymentMethod => _selectedPaymentMethod.value;
   int get stayingDays => _stayingDays.value;
   UserData? get user => _user.value;
-  List get bookedDates => _bookedDates;
+  List<DateTime> get bookedDates => _bookedDates;
   BookResponse? get bookData => _bookData.value;
 
   set price(int price) => this._price.value = price;
@@ -75,7 +76,7 @@ class BookVillaScreenController extends GetxController {
       this._selectedPaymentMethod.value = selectedPaymentMethod;
   set stayingDays(int stayingDays) => this._stayingDays.value = stayingDays;
   set user(UserData? user) => this._user.value = user;
-  set bookedDates(List bookedDates) => this._bookedDates.value = bookedDates;
+  set bookedDates(List<DateTime> bookedDates) => this._bookedDates.value = bookedDates;
   set bookData(BookResponse? bookData) => this._bookData.value = bookData;
 
   List paymentMethods = [
@@ -97,7 +98,7 @@ class BookVillaScreenController extends GetxController {
     price = Get.arguments['price'];
     bookedDates = Get.arguments['active_booking_dates'];
     getUserData();
-    print(bookedDates);
+    firstDate();
   }
 
   @override
@@ -112,6 +113,31 @@ class BookVillaScreenController extends GetxController {
     return user;
   }
 
+  bool selectableDate(DateTime date) {
+    for (var i = 0; i < bookedDates.length; i++) {
+      if (date == bookedDates[i]) {
+        return false;
+      } 
+    }
+    
+    return true;
+  }
+
+  DateTime firstDate() {
+    DateTime currentDateStartWithoutHour = DateTime(currentDateStart.year, currentDateStart.month, currentDateStart.day);
+
+    for (var i = 0; i < bookedDates.length; i++) {
+      DateTime bookedDateWithoutHour = DateFormat('yyyy-MM-dd').parse(bookedDates[i].toString());
+
+      if (currentDateStartWithoutHour == bookedDateWithoutHour) {
+        currentDateStartWithoutHour = currentDateStartWithoutHour.add(const Duration(days: 1));
+        currentDateStart = currentDateStartWithoutHour;
+      }
+    }
+    print(currentDateStart);
+    return currentDateStart;
+  }
+
   int totalPayment(int stayingDays, int villaPrice) {
     grossAmount = stayingDays * villaPrice;
     return grossAmount;
@@ -120,9 +146,10 @@ class BookVillaScreenController extends GetxController {
   Future<Null> selectCheckInDate(BuildContext context) async {
     DateTime? newDate = await showDatePicker(
       context: context,
-      initialDate: bookingStartDateUpdated ? currentDateStart : DateTime.now(),
-      firstDate: DateTime.now(),
+      initialDate: currentDateStart,
+      firstDate: currentDateStart,
       lastDate: DateTime(currentDateStart.year, currentDateStart.month, currentDateStart.day + 122),
+      selectableDayPredicate: selectableDate,
       builder: (context, child) {
         return Theme(
           data: Theme.of(context).copyWith(
@@ -161,6 +188,7 @@ class BookVillaScreenController extends GetxController {
           currentDateStart.isAfter(currentDateEnd) ? currentDateStart.add(const Duration(days: 1)) : currentDateEnd,
       firstDate: currentDateStart.add(const Duration(days: 1)),
       lastDate: DateTime(currentDateStart.year, currentDateStart.month, currentDateStart.day + 121),
+      selectableDayPredicate: selectableDate,
       builder: (context, child) {
         return Theme(
           data: Theme.of(context).copyWith(
@@ -269,6 +297,11 @@ class BookVillaScreenController extends GetxController {
         defaultSnackbar('Ups!', 'Anda telah booking villa ini pada tanggal yang sama');
       } else if (bookData!.message == 'This villa has been booked on the date of your choosing') {
         Get.back();
+        currentDateStart = DateTime.now();
+        bookingStartDateUpdated = false;
+        bookingEndDateUpdated = false;
+        stayingDays = 0;
+        totalPayment(stayingDays, price);
         defaultSnackbar('Ups!', 'Villa telah di-booking pada tanggal yang Anda pilih');
       } else {
         Get.back();

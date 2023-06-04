@@ -304,7 +304,11 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
                                         controller.bookingDetailData!.data.status == 'settlement' ?
                                             'TELAH DIBAYAR' : controller.bookingDetailData!.data.status == 'pending' ?
                                              'MENUNGGU PEMBAYARAN' : 'BATAL',
-                                        style: h5(color: contextOrange),
+                                        style: h5(
+                                          color: controller.bookingDetailData!.data.status == 'settlement' ? contextGreen :
+                                              controller.bookingDetailData!.data.status == 'pending' ? contextOrange :
+                                              contextRed
+                                        ),
                                         textAlign: TextAlign.justify,
                                       )),
                                       const SizedBox(height: 8),
