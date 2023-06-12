@@ -277,18 +277,21 @@ class _BookVillaScreenState extends State<BookVillaScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavBarButton(
-        onPressed: () {
-          if (!controller.bookingStartDateUpdated) {
-            defaultSnackbar('Ups!', 'Tolong pilih tanggal check-in dulu');
-          } else if (!controller.bookingEndDateUpdated) {
-            defaultSnackbar('Ups!', 'Tolong pilih tanggal check-out dulu');
-          } else {
-            controller.initiateBook();
-          }
-        }, 
-        buttonColor: contextOrange, 
-        buttonText: 'Ajukan Booking'
+      bottomNavigationBar: Container(
+        margin: const EdgeInsets.only(top: 8),
+        child: BottomNavBarButton(
+          onPressed: () {
+            if (!controller.bookingStartDateUpdated) {
+              defaultSnackbar('Ups!', 'Tolong pilih tanggal check-in dulu');
+            } else if (!controller.bookingEndDateUpdated) {
+              defaultSnackbar('Ups!', 'Tolong pilih tanggal check-out dulu');
+            } else {
+              controller.initiateBook();
+            }
+          }, 
+          buttonColor: contextOrange, 
+          buttonText: 'Ajukan Booking'
+        ),
       )
     );
   }

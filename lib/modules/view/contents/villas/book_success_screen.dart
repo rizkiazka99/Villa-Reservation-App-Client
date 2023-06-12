@@ -25,6 +25,7 @@ class _BookSuccessScreenState extends State<BookSuccessScreen> {
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
           child: Container(
+            height: MediaQuery.of(context).size.height,
             padding: const EdgeInsets.all(16),
             margin: EdgeInsets.fromLTRB(
               16, 
@@ -43,7 +44,7 @@ class _BookSuccessScreenState extends State<BookSuccessScreen> {
                 Image.asset(
                   'assets/images/booking_success.png',
                   width: 280,
-                  height: 280,
+                  height: 240,
                 ),
                 Text(
                   'Booking Anda untuk ${controller.name} berhasil diajukan!',

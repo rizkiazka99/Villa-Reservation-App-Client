@@ -146,7 +146,7 @@ class _VillaReviewsScreenState extends State<VillaReviewsScreen> {
               Container(
                 height: MediaQuery.of(context).size.height / 4.5,
                 width: MediaQuery.of(context).size.width,
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
                 decoration: const BoxDecoration(
                   color: contextOrange,
                   borderRadius: BorderRadius.only(
@@ -157,37 +157,39 @@ class _VillaReviewsScreenState extends State<VillaReviewsScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Obx(() => !controller.reviewsLoading ? Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          'assets/icons/icon_star.png'
-                        ),
-                        const SizedBox(width: 8),
-                        Text.rich(
-                          TextSpan(
-                            text: controller.villaReviewsData!.data!.averageRating.toString(),
-                            style: oceanTextStyle.copyWith(
-                              fontSize: 65,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white
-                            ),
-                            children: [
-                              TextSpan(
-                                text: ' / 5',
-                                style: blackTextStyle.copyWith(fontSize: 30)
-                              )
-                            ]
+                    Expanded(
+                      child: Obx(() => !controller.reviewsLoading ? Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            'assets/icons/icon_star.png'
+                          ),
+                          const SizedBox(width: 8),
+                          Text.rich(
+                            TextSpan(
+                              text: controller.villaReviewsData!.data!.averageRating.toString(),
+                              style: oceanTextStyle.copyWith(
+                                fontSize: 65,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white
+                              ),
+                              children: [
+                                TextSpan(
+                                  text: ' / 5',
+                                  style: blackTextStyle.copyWith(fontSize: 30)
+                                )
+                              ]
+                            )
                           )
-                        )
-                      ],
-                    ) : const SkeletonLoader()),
+                        ],
+                      ) : const SkeletonLoader()),
+                    ),
                     Obx(() => !controller.reviewsLoading ? DefaultDropdown(
                       backgroundColor: Colors.white,
                       value: controller.selectedOrder, 
                       onChanged: (value) {
                         controller.selectedOrder = value!;
-
+                    
                         if (controller.selectedOrder == 'Tinggi ke Rendah') {
                           controller.getVillaReviewsDesc();
                         } else {
