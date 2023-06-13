@@ -54,7 +54,6 @@ class Repository {
 
   Future<EditProfileResponse> uploadProfilePicture(String id, FormData formData, Function onSendProgress) async {
     final response = await uploadApi.uploadProfilePicture(id, formData, onSendProgress);
-    print(response);
     return EditProfileResponse.fromJson(response);
   }
 

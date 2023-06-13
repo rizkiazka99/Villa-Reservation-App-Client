@@ -171,7 +171,7 @@ class Methods {
 
     try {
       final response = await dio.put(
-        baseUrlImg + url,
+        baseUrl + url,
         data: formData,
         onSendProgress: onSendProgress,
         options: Options(

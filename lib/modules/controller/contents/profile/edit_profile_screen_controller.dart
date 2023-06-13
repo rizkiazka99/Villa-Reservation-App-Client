@@ -146,6 +146,7 @@ class EditProfileScreenController extends GetxController {
 
   Future<EditProfileResponse?> uploadProfilePicture() async {
     uploadLoading = true;
+    print('Picture Path: $picturePath');
     dio.FormData formData = dio.FormData.fromMap({
       'file': await dio.MultipartFile.fromFile(
         picturePath,
@@ -153,18 +154,7 @@ class EditProfileScreenController extends GetxController {
       ),
       'type': 'profile-picture'
     });
-    print(formData.files[0].value.contentType);
-    print(formData.files[0].value.filename);
-    print(formData.files[0].value.headers);
-    print(formData.fields[0].value);
-    print(formData.boundary);
-    print(formData.camelCaseContentDisposition);
     EditProfileResponse res = await repository.uploadProfilePicture(id, formData, onSendProgress);
-    /*if (res['error']) {
-      picture = res['data']['url'];
-      uploadProgressReceived = 0;
-      uploadProgressTotal = 1;
-    }*/
     editProfileData = res;
     uploadLoading = false;
     
