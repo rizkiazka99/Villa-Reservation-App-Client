@@ -147,6 +147,7 @@ class EditProfileScreenController extends GetxController {
   Future<EditProfileResponse?> uploadProfilePicture() async {
     uploadLoading = true;
     print('Picture Path: $picturePath');
+    print('Filename: ${picturePath.split('/').last}');
     dio.FormData formData = dio.FormData.fromMap({
       'file': await dio.MultipartFile.fromFile(
         picturePath,

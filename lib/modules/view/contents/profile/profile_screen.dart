@@ -142,7 +142,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   children: [
                     Container(
                       width: MediaQuery.of(context).size.width / 4,
-                      padding: const EdgeInsets.only(left: 8, right: 8),
+                      margin: const EdgeInsets.only(left: 16),
                       child: Obx(() {
                         if (dashboardScreenController.user!.data.profilePicture == null) {
                           return const Icon(
@@ -154,6 +154,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           return ClipRRect(
                             borderRadius: BorderRadius.circular(100),
                             child: CachedNetworkImage(
+                              fit: BoxFit.fitWidth,
                               height: MediaQuery.of(context).size.height / 8,
                               width: MediaQuery.of(context).size.width / 4,
                               imageUrl: baseUrlImg + dashboardScreenController.user!.data.profilePicture,
@@ -169,34 +170,36 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       }),
                     ),
                     const SizedBox(width: 8),
-                    Container(
-                      width: MediaQuery.of(context).size.width / 1.4,
-                      height: MediaQuery.of(context).size.height / 6,
-                      padding: const EdgeInsets.only(left: 8),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            dashboardScreenController.user!.data.name,
-                            style: h4(color: backgroundColorLight),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          Text(
-                            dashboardScreenController.user!.data.email,
-                            style: bodyMd(color: Colors.white),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          Text(
-                            '0${dashboardScreenController.user!.data.phone}',
-                            style: bodyMd(color: Colors.white),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ],
-                      )
+                    Expanded(
+                      child: Container(
+                        width: MediaQuery.of(context).size.width / 1.4,
+                        height: MediaQuery.of(context).size.height / 6,
+                        padding: const EdgeInsets.only(left: 8),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              dashboardScreenController.user!.data.name,
+                              style: h4(color: backgroundColorLight),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            Text(
+                              dashboardScreenController.user!.data.email,
+                              style: bodyMd(color: Colors.white),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            Text(
+                              '0${dashboardScreenController.user!.data.phone}',
+                              style: bodyMd(color: Colors.white),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
+                        )
+                      ),
                     )
                   ],
                 )),

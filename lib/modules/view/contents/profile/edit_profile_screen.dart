@@ -6,6 +6,7 @@ import 'package:reservilla/core/colors.dart';
 import 'package:reservilla/core/font_sizes.dart';
 import 'package:reservilla/helpers/regex.dart';
 import 'package:reservilla/modules/controller/contents/profile/edit_profile_screen_controller.dart';
+import 'package:reservilla/modules/controller/miscellaneous/dashboard_screen_controller.dart';
 import 'package:reservilla/router/route_variables.dart';
 import 'package:reservilla/widgets/back_button.dart';
 import 'package:reservilla/widgets/confirmation_dialog.dart';
@@ -21,6 +22,7 @@ class EditProfileScreen extends StatefulWidget {
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
   EditProfileScreenController controller = Get.find<EditProfileScreenController>();
+  DashboardScreenController dashboardController = Get.find<DashboardScreenController>();
 
   triggerModalBottomSheet(BuildContext context) async {
     showModalBottomSheet(
@@ -261,7 +263,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                         color: contextGrey,
                                       ),
                                       Text(
-                                        'Tambahkan foto profil',
+                                        dashboardController.user!.data.profilePicture == null
+                                            ? 'Tambahkan foto profil' : 'Ubah foto profil',
                                         style: h7(
                                           color: contextGrey
                                         ),
@@ -367,13 +370,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               value: controller.showPasswordForm,
                               activeColor: contextOrange, 
                               onChanged: (bool value) {
-                                print(controller.isPasswordVerified);
                                 if (!controller.isPasswordVerified) {
                                   Get.dialog(verifyPasswordDialog());
                                 } else {
                                   controller.showPasswordForm = value;
                                 }
-                                print(controller.showPasswordForm);
                               }
                             )),
                             const SizedBox(width: 5),

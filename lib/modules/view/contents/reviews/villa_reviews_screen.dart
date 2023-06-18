@@ -83,8 +83,9 @@ class _VillaReviewsScreenState extends State<VillaReviewsScreen> {
                                               ) : ClipRRect(
                                                 borderRadius: BorderRadius.circular(100),
                                                 child: CachedNetworkImage(
-                                                  height: 80,
-                                                  width: 80,
+                                                  fit: BoxFit.fitWidth,
+                                                  height: 70,
+                                                  width: 70,
                                                   imageUrl: baseUrlImg + controller.villaReviewsData!.data!.reviews[index].user.profilePicture,
                                                   fadeInDuration: const Duration(milliseconds: 300),
                                                   errorWidget: (context, url, error) => const Icon(
@@ -97,7 +98,8 @@ class _VillaReviewsScreenState extends State<VillaReviewsScreen> {
                                                   ),
                                                 ),
                                               ),
-                                          const SizedBox(width: 5),
+                                          controller.villaReviewsData!.data!.reviews[index].user.profilePicture == null 
+                                            ? const SizedBox(width: 5) : const SizedBox(width: 12),
                                           Column(
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
@@ -123,7 +125,8 @@ class _VillaReviewsScreenState extends State<VillaReviewsScreen> {
                                           )
                                       ],
                                     ),
-                                    const SizedBox(height: 3),
+                                    controller.villaReviewsData!.data!.reviews[index].user.profilePicture == null 
+                                        ? const SizedBox(height: 3) : const SizedBox(height: 8),
                                     controller.villaReviewsData!.data!.reviews[index].comment.isNotEmpty ? Text(
                                       controller.villaReviewsData!.data!.reviews[index].comment,
                                       style: bodyMd(color: Colors.black)

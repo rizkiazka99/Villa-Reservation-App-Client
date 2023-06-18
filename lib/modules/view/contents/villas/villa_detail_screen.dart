@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 import 'package:reservilla/core/colors.dart';
 import 'package:reservilla/core/font_sizes.dart';
 import 'package:reservilla/core/theme.dart';
-import 'package:reservilla/data/models/miscellaneous/user_response.dart';
 import 'package:reservilla/helpers/common_variables.dart';
 import 'package:reservilla/helpers/currency_formatter.dart';
 import 'package:reservilla/modules/controller/contents/villas/villa_detail_controller.dart';
@@ -317,44 +316,48 @@ class _VillaDetailScreenState extends State<VillaDetailScreen> {
                                                                 color:
                                                                     backgroundColorPrimary,
                                                                 size: 40)
-                                                            : ClipRRect(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            100),
-                                                                child:
-                                                                    CachedNetworkImage(
-                                                                  height: 40,
-                                                                  width: 40,
-                                                                  imageUrl: baseUrlImg +
-                                                                      controller
-                                                                          .villaDetailData!
-                                                                          .data
-                                                                          .villaReviews[
-                                                                              0]
-                                                                          .user
-                                                                          .profilePicture,
-                                                                  fadeInDuration:
-                                                                      const Duration(
-                                                                          milliseconds:
-                                                                              300),
-                                                                  errorWidget: (context,
-                                                                          url,
-                                                                          error) =>
-                                                                      const Icon(
-                                                                          Icons
-                                                                              .error,
-                                                                          size:
-                                                                              40),
-                                                                  placeholder: (context,
-                                                                          url) =>
-                                                                      const SpinKitThreeBounce(
-                                                                          color:
-                                                                              contextOrange,
-                                                                          size:
-                                                                              18),
+                                                            : Container(
+                                                              margin: const EdgeInsets.only(left: 4, right: 4),
+                                                              child: ClipRRect(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              100),
+                                                                  child:
+                                                                      CachedNetworkImage(
+                                                                    fit: BoxFit.fitWidth,
+                                                                    height: 38,
+                                                                    width: 38,
+                                                                    imageUrl: baseUrlImg +
+                                                                        controller
+                                                                            .villaDetailData!
+                                                                            .data
+                                                                            .villaReviews[
+                                                                                0]
+                                                                            .user
+                                                                            .profilePicture,
+                                                                    fadeInDuration:
+                                                                        const Duration(
+                                                                            milliseconds:
+                                                                                300),
+                                                                    errorWidget: (context,
+                                                                            url,
+                                                                            error) =>
+                                                                        const Icon(
+                                                                            Icons
+                                                                                .error,
+                                                                            size:
+                                                                                40),
+                                                                    placeholder: (context,
+                                                                            url) =>
+                                                                        const SpinKitThreeBounce(
+                                                                            color:
+                                                                                contextOrange,
+                                                                            size:
+                                                                                18),
+                                                                  ),
                                                                 ),
-                                                              ),
+                                                            ),
                                                         const SizedBox(
                                                             width: 5),
                                                         Column(
@@ -394,7 +397,8 @@ class _VillaDetailScreenState extends State<VillaDetailScreen> {
                                                         )
                                                       ],
                                                     ),
-                                                    const SizedBox(height: 3),
+                                                    controller.villaDetailData!.data.villaReviews[0].user.profilePicture == null 
+                                                        ? const SizedBox(height: 3) : const SizedBox(height: 5),
                                                     Text(
                                                       controller
                                                           .villaDetailData!
