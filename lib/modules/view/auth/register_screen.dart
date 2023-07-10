@@ -5,7 +5,6 @@ import 'package:reservilla/core/colors.dart';
 import 'package:reservilla/core/font_sizes.dart';
 import 'package:reservilla/helpers/regex.dart';
 import 'package:reservilla/modules/controller/auth/register_screen_controller.dart';
-import 'package:reservilla/router/route_variables.dart';
 import 'package:reservilla/widgets/custom_form.dart';
 import 'package:reservilla/widgets/confirmation_dialog.dart';
 import 'package:reservilla/widgets/default_button.dart';
@@ -18,10 +17,10 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  RegisterScreenController controller = Get.find<RegisterScreenController>();
-
   @override
   Widget build(BuildContext context) {
+    RegisterScreenController controller = Get.find<RegisterScreenController>();
+
     return WillPopScope(
       onWillPop: () {
         if (controller.emailController.text.isNotEmpty || controller.phoneController.text.isNotEmpty ||
@@ -32,14 +31,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 title: 'Tunggu sebentar!', 
                 content: 'Apakah Anda yakin ingin membatalkan proses pembuatan akun?', 
                 onConfirmation: () {
-                  Get.offAllNamed(loginScreenRoute);
+                  Get.back();
+                  Get.back();
                 }
               )
             );
 
             return Future.value(false);
         } else {
-          Get.offAllNamed(loginScreenRoute);
+          Get.back();
           return Future.value(false);
         }
       },
@@ -262,12 +262,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                           title: 'Tunggu sebentar!', 
                                           content: 'Apakah Anda yakin ingin membatalkan proses pembuatan akun?', 
                                           onConfirmation: () {
-                                            Get.offAllNamed(loginScreenRoute);
+                                            Get.back();
+                                            Get.back();
                                           }
                                         )
                                       );
                                   } else {
-                                    Get.offAllNamed(loginScreenRoute);
+                                    Get.back();
                                   }
                                 }, 
                                 color: contextRed, 

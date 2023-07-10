@@ -14,10 +14,10 @@ class BookSuccessScreen extends StatefulWidget {
 }
 
 class _BookSuccessScreenState extends State<BookSuccessScreen> {
-  BookSuccessScreenController controller = Get.find<BookSuccessScreenController>();
-
   @override
   Widget build(BuildContext context) {
+    BookSuccessScreenController controller = Get.find<BookSuccessScreenController>();
+    
     return Scaffold(
       backgroundColor: contextOrange,
       body: SafeArea(

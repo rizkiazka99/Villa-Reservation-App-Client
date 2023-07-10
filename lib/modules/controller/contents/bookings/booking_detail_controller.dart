@@ -36,8 +36,8 @@ class BookingDetailController extends GetxController {
   }
 
   @override
-  void dispose() {
-    super.dispose();
+  void onClose() {
+    super.onClose();
   }
 
   Future<BookingDetailResponse?> getBookingDetail() async {

@@ -61,11 +61,11 @@ class DashboardScreenController extends GetxController with GetTickerProviderSta
   }
 
   @override
-  void dispose() {
+  void onClose() {
     homeController.dispose();
     bookingsController.dispose();
     profileController.dispose();
-    super.dispose();
+    super.onClose();
   }
   
   void onItemTapped(int index) {

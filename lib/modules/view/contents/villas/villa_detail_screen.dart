@@ -25,10 +25,10 @@ class VillaDetailScreen extends StatefulWidget {
 }
 
 class _VillaDetailScreenState extends State<VillaDetailScreen> {
-  VillaDetailController controller = Get.find<VillaDetailController>();
-
   @override
   Widget build(BuildContext context) {
+    VillaDetailController controller = Get.find<VillaDetailController>();
+    
     return SafeArea(
       bottom: false,
       child: Scaffold(

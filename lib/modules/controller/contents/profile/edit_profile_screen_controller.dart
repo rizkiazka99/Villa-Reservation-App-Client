@@ -107,12 +107,12 @@ class EditProfileScreenController extends GetxController {
   }
 
   @override
-  void dispose() {
+  void onClose() {
     nameController.dispose();
     phoneController.dispose();
     verifyPasswordController.dispose();
     passwordController.dispose();
-    super.dispose();
+    super.onClose();
   }
 
   Future getImageByCamera() async {
@@ -120,6 +120,9 @@ class EditProfileScreenController extends GetxController {
       source: ImageSource.camera,
       imageQuality: 50
     );
+
+    final LostDataResponse response = await imagePicker.retrieveLostData();
+    print('Lost Data: ${response.exception}');
 
     if (picture?.path != null) {
       picturePath = picture!.path;
@@ -133,6 +136,9 @@ class EditProfileScreenController extends GetxController {
       imageQuality: 25
     );
 
+    final LostDataResponse response = await imagePicker.retrieveLostData();
+    print('Lost Data: $response');
+
     if(picture?.path != null) {
       picturePath = picture!.path;
       image = File(picture.path);
@@ -145,15 +151,17 @@ class EditProfileScreenController extends GetxController {
   }
 
   Future<EditProfileResponse?> uploadProfilePicture() async {
+    String fileName = picturePath.split('/').last;
+
     uploadLoading = true;
     print('Picture Path: $picturePath');
     print('Filename: ${picturePath.split('/').last}');
     dio.FormData formData = dio.FormData.fromMap({
-      'file': await dio.MultipartFile.fromFile(
+      'profile-picture': await dio.MultipartFile.fromFile(
         picturePath,
         filename: picture.split('/').last
       ),
-      'type': 'profile-picture'
+      //'type': 'profile-picture'
     });
     EditProfileResponse res = await repository.uploadProfilePicture(id, formData, onSendProgress);
     editProfileData = res;
@@ -276,7 +284,8 @@ class EditProfileScreenController extends GetxController {
       
         if (editProfileData!.status) {
           Get.back();
-          Get.offAllNamed(dashboardScreenRoute);
+          Get.back();
+          dashboardScreenController.getUserById();
           defaultSnackbar('Sukses!', 'Profil Anda telah diperbarui');
         } else {
           Get.back();
@@ -323,7 +332,8 @@ class EditProfileScreenController extends GetxController {
       
         if (editProfileData!.status) {
           Get.back();
-          Get.offAllNamed(dashboardScreenRoute);
+          Get.back();
+          dashboardScreenController.getUserById();
           defaultSnackbar('Sukses!', 'Profil Anda telah diperbarui');
         } else {
           Get.back();

@@ -40,10 +40,11 @@ class LoginScreenController extends GetxController {
       this._loginData.value = loginData;
 
   @override
-  void dispose() {
+  void onClose() {
     emailController.dispose();
     passwordController.dispose();
-    super.dispose();
+    super.onClose();
+    print('LoginScreenController disposed');
   }
 
   void showAndHidePassword() {

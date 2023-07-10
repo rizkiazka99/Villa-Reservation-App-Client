@@ -49,9 +49,9 @@ class LocationDetailScreenController extends GetxController {
   }
 
   @override
-  void dispose() {
+  void onClose() {
     searchController.dispose();
-    super.dispose();
+    super.onClose();
   }
 
   Future<LocationDetailResponse?> getLocationDetail() async {

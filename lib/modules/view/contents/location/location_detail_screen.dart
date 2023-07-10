@@ -16,10 +16,10 @@ class LocationDetailScreen extends StatefulWidget {
 }
 
 class _LocationDetailScreenState extends State<LocationDetailScreen> {
-  LocationDetailScreenController controller = Get.find<LocationDetailScreenController>();
-
   @override
   Widget build(BuildContext context) {
+    LocationDetailScreenController controller = Get.find<LocationDetailScreenController>();
+    
     return Scaffold(
       appBar: AppBar(
         scrolledUnderElevation: 0,

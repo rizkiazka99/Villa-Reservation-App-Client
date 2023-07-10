@@ -46,9 +46,9 @@ class AddReviewController extends GetxController {
   }
 
   @override
-  void dispose() {
+  void onClose() {
     commentController.dispose();
-    super.dispose();
+    super.onClose();
   }
 
   Future<AddReviewResponse?> addReview() async {

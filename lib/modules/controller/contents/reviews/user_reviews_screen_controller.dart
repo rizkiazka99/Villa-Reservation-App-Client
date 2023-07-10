@@ -27,8 +27,8 @@ class UserReviewsScreenController extends GetxController {
   }
 
   @override
-  void dispose() {
-    super.dispose();
+  void onClose() {
+    super.onClose();
   }
 
   Future<UserReviewsResponse?> getUserReviews() async {

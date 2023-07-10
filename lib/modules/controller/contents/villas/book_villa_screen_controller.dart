@@ -102,8 +102,8 @@ class BookVillaScreenController extends GetxController {
   }
 
   @override
-  void dispose() {
-    super.dispose();
+  void onClose() {
+    super.onClose();
   }
 
   Future<UserData?> getUserData() async {

@@ -22,10 +22,10 @@ class VillaReviewsScreen extends StatefulWidget {
 }
 
 class _VillaReviewsScreenState extends State<VillaReviewsScreen> {
-  VillaReviewsScreenController controller = Get.find<VillaReviewsScreenController>();
-
   @override
   Widget build(BuildContext context) {
+    VillaReviewsScreenController controller = Get.find<VillaReviewsScreenController>();
+    
     return Scaffold(
       appBar: AppBar(
         scrolledUnderElevation: 0,

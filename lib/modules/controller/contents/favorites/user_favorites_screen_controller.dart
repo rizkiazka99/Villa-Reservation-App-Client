@@ -53,8 +53,8 @@ class UserFavoritesScreenController extends GetxController {
   }
 
   @override
-  void dispose() {
-    super.dispose();
+  void onClose() {
+    super.onClose();
   }
 
   Future<UserFavoritesResponse?> getUserFavorites() async {

@@ -22,11 +22,11 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  ProfileScreenController controller = Get.find<ProfileScreenController>();
-  DashboardScreenController dashboardScreenController = Get.find<DashboardScreenController>();
-  
   @override
   Widget build(BuildContext context) {
+    ProfileScreenController controller = Get.find<ProfileScreenController>();
+    DashboardScreenController dashboardScreenController = Get.find<DashboardScreenController>();
+
     return Scaffold(
       extendBody: true,
       backgroundColor: contextOrange,

@@ -52,9 +52,10 @@ class AllVillasScreenController extends GetxController {
   }
 
   @override
-  void dispose() {
+  void onClose() {
     searchController.dispose();
-    super.dispose();
+    super.onClose();
+    print('disposed');
   }
 
   Future<VillasResponse?> getVillas() async {

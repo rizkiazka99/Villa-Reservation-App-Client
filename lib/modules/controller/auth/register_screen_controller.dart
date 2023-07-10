@@ -49,13 +49,14 @@ class RegisterScreenController extends GetxController {
       this._registerData.value = registerData;
 
   @override
-  void dispose() {
+  void onClose() {
     emailController.dispose();
     phoneController.dispose();
     nameController.dispose();
     passwordController.dispose();
     confirmPasswordController.dispose();
-    super.dispose();
+    super.onClose();
+    print('RegisterScreenController disposed');
   }
 
   void showAndHidePassword() {
@@ -98,7 +99,7 @@ class RegisterScreenController extends GetxController {
 
       if(registerData!.status) {
         Get.back();
-        Get.offAllNamed(loginScreenRoute);
+        Get.back();
         defaultSnackbar('Akun telah dibuat!', 'Silahkan masuk ke akun Anda');
       } else {
         if (registerData!.message == 'This e-mail address has been used by another account') {

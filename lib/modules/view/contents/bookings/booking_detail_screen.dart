@@ -25,8 +25,6 @@ class BookingDetailScreen extends StatefulWidget {
 }
 
 class _BookingDetailScreenState extends State<BookingDetailScreen> {
-  BookingDetailController controller = Get.find<BookingDetailController>();
-
   Widget paymentCountdown(int endTime) {
     return Column(
       children: [
@@ -84,6 +82,8 @@ class _BookingDetailScreenState extends State<BookingDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    BookingDetailController controller = Get.find<BookingDetailController>();
+    
     return WillPopScope(
       onWillPop: () {
         if (Get.previousRoute != dashboardScreenRoute) {

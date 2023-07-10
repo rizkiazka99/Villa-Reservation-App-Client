@@ -21,10 +21,7 @@ class EditProfileScreen extends StatefulWidget {
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
-  EditProfileScreenController controller = Get.find<EditProfileScreenController>();
-  DashboardScreenController dashboardController = Get.find<DashboardScreenController>();
-
-  triggerModalBottomSheet(BuildContext context) async {
+  triggerModalBottomSheet(BuildContext context, EditProfileScreenController controller) async {
     showModalBottomSheet(
       context: context,
       shape: const RoundedRectangleBorder(
@@ -90,7 +87,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     );
   }
 
-  Widget verifyPasswordDialog() {
+  Widget verifyPasswordDialog(EditProfileScreenController controller) {
     return Container(
       margin: const EdgeInsets.all(10),
       child: Dialog(
@@ -183,6 +180,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    EditProfileScreenController controller = Get.find<EditProfileScreenController>();
+    DashboardScreenController dashboardController = Get.find<DashboardScreenController>();
+
     return WillPopScope(
       onWillPop: () {
         if (controller.phoneController.text.isNotEmpty ||
@@ -192,7 +192,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 title: 'Tunggu sebentar!', 
                 content: 'Apakah Anda yakin ingin membatalkan proses pembaruan profil?', 
                 onConfirmation: () {
-                  Get.offAllNamed(dashboardScreenRoute);
+                  Get.back();
+                  Get.back();
                 }
               )
             );
@@ -241,7 +242,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       children: [
                         InkWell(
                           onTap: () async {
-                            await triggerModalBottomSheet(context);
+                            await triggerModalBottomSheet(context, controller);
                           },
                           child: DottedBorder(
                             strokeWidth: 2,
@@ -287,7 +288,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                       right: 8,
                                       child: TextButton(
                                         onPressed: () async {
-                                          await triggerModalBottomSheet(context);
+                                          await triggerModalBottomSheet(context, controller);
                                         },
                                         style: ButtonStyle(
                                           padding: MaterialStateProperty.all(const EdgeInsets.all(0)),
@@ -371,7 +372,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               activeColor: contextOrange, 
                               onChanged: (bool value) {
                                 if (!controller.isPasswordVerified) {
-                                  Get.dialog(verifyPasswordDialog());
+                                  Get.dialog(verifyPasswordDialog(controller));
                                 } else {
                                   controller.showPasswordForm = value;
                                 }
@@ -436,12 +437,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                     title: 'Tunggu sebentar!', 
                                     content: 'Apakah Anda yakin ingin membatalkan proses pembuatan akun?', 
                                     onConfirmation: () {
-                                      Get.offAllNamed(dashboardScreenRoute);
+                                      Get.back();
+                                      Get.back();
                                     }
                                   )
                                 );
                             } else {
-                              Get.offAllNamed(dashboardScreenRoute);
+                              Get.back();
+                              Get.back();
                             }
                           }, 
                           color: contextRed, 

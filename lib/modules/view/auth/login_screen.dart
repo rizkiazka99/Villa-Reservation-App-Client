@@ -17,10 +17,10 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  LoginScreenController controller = Get.find<LoginScreenController>();
-
   @override
   Widget build(BuildContext context) {
+    LoginScreenController controller = Get.find<LoginScreenController>();
+    
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(

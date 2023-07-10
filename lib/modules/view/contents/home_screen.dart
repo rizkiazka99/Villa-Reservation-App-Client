@@ -20,12 +20,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  HomeScreenController controller = Get.find<HomeScreenController>();
-  LocationScreenController locationController = Get.find<LocationScreenController>();
-  DashboardScreenController dashboardScreenController = Get.find<DashboardScreenController>();
-
   @override
   Widget build(BuildContext context) {
+    HomeScreenController controller = Get.find<HomeScreenController>();
+    LocationScreenController locationController = Get.find<LocationScreenController>();
+    DashboardScreenController dashboardScreenController = Get.find<DashboardScreenController>();
+    
     return RefreshIndicator(
       onRefresh: () {
         locationController.getLocations();

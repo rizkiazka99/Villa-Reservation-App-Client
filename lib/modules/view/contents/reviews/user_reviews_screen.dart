@@ -14,10 +14,10 @@ class UserReviewsScreen extends StatefulWidget {
 }
 
 class _UserReviewsScreenState extends State<UserReviewsScreen> {
-  UserReviewsScreenController controller = Get.find<UserReviewsScreenController>();
-
   @override
   Widget build(BuildContext context) {
+    UserReviewsScreenController controller = Get.find<UserReviewsScreenController>();
+    
     return Scaffold(
       extendBody: true,
       appBar: AppBar(

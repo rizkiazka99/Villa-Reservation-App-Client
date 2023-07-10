@@ -13,10 +13,10 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
-  DashboardScreenController controller = Get.find<DashboardScreenController>();
-
   @override
   Widget build(BuildContext context) {
+    DashboardScreenController controller = Get.find<DashboardScreenController>();
+    
     return Scaffold(
       body: Obx(() => PageStorage(
         bucket: controller.bucket, 

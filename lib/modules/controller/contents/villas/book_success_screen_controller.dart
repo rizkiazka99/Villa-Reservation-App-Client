@@ -19,7 +19,7 @@ class BookSuccessScreenController extends GetxController {
   }
 
   @override
-  void dispose() {
-    super.dispose();
+  void onClose() {
+    super.onClose();
   }
 }

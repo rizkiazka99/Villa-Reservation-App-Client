@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:reservilla/core/colors.dart';
-import 'package:reservilla/core/font_sizes.dart';
-import 'package:reservilla/data/models/contents/favorites/user_favorites_response.dart';
 import 'package:reservilla/modules/controller/contents/favorites/user_favorites_screen_controller.dart';
 import 'package:reservilla/widgets/back_button.dart';
 import 'package:reservilla/widgets/custom_form.dart';
 import 'package:reservilla/widgets/empty_state.dart';
-import 'package:reservilla/widgets/error_state.dart';
 import 'package:reservilla/widgets/favorite_card.dart';
 import 'package:reservilla/widgets/loading_state.dart';
 
@@ -19,10 +16,10 @@ class UserFavoritesScreen extends StatefulWidget {
 }
 
 class _UserFavoritesScreenState extends State<UserFavoritesScreen> {
-  UserFavoritesScreenController controller = Get.find<UserFavoritesScreenController>();
-
   @override
   Widget build(BuildContext context) {
+    UserFavoritesScreenController controller = Get.find<UserFavoritesScreenController>();
+    
     return Scaffold(
       appBar: AppBar(
         scrolledUnderElevation: 0,

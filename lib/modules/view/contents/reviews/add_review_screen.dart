@@ -15,10 +15,10 @@ class AddReviewScreen extends StatefulWidget {
 }
 
 class _AddReviewScreenState extends State<AddReviewScreen> {
-  AddReviewController controller = Get.find<AddReviewController>();
-
   @override
   Widget build(BuildContext context) {
+    AddReviewController controller = Get.find<AddReviewController>();
+    
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,

@@ -17,10 +17,9 @@ class BookingsScreen extends StatefulWidget {
 }
 
 class _BookingsScreenState extends State<BookingsScreen> {
-  BookingsScreenController controller = Get.find<BookingsScreenController>();
-  DashboardScreenController dashboardScreenController = Get.find<DashboardScreenController>();
-
   Widget customTabBar() {
+    BookingsScreenController controller = Get.find<BookingsScreenController>();
+
     return Container(
       width: MediaQuery.of(context).size.width,
       padding: const EdgeInsets.all(8),
@@ -110,6 +109,9 @@ class _BookingsScreenState extends State<BookingsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    BookingsScreenController controller = Get.find<BookingsScreenController>();
+    DashboardScreenController dashboardScreenController = Get.find<DashboardScreenController>();
+
     return RefreshIndicator(
       onRefresh: () {
         List pendingBookingsIds = [];
@@ -197,11 +199,11 @@ class Booked extends StatefulWidget {
 }
 
 class _BookedState extends State<Booked> {
-  BookingsScreenController controller = Get.find<BookingsScreenController>();
-  DashboardScreenController dashboardScreenController = Get.find<DashboardScreenController>();
-
   @override
   Widget build(BuildContext context) {
+    BookingsScreenController controller = Get.find<BookingsScreenController>();
+    DashboardScreenController dashboardScreenController = Get.find<DashboardScreenController>();
+
     return Obx(() {
       if (controller.bookingsLoading) {
         return LoadingState(
@@ -235,11 +237,11 @@ class PastBookings extends StatefulWidget {
 }
 
 class _PastBookingsState extends State<PastBookings> {
-  BookingsScreenController controller = Get.find<BookingsScreenController>();
-  DashboardScreenController dashboardScreenController = Get.find<DashboardScreenController>();
-
   @override
   Widget build(BuildContext context) {
+    BookingsScreenController controller = Get.find<BookingsScreenController>();
+    DashboardScreenController dashboardScreenController = Get.find<DashboardScreenController>();
+
     return Obx(() {
       if (controller.bookingsLoading) {
         return LoadingState(
@@ -273,11 +275,11 @@ class CancelledBookings extends StatefulWidget {
 }
 
 class _CancelledBookingsState extends State<CancelledBookings> {
-  BookingsScreenController controller = Get.find<BookingsScreenController>();
-  DashboardScreenController dashboardScreenController = Get.find<DashboardScreenController>();
-
   @override
   Widget build(BuildContext context) {
+    BookingsScreenController controller = Get.find<BookingsScreenController>();
+    DashboardScreenController dashboardScreenController = Get.find<DashboardScreenController>();
+    
     return Obx(() {
       if (controller.bookingsLoading) {
         return LoadingState(

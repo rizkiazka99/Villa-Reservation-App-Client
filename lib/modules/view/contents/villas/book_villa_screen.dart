@@ -18,10 +18,10 @@ class BookVillaScreen extends StatefulWidget {
 }
 
 class _BookVillaScreenState extends State<BookVillaScreen> {
-  BookVillaScreenController controller = Get.find<BookVillaScreenController>();
-
   @override
   Widget build(BuildContext context) {
+    BookVillaScreenController controller = Get.find<BookVillaScreenController>();
+    
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,

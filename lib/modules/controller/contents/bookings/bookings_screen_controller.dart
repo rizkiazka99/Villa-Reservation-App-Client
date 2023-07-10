@@ -71,9 +71,9 @@ class BookingsScreenController extends GetxController {
   }
 
   @override
-  void dispose() {
+  void onClose() {
     scrollController.dispose();
-    super.dispose();
+    super.onClose();
   }
 
   getBooked() {
